@@ -1,6 +1,6 @@
 # Roadmap
 
-**Current status: Phase 02 accepted; Phase 03 ready to implement.**
+**Current status: Phase 02 accepted; Phase 03 implementation in progress, final refinement and acceptance pending.**
 **Current branch:** phase/03-product-catalogue-and-management.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
@@ -38,7 +38,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 03 — Product catalogue and management
 
-**Status:** Ready to implement on `phase/03-product-catalogue-and-management`.
+**Status:** Active on `phase/03-product-catalogue-and-management`. Final measurement-model, product-lifecycle, and UX corrections must be verified before acceptance.
 
 - [ ] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
 - [ ] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
