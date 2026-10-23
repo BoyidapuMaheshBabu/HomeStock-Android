@@ -13,13 +13,18 @@ HomeStock is for the user's sister and household. It is a simple offline Android
 
 ## 3. Home screen and fixed categories
 
-The home screen shows exactly three large, rectangular, clickable hero cards:
+The home screen uses a simple layout with this order:
 
-1. **Food & Kitchen:** rice, dal, flour, oil, spices, and related staples.
-2. **Home Care & Cleaning:** toilet/bathroom/floor cleaner, dishwashing liquid, detergent, disinfectant, and related products.
-3. **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, creams, and related products.
+1. **Top bar:** a personalized time-based greeting on the left (such as “Good morning, Priya!”) and a Settings gear icon on the right.
+2. **This month spending card:** a compact, clickable summary of actual purchase spending from the first day of the current calendar month through today. Tapping the card opens Insights with This month selected. If there are no purchases in the current month, show ₹0 with a clear empty-state message. This amount updates immediately when a purchase is saved; recording usage does not change it.
+3. **Category section:** a short heading and exactly three large, rectangular, clickable category hero cards.
 
-Do not add separate top-level categories for snacks, drinks, or other groups in the first version. Do not provide a feature to add top-level categories.
+The three cards are:
+- **Food & Kitchen:** rice, dal, flour, oil, spices, and related staples.
+- **Home Care & Cleaning:** toilet/bathroom/floor cleaner, dishwashing liquid, detergent, disinfectant, and related products.
+- **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, creams, and related products.
+
+Do not add separate top-level categories for snacks, drinks, or other groups in the first version. Do not provide a feature to add top-level categories. Keep detailed spending filters and breakdowns on Insights so the home screen remains focused and easy to scan.
 
 ## 4. Product management within each category
 
