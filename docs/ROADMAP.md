@@ -1,91 +1,86 @@
 # Roadmap
 
-**Current project status: Planning & Research — implementation has not started.** We are refining the requirements and technical decisions before implementation begins.
+**Current project status: Planning & Research — implementation has not started.**
 
-**Current planning branch:** `planning/research`. The Phase 01 branch named below is for implementation after planning is accepted.
+**Current planning branch:** \`planning/research\`.
 
-The roadmap is phase-based. Each phase should stay focused, be implemented on its own branch, and include evidence for acceptance.
+The implementation roadmap below is provisional until product requirements, data rules, technical choices, and acceptance criteria have been reviewed. Do not start implementation simply because phases are listed.
 
-## Phase 01 — Foundation and project setup (planned; not started)
-**Branch:** phase/01-foundation-and-project-setup
+## Phase 01 — Foundation and project setup (planned)
 
-- [ ] Create/open the native Android project and confirm application ID, minimum Android version, language, and build tooling.
-- [ ] Confirm the actual UI and persistence stack; proposed direction is Kotlin + Jetpack Compose + Room/SQLite.
-- [ ] Establish a small, maintainable project structure and app theme.
-- [ ] Create a runnable app shell with the HomeStock app name.
+- [ ] Confirm native Android project setup, package/application ID, minimum Android version, language, and build tooling.
+- [ ] Evaluate and choose the UI and local-storage stack; Kotlin + Jetpack Compose + Room/SQLite is the current proposal, not yet a verified implementation choice.
+- [ ] Establish a maintainable project structure and app theme.
+- [ ] Build a runnable HomeStock shell.
 - [ ] Document build and physical-device run steps.
-- [ ] Build the debug APK successfully and launch on a physical Android device.
-- [ ] Record actual build/device evidence; do not claim unverified checks.
+- [ ] Verify a debug build and launch on the intended physical device.
 
-**Acceptance:** The project builds, launches on the target phone, has a clear starting screen, and is ready for feature work.
+**Acceptance:** The native app builds, launches, and is ready for core feature implementation.
 
-## Phase 02 — First launch, home screen, and category navigation
+## Phase 02 — Welcome, home, and fixed categories (planned)
 
-- [ ] On first launch, ask for the user's name and save it locally.
-- [ ] Show a friendly greeting based on the device's local time, using the saved name.
-- [ ] Present three fixed categories: Food & Kitchen, Home Care & Cleaning, and Personal Care & Cosmetics.
-- [ ] Show touch-friendly category navigation and clear empty states.
-- [ ] Keep additional top-level category creation out of the first version.
+- [ ] Ask for the user's name on first launch and save it locally.
+- [ ] Show a friendly greeting based on local time and the saved name.
+- [ ] Show exactly three top-level categories: Food & Kitchen, Home Care & Cleaning, and Personal Care & Cosmetics.
+- [ ] Keep the home navigation simple, readable, and touch-friendly.
+- [ ] Do not include additional top-level categories.
 
-**Acceptance:** The user's name persists across restarts, the greeting is personalized, and the three categories are easy to navigate.
+**Acceptance:** The saved name persists across restarts and the three-category home screen is clear.
 
-## Phase 03 — Product management and local storage
+## Phase 03 — Preset products and customization (planned)
 
-- [ ] Provide familiar starter product choices in the appropriate category.
-- [ ] Allow custom products to be added and edited within a category.
-- [ ] Assign each product a compatible measurement dimension and unit.
+- [ ] Provide common starter products under each fixed top-level category.
+- [ ] Offer Add product within each category.
+- [ ] Provide three-dot Edit and Delete actions for each product.
+- [ ] Edit the name and compatible unit/type safely.
 - [ ] Support mass (kg/g), volume (L/ml), and count (pieces/units).
-- [ ] Persist products and validate required fields.
+- [ ] Seed products with zero recorded stock; do not require opening inventory.
 
-**Acceptance:** A user can select Rice or Soap from suitable choices, add another product, and see saved products after app restart.
+**Acceptance:** The user can add a custom product, edit a product, and remove a product safely without losing or corrupting history.
 
-## Phase 04 — Purchase records
+## Phase 04 — Purchase records (planned)
 
-- [ ] Record product, quantity, unit, actual price paid, and date.
-- [ ] Keep dated purchase history for each product.
-- [ ] Update stock using unit-safe calculations.
+- [ ] Record product, quantity, compatible unit, actual price paid, and purchase date.
+- [ ] Preserve each purchase as a separate history entry.
+- [ ] Increase stock using unit-safe calculations.
 - [ ] Display money in INR (₹).
 
-**Acceptance:** A purchase increases stock and recorded spending matches the entered amount. Quantities and price belong to the specific purchase record.
+**Acceptance:** Purchase quantities update stock correctly and spending totals reconcile with recorded purchase amounts.
 
-## Phase 05 — Usage records and stock calculations
+## Phase 05 — Usage records and stock calculations (planned)
 
 - [ ] Record usage quantity and date.
-- [ ] Reduce stock using compatible units only.
+- [ ] Reduce stock only using compatible units.
 - [ ] Validate usage against available stock.
-- [ ] Show remaining quantity clearly for weight, liquid, and count items.
+- [ ] Show current remaining quantities clearly for weight, liquid, and count products.
 
 **Acceptance:** Example checks pass: 5 kg − 1 kg = 4 kg; 1 L − 200 ml = 800 ml; 10 soap bars − 2 bars = 8 bars. No mass/volume/count mixing.
 
-## Phase 06 — History and spending
+## Phase 06 — Dashboard, spending insights, history, and usability (planned)
 
-- [ ] Show dated purchase and usage history for a product.
-- [ ] Show a simple purchase-spending summary.
-- [ ] Distinguish money spent from estimated stock value.
-- [ ] Use understandable empty and no-history states.
+- [ ] Prioritize total recorded spending in the dashboard/Insights experience.
+- [ ] Design a clear spending period view (at minimum, consider monthly spending).
+- [ ] Consider category-level spending breakdown without cluttering the UI.
+- [ ] Show remaining quantities and compatible units alongside spending information.
+- [ ] Show dated purchase and usage history.
+- [ ] Test persistence after app restart and core flows in airplane mode.
+- [ ] Test representative data, empty states, invalid inputs, and product edit/delete cases.
+- [ ] Verify behavior on the intended physical device and review the release build.
+- [ ] Update README with only verified features and evidence.
 
-**Acceptance:** Summaries reconcile with recorded purchase entries.
+**Acceptance:** Spending sums match the stored purchase entries; remaining quantities are correct; core workflows are usable and offline.
 
-## Phase 07 — JSON backup/restore, usability, and release checks
+## Deferred follow-up — JSON backup and restore (after core app acceptance)
 
-- [ ] Export a JSON backup through a user-initiated Android file flow.
-- [ ] Include the saved name, products, categories, purchase history, usage history, and required metadata.
-- [ ] Validate a selected JSON backup before restoring it.
-- [ ] Explain overwrite behavior and require confirmation before replacing existing data.
-- [ ] Test persistence after force-close/restart and core flows in airplane mode.
-- [ ] Test backup and restore with valid, invalid, and older/unsupported files.
-- [ ] Test on the target physical phone and review the release build.
-- [ ] Update the README with only verified features and evidence.
+Do not build this as part of the initial accepted core app. After the intended user has reviewed and accepted the core app, plan and implement JSON backup/restore as a separate follow-up, including data validation and protection from accidental overwrites.
 
-**Acceptance:** Valid backup/restore recovers data and personalization without network access; invalid backup input does not partially overwrite existing data.
+## Planning and branch workflow
 
-## Branch and phase workflow
+1. Continue product research and specification refinement on \`planning/research\`.
+2. Close open product and data-model questions before implementation.
+3. Review the final product flow, technical choices, and acceptance criteria with the intended user.
+4. Only after planning is accepted, prepare the first implementation phase from the latest accepted \`main\`.
+5. Implement in small phases, then build, test, and inspect the result before calling a phase complete.
+6. After the user accepts a phase, merge it into \`main\`, update project status/evidence, and create the next implementation branch from the latest \`main\`.
 
-1. Create each phase branch from the latest main.
-2. Implement only the scoped phase.
-3. Build, test, and inspect the result before marking tasks complete.
-4. The user reviews and accepts the phase.
-5. Merge the accepted branch into main and update project status/docs.
-6. Create the next phase branch from the updated main.
-
-A checklist is a plan until verified; never treat planned work as completed work.
+A roadmap checklist is a plan until verified; never treat planned work as completed work.
