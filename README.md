@@ -64,13 +64,13 @@ The primary money metric is **cumulative purchase spending since the user starte
 Example: existing recorded spending is ₹5,000. The user records a new shampoo purchase for ₹5. The all-time total immediately becomes **₹5,005**. Recording usage changes stock quantity, not past spending. Adding or editing a product definition alone does not count as spending.
 
 Required views:
-- Last 7 days
-- Last 1 month
-- Last 3 months
-- Custom date range
-- All time / Since app start
+- **Last 7 days:** today and the previous six calendar dates.
+- **This month:** from the first day of the current calendar month through today.
+- **Last 3 months:** from the first day of the calendar month two months before the current month through today (the current month plus the two preceding calendar months).
+- **Custom date range:** include both the start date and end date selected by the user.
+- **All time / Since app start:** all recorded purchases from the start of tracking through today.
 
-Filtered totals come from dated purchase records in the selected range. The app should also make current quantities and transaction history easy to inspect.
+Month-based views use calendar-month boundaries, not rolling same-date ranges such as September 23–October 23. For example, on October 23, the This month view covers October 1–23, and Last 3 months covers August 1–October 23. Filtered totals come from purchase records dated within the selected inclusive range. The app should also make current quantities and transaction history easy to inspect.
 
 ## Data safety
 
