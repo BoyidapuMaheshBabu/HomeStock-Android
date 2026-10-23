@@ -77,8 +77,9 @@ Filtered totals come from dated purchase records in the selected range. The app 
 - Do not allow usage greater than current stock.
 - Never mix incompatible units (for example, kg and ml).
 - Each purchase retains its own quantity, unit, actual amount paid, and date.
-- The Delete action must use a confirmation dialog.
-- Editing or deleting a product must not silently corrupt historical quantities or spending. The exact behavior for deleting products with transaction history is still part of planning.
+- Delete an accidental product only when it has no transaction history, after a confirmation dialog.
+- If a product has history and zero stock, offer Archive / Hide to remove it from the active list while preserving its history and spending records.
+- Do not allow Archive / Hide while stock remains. If stock is expired or discarded, record that quantity through Use first; this changes stock but not recorded purchase spending.
 
 ## First-version boundaries
 
