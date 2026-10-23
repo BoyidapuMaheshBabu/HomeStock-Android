@@ -1,51 +1,54 @@
 # HomeStock
 
-HomeStock is an **offline-first native Android household inventory and spending tracker**. It helps a household understand what was purchased, what has been used, what remains in stock, and how spending changes over time.
+HomeStock is a planned **offline-first native Android household inventory and spending app** for the user's sister and household. It is designed to track purchases, product quantities, usage, remaining stock, and—especially—how much the household spends on home products.
 
 > **Project status:** Planning & Research — implementation has not started.
-> **Current planning branch:** `planning/research`.
-> This branch contains the current product planning documents; implementation phases remain planned, and no app build or feature tests have been verified.
+> **Current planning branch:** \`planning/research\`.
+> The requirements are being refined. No app build or feature tests have been verified.
 
-## First-use experience
+## Intended first-use experience
 
-- On first launch, ask for the household user's name and save it locally.
-- Display a welcoming time-based greeting, such as “Good morning, Priya!”.
-- Keep the saved name and household records available offline.
-- Provide user-initiated JSON backup and restore for the saved name and app data.
+- Ask for the user's name on first launch and save it locally.
+- Show a friendly, local-time greeting, such as “Good morning, Priya!”
+- Keep the core app usable without an internet connection.
+- Begin stock tracking from the user's first recorded purchases. Existing household stock does not need to be entered as opening stock.
 
-## Product scope
+## Three fixed home categories
 
-The home screen starts with three categories:
+1. **Food & Kitchen:** starter products such as rice, dal, flour, oil, and spices.
+2. **Home Care & Cleaning:** starter products such as toilet/bathroom/floor cleaner, dishwashing liquid, detergent, and disinfectant.
+3. **Personal Care & Cosmetics:** starter products such as soap, shampoo, toothpaste, hair oil, and creams.
 
-- **Food & Kitchen:** rice, dal, flour, oil, spices, sugar, and similar supplies.
-- **Home Care & Cleaning:** toilet/bathroom/floor cleaners, dishwashing liquid, detergent, and disinfectants.
-- **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, and similar products.
+These three top-level home categories stay fixed in the first version. Users can add, edit, and delete products/items inside each category; they cannot create additional top-level home categories in the first version. Product brands are not needed.
 
-Show familiar starter product choices within categories and let users add their own products. Creating additional top-level home categories is not in the first version.
+## Core product workflow
 
-## MVP priorities
+1. Choose one of the three home categories.
+2. Select a preset product or add a custom product.
+3. Edit a product's name and compatible unit when needed, or delete it using its three-dot menu.
+4. Record a purchase with quantity, unit, price paid, and date.
+5. Record usage to reduce stock.
+6. Review the remaining quantity, purchase/usage history, and spending.
 
-1. Personalize the app with a locally saved name and greeting.
-2. Add and edit products with compatible stock units.
-3. Record purchases with quantity, actual price paid, and date.
-4. Record usage and calculate remaining stock.
-5. Review product history and actual purchase spending.
-6. Back up and restore household records through a user-selected JSON file.
-7. Persist records locally and verify they survive app restarts and work without internet.
+## Spending and inventory are core
 
-No login, cloud sync, AI features, or barcode scanning are required for the first MVP.
+Money is a primary concern for the intended user, not an optional add-on. The dashboard/Insights experience should make spending easy to understand while also showing remaining quantities. Spending must be calculated from recorded purchase amounts, kept separate from any estimated value of stock remaining.
 
-## Unit and money rules
+## Unit and data rules
 
 - **Mass:** kg and g can convert to each other.
 - **Volume:** litres (L) and millilitres (ml) can convert to each other.
-- **Count:** pieces/units are used for items such as soap bars.
-- Never mix incompatible units, such as kg and ml, in a stock calculation.
-- Record actual purchase spending separately from any estimated value of remaining stock. A purchase entry stores its quantity, unit, price paid, and date.
+- **Count:** pieces/units suit items such as soap bars.
+- Never combine incompatible units, such as kg and ml, in a stock calculation.
+- The predefined product list starts with zero stock; quantities increase through recorded purchases and decrease through recorded usage.
+- Protect purchase and usage history from being silently lost or misrepresented when a product is edited or deleted.
 
-## Engineering direction
+## First-version boundaries
 
-The target is a native Android app, with Kotlin, Jetpack Compose, and Room/SQLite as the proposed implementation direction. Confirm the actual stack and minimum Android version during Phase 01 project setup.
+- Native Android app; proposed direction is Kotlin, Jetpack Compose, and Room/SQLite, pending technical research.
+- Offline local persistence; no account or cloud service.
+- No brand field, barcode scanning, AI features, or extra top-level home categories.
+- JSON backup/restore is **deferred** until after the core app is built and accepted by the intended user.
 
 ## Documentation
 
@@ -53,6 +56,6 @@ The target is a native Android app, with Kotlin, Jetpack Compose, and Room/SQLit
 - [Roadmap and phase acceptance](docs/ROADMAP.md)
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md)
 
-## Working rule
+## Planning-first working rule
 
-Work in small, reviewable phases. Do not mark a phase complete until its acceptance criteria have been checked and the relevant build/device evidence is recorded. After a phase is accepted, merge it into main, update project status, and create the next phase branch from the latest main.
+We are planning and researching now, not implementing. Clarify the product workflow, data rules, technical choices, and acceptance criteria before asking an implementation agent to build. Work in small, reviewable phases only after planning is accepted. Do not claim any feature is implemented or tested without evidence.
