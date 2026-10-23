@@ -3,7 +3,7 @@
 HomeStock is a planned **offline-first native Android household inventory and spending app** for the user's sister and household. It is designed to track purchases, product quantities, usage, remaining stock, and—especially—how much the household spends on home products.
 
 > **Project status:** Planning & Research — implementation has not started.
-> **Current planning branch:** \`planning/research\`.
+> **Current planning branch:** `planning/research`.
 > The requirements are being refined. No app build or feature tests have been verified.
 
 ## Intended first-use experience
