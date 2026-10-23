@@ -1,8 +1,10 @@
 # Roadmap
 
+**Current project status: Planning & Research — implementation has not started.** We are refining the requirements and technical decisions before implementation begins.
+
 The roadmap is phase-based. Each phase should stay focused, be implemented on its own branch, and include evidence for acceptance.
 
-## Phase 01 — Foundation and project setup
+## Phase 01 — Foundation and project setup (planned; not started)
 **Branch:** phase/01-foundation-and-project-setup
 
 - [ ] Create/open the native Android project and confirm application ID, minimum Android version, language, and build tooling.
