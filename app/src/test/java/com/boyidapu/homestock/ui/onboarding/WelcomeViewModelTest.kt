@@ -44,6 +44,24 @@ class WelcomeViewModelTest {
     }
 
     @Test
+    fun onNameInputChanged_over10Chars_truncatesTo10Chars() {
+        viewModel.onNameInputChanged("PriyaMaheshBabu")
+        assertEquals("PriyaMahes", viewModel.uiState.value.nameInput)
+        assertEquals(10, viewModel.uiState.value.nameInput.length)
+    }
+
+    @Test
+    fun submitName_exactly10Chars_succeeds(): Unit = runTest {
+        viewModel.onNameInputChanged("PriyaMahes")
+        viewModel.submitName()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        assertNull(viewModel.uiState.value.errorMessage)
+        assertTrue(viewModel.uiState.value.isSaveSuccess)
+        assertEquals("PriyaMahes", fakeUserRepository.userName.value)
+    }
+
+    @Test
     fun submitName_validName_trimsAndSavesSuccessfully(): Unit = runTest {
         viewModel.onNameInputChanged("  Priya  ")
         viewModel.submitName()

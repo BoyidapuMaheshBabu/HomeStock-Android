@@ -5,8 +5,10 @@ data class Product(
     val category: FixedCategory,
     val name: String,
     val dimension: MeasurementDimension,
-    val preferredUnit: UnitType,
     val isPreset: Boolean = false,
     val isArchived: Boolean = false,
     val createdAtEpochMs: Long = System.currentTimeMillis()
-)
+) {
+    val preferredUnit: UnitType
+        get() = dimension.defaultUnit
+}

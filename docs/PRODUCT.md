@@ -38,14 +38,14 @@ Seed the preset product list once and begin all products with zero recorded stoc
 
 Product rows show the name and current quantity on the left, plus action and three-dot menu on the right. Tapping the main row opens product history.
 
-Creating a product is separate from purchasing it. Product creation asks for the name, fixed category context, and measurement dimension/default unit; it does not ask for price or starting quantity. New products begin at zero stock.
+Creating a product is separate from purchasing it. Product creation asks for the name, fixed category context, and measurement type (Mass, Liquid, or Units); it does not ask for price, starting quantity, or a preferred unit. New products begin at zero stock.
 
-A product uses one dimension:
+A product uses one measurement type:
 - Mass: kg/g.
-- Volume: L/ml.
-- Count: pieces/units.
+- Liquid: L/ml.
+- Units: pieces/items.
 
-Starter products have sensible unit defaults. A unit dimension may be changed before any transaction exists. Once transactions exist, the dimension cannot be changed; a preferred unit may change within the same dimension.
+Starter products have sensible measurement type defaults. A product's measurement type may be changed before any transaction exists. Once transactions exist, the measurement type cannot be changed.
 
 ## 6. Product row actions and safety
 

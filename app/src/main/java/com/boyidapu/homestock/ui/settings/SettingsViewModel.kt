@@ -3,6 +3,7 @@ package com.boyidapu.homestock.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.boyidapu.homestock.domain.repository.UserRepository
+import com.boyidapu.homestock.ui.onboarding.WelcomeViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -45,7 +46,7 @@ class SettingsViewModel(
         _editState.update {
             it.copy(
                 isEditing = true,
-                nameInput = currentName,
+                nameInput = currentName.take(WelcomeViewModel.MAX_USER_NAME_LENGTH),
                 errorMessage = null,
                 successMessage = null
             )
@@ -64,9 +65,14 @@ class SettingsViewModel(
     }
 
     fun onNameInputChanged(input: String) {
+        val truncated = if (input.length > WelcomeViewModel.MAX_USER_NAME_LENGTH) {
+            input.take(WelcomeViewModel.MAX_USER_NAME_LENGTH)
+        } else {
+            input
+        }
         _editState.update {
             it.copy(
-                nameInput = input,
+                nameInput = truncated,
                 errorMessage = null,
                 successMessage = null
             )
@@ -82,10 +88,17 @@ class SettingsViewModel(
             return
         }
 
+        if (trimmed.length > WelcomeViewModel.MAX_USER_NAME_LENGTH) {
+            _editState.update {
+                it.copy(errorMessage = "Name must be at most ${WelcomeViewModel.MAX_USER_NAME_LENGTH} characters")
+            }
+            return
+        }
+
         viewModelScope.launch {
             _editState.update { it.copy(isSaving = true) }
             try {
-                userRepository.saveUserName(trimmed)
+                userRepository.saveUserName(trimmed.take(WelcomeViewModel.MAX_USER_NAME_LENGTH))
                 _editState.update {
                     it.copy(
                         isEditing = false,

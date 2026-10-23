@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -143,6 +145,27 @@ fun WelcomeScreen(
                         placeholder = { Text("e.g. Priya") },
                         isError = uiState.errorMessage != null,
                         singleLine = true,
+                        supportingText = {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                if (uiState.errorMessage != null) {
+                                    Text(
+                                        text = uiState.errorMessage!!,
+                                        color = MaterialTheme.colorScheme.error,
+                                        fontSize = 12.sp
+                                    )
+                                } else {
+                                    Spacer(modifier = Modifier.width(1.dp))
+                                }
+                                Text(
+                                    text = "${uiState.nameInput.length}/${WelcomeViewModel.MAX_USER_NAME_LENGTH}",
+                                    fontSize = 12.sp,
+                                    color = MutedSageGray
+                                )
+                            }
+                        },
                         keyboardOptions = KeyboardOptions(
                             capitalization = KeyboardCapitalization.Words,
                             imeAction = ImeAction.Done
@@ -158,16 +181,7 @@ fun WelcomeScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    if (uiState.errorMessage != null) {
-                        Spacer(modifier = Modifier.height(6.dp))
-                        Text(
-                            text = uiState.errorMessage!!,
-                            color = MaterialTheme.colorScheme.error,
-                            fontSize = 12.sp
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
                     Button(
                         onClick = { viewModel.submitName() },

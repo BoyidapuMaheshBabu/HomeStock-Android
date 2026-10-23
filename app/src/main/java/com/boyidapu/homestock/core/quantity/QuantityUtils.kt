@@ -67,6 +67,47 @@ object QuantityUtils {
     }
 
     /**
+     * Formats an integer base unit quantity automatically based on dimension and size.
+     * Examples:
+     * - 0 g -> "0 kg", 1500 g -> "1.5 kg", 750 g -> "750 g"
+     * - 0 ml -> "0 L", 1500 ml -> "1.5 L", 800 ml -> "800 ml"
+     * - 4 pieces -> "4 pieces"
+     */
+    fun autoFormatStock(baseQuantity: Long, dimension: MeasurementDimension): String {
+        return when (dimension) {
+            MeasurementDimension.MASS -> {
+                if (baseQuantity == 0L) {
+                    "0 kg"
+                } else if (baseQuantity >= 1000L && baseQuantity % 1000L == 0L) {
+                    "${baseQuantity / 1000L} kg"
+                } else if (baseQuantity >= 1000L) {
+                    val kg = BigDecimal(baseQuantity).divide(BigDecimal(1000), 3, RoundingMode.HALF_UP)
+                        .stripTrailingZeros().toPlainString()
+                    "$kg kg"
+                } else {
+                    "$baseQuantity g"
+                }
+            }
+            MeasurementDimension.VOLUME -> {
+                if (baseQuantity == 0L) {
+                    "0 L"
+                } else if (baseQuantity >= 1000L && baseQuantity % 1000L == 0L) {
+                    "${baseQuantity / 1000L} L"
+                } else if (baseQuantity >= 1000L) {
+                    val litres = BigDecimal(baseQuantity).divide(BigDecimal(1000), 3, RoundingMode.HALF_UP)
+                        .stripTrailingZeros().toPlainString()
+                    "$litres L"
+                } else {
+                    "$baseQuantity ml"
+                }
+            }
+            MeasurementDimension.COUNT -> {
+                "$baseQuantity pieces"
+            }
+        }
+    }
+
+    /**
      * Validates input quantity string for a given dimension and unit.
      */
     fun validateQuantityInput(

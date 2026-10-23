@@ -1,5 +1,7 @@
 package com.boyidapu.homestock.ui.settings
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -41,6 +44,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.boyidapu.homestock.R
+import com.boyidapu.homestock.ui.onboarding.WelcomeViewModel
 import com.boyidapu.homestock.ui.theme.CleanWhite
 import com.boyidapu.homestock.ui.theme.DeepTeal
 import com.boyidapu.homestock.ui.theme.ForestCharcoal
@@ -50,7 +54,8 @@ import com.boyidapu.homestock.ui.theme.MutedSageGray
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    onNavigateToArchivedProducts: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -147,6 +152,27 @@ fun SettingsScreen(
                             label = { Text("Your Name") },
                             isError = uiState.errorMessage != null,
                             singleLine = true,
+                            supportingText = {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    if (uiState.errorMessage != null) {
+                                        Text(
+                                            text = uiState.errorMessage!!,
+                                            color = MaterialTheme.colorScheme.error,
+                                            fontSize = 12.sp
+                                        )
+                                    } else {
+                                        Spacer(modifier = Modifier.width(1.dp))
+                                    }
+                                    Text(
+                                        text = "${uiState.nameInput.length}/${WelcomeViewModel.MAX_USER_NAME_LENGTH}",
+                                        fontSize = 12.sp,
+                                        color = MutedSageGray
+                                    )
+                                }
+                            },
                             keyboardOptions = KeyboardOptions(
                                 capitalization = KeyboardCapitalization.Words,
                                 imeAction = ImeAction.Done
@@ -161,15 +187,6 @@ fun SettingsScreen(
                             ),
                             modifier = Modifier.fillMaxWidth()
                         )
-
-                        if (uiState.errorMessage != null) {
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = uiState.errorMessage!!,
-                                color = MaterialTheme.colorScheme.error,
-                                fontSize = 12.sp
-                            )
-                        }
 
                         Spacer(modifier = Modifier.height(12.dp))
 
@@ -197,7 +214,45 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // App Identity & Archiving Notice Card
+            // Archived Products Entry Card
+            Card(
+                colors = CardDefaults.cardColors(containerColor = CleanWhite),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigateToArchivedProducts() }
+            ) {
+                Row(
+                    modifier = Modifier.padding(20.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "Archived Products",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = ForestCharcoal
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "View and restore hidden or archived products",
+                            fontSize = 13.sp,
+                            color = MutedSageGray
+                        )
+                    }
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "View Archived Products",
+                        tint = MutedSageGray
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // App Identity Card
             Card(
                 colors = CardDefaults.cardColors(containerColor = CleanWhite),
                 shape = RoundedCornerShape(16.dp),
@@ -223,14 +278,6 @@ fun SettingsScreen(
                     Text(
                         text = stringResource(id = R.string.telugu_app_caption),
                         fontSize = 13.sp,
-                        color = MutedSageGray
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                    Text(
-                        text = "Archived Products management will be available in Phase 03.",
-                        fontSize = 12.sp,
                         color = MutedSageGray
                     )
                 }

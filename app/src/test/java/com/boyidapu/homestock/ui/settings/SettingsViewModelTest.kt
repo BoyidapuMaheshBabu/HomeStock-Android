@@ -47,6 +47,18 @@ class SettingsViewModelTest {
     }
 
     @Test
+    fun onNameInputChanged_over10Chars_truncatesTo10Chars(): Unit = runTest {
+        backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
+            viewModel.uiState.collect()
+        }
+        viewModel.startEditing()
+        viewModel.onNameInputChanged("PriyaMaheshBabu")
+
+        assertEquals("PriyaMahes", viewModel.uiState.value.nameInput)
+        assertEquals(10, viewModel.uiState.value.nameInput.length)
+    }
+
+    @Test
     fun saveName_blankInput_showsError(): Unit = runTest {
         backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
             viewModel.uiState.collect()

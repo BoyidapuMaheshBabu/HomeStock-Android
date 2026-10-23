@@ -15,7 +15,7 @@ sealed interface Screen : NavKey {
     data class CategoryProducts(val categoryId: String) : Screen
 
     @Serializable
-    data object CreateProduct : Screen
+    data class CreateProduct(val categoryId: String) : Screen
 
     @Serializable
     data class EditProduct(val productId: Long) : Screen
