@@ -1,0 +1,95 @@
+# Roadmap
+
+**Current status: Planning & Research — implementation has not started.**
+**Current branch:** planning/research.
+
+The architecture and product specification are the working contract. Checkboxes below are planned work, not evidence that the app has been implemented.
+
+## Planning sign-off
+
+- [ ] Review product requirements, architecture and acceptance tests.
+- [ ] Verify the target phone is compatible with the planned minimum Android API.
+- [ ] Agree the starter product list and default units.
+- [ ] Confirm the first MVP uses read-only transaction history.
+- [ ] Approve the planning specification before creating the implementation branch.
+
+## Phase 01 — Android foundation
+
+- [ ] Native Kotlin Android project, Gradle Kotlin DSL, version catalog, single Activity and single app module.
+- [ ] Jetpack Compose + Material 3, Navigation 3, screen ViewModels, Kotlin coroutines/Flow, Room/SQLite, Preferences DataStore.
+- [ ] Manual AppContainer dependency wiring.
+- [ ] Create package structure from ARCHITECTURE.md.
+- [ ] Set up app theme, local database, preferences and navigation.
+- [ ] Build and launch a minimal app on the intended phone.
+- [ ] Record actual dependency versions and verified build evidence.
+
+**Acceptance:** App compiles and launches on the intended device. No features are claimed complete based only on code generation.
+
+## Phase 02 — Welcome and Home
+
+- [ ] First-run name input, validation, and local persistence.
+- [ ] Time-based greeting top-left and Settings gear top-right.
+- [ ] Clickable This month spending preview, using calendar month boundaries.
+- [ ] This month card opens Insights with This month selected.
+- [ ] Three fixed rectangular category hero cards.
+
+## Phase 03 — Product catalogue and management
+
+- [ ] Seed common starter products once with zero stock.
+- [ ] Fixed category product lists and separate custom product creation.
+- [ ] Product row with name/current stock, plus action and three-dot menu.
+- [ ] Edit product name and compatible preferred unit.
+- [ ] Delete only products with no transaction history, after confirmation.
+- [ ] Archive/hide products with history only when stock is zero.
+- [ ] Preserve archived history and spending; add Settings > Archived Products and Restore.
+
+## Phase 04 — Add/Use transactions and stock rules
+
+- [ ] Plus action opens separate Add and Use choices.
+- [ ] Add form: quantity, compatible unit, required amount paid and date.
+- [ ] Use form: current stock, quantity, compatible unit and date.
+- [ ] Base-unit conversions and positive quantity validation.
+- [ ] Atomic stock check and Use insert; reject over-use.
+- [ ] Disable Save while write is pending and prevent duplicate submissions.
+- [ ] Update Room-derived stock, history and spending immediately after successful saves.
+
+## Phase 05 — Product transaction history
+
+- [ ] Tapping product row opens scrollable date-grouped read-only history.
+- [ ] Add entries display quantity, unit, amount paid and date.
+- [ ] Use entries display quantity, unit and stock impact.
+- [ ] Show product-specific purchase spending.
+- [ ] No time-of-day display or transaction-row edit/delete in the first MVP.
+
+## Phase 06 — Spending Dashboard and Insights
+
+- [ ] Current calendar-month spending preview on Home.
+- [ ] Last 7 days, This month, Last 3 months, Custom date range and All time filters.
+- [ ] Inclusive date boundaries and visible selected range.
+- [ ] Calculate totals from saved Add transactions; Use does not alter spending.
+- [ ] Include purchases belonging to archived products in historical totals.
+- [ ] Test monthly boundaries, custom range, empty range and immediate recalculation.
+
+## Phase 07 — Verification and intended-user review
+
+- [ ] Run tests listed in ACCEPTANCE-TESTS.md.
+- [ ] Test core flow in airplane mode.
+- [ ] Verify persistence across restart/force close.
+- [ ] Test unit conversions, over-use rejection, double taps, price parsing, date filters and archive/delete.
+- [ ] Install on the intended physical phone and let the intended user try the app.
+- [ ] Fix feedback that affects agreed MVP requirements.
+- [ ] Update README only with verified features and evidence.
+
+## Deferred follow-up — JSON backup/restore
+
+Do not implement JSON backup/restore in the core MVP. Revisit after the intended user reviews and accepts the working app.
+
+## Branch workflow
+
+1. Continue research on planning/research.
+2. Review and approve the product, architecture and acceptance tests.
+3. Commit the accepted planning documents to main.
+4. Create the first implementation branch from the latest main.
+5. Implement one focused phase at a time and verify builds/tests/device behavior.
+6. After user acceptance, merge each phase to main, update evidence, and create the next branch from the latest main.
+
