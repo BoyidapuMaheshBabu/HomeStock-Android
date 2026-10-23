@@ -2,6 +2,8 @@
 
 **Current project status: Planning & Research — implementation has not started.** We are refining the requirements and technical decisions before implementation begins.
 
+**Current planning branch:** `planning/research`. The Phase 01 branch named below is for implementation after planning is accepted.
+
 The roadmap is phase-based. Each phase should stay focused, be implemented on its own branch, and include evidence for acceptance.
 
 ## Phase 01 — Foundation and project setup (planned; not started)
