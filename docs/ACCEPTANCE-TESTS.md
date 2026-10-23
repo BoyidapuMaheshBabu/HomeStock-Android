@@ -10,6 +10,7 @@ The implementation is accepted only after relevant tests pass and the intended u
 
 - [ ] Fresh install without a saved name opens Name Setup.
 - [ ] Blank/whitespace-only name cannot be saved.
+- [ ] Display name accepts at most 10 characters in Welcome and Settings.
 - [ ] Saving a valid name persists locally; later launches skip onboarding.
 - [ ] Greeting uses device-local time and the saved name.
 - [ ] Home places greeting at top-left and Settings gear at top-right.
@@ -24,15 +25,17 @@ The implementation is accepted only after relevant tests pass and the intended u
 
 - [ ] Starter products are shown within their intended fixed category.
 - [ ] Starter seed runs once; a deleted preset is not recreated on every launch.
-- [ ] Creating a product is a separate action from Add/Purchase and asks only for name/category/unit setup, not quantity or price.
+- [ ] Creating a product asks for name and exactly one type: Mass, Liquid, or Units; it does not ask for a preferred unit, quantity, or price.
+- [ ] Product name accepts at most 40 characters in Create and Edit; blank names are rejected and whitespace is trimmed.
 - [ ] New product starts at zero stock.
+- [ ] Mass products offer kg/g only; Liquid products offer L/ml only; Units products accept whole pieces only when entering transaction quantities.
+- [ ] A product without transaction history can switch repeatedly among Mass, Liquid and Units; all three choices remain available when editing.
+- [ ] Once any transaction exists, measurement type is locked even if current stock is zero.
 - [ ] Product row shows name/current stock, plus action and three-dot menu.
-- [ ] Tapping the product row opens history; tapping plus opens Add/Use choices.
-- [ ] Three-dot menu offers Edit and the state-appropriate Delete/Archive action.
-- [ ] Editing the name preserves all transaction history.
-- [ ] Changing preferred unit within the same dimension preserves normalized stock and transaction history.
-- [ ] Changing measurement dimension after any transaction is blocked.
-- [ ] No brand field is required or stored.
+- [ ] Tapping the product row opens history; tapping plus opens Add/Use choices in Phase 04.
+- [ ] Three-dot menu offers Edit, Archive, and Delete permanently with appropriate confirmation.
+- [ ] Editing a product's name or an allowed measurement type preserves product identity.
+- [ ] No brand field or product-level preferred unit is required or stored.
 
 ## C. Add / Purchase
 
@@ -108,16 +111,17 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 
 ## I. Delete, Archive and Restore
 
-- [ ] Product with no transaction history can be permanently deleted only after confirmation.
-- [ ] Canceling Delete leaves the product unchanged.
-- [ ] Product with transaction history and positive stock cannot be archived.
-- [ ] Stock that is consumed, expired or thrown away must be recorded through Use to reach zero.
-- [ ] Product with history and zero stock can be archived/hidden.
-- [ ] Archive keeps transactions and spending unchanged.
-- [ ] Archived products disappear from active category lists.
-- [ ] Settings > Archived Products shows archived items.
-- [ ] Restore returns an archived product to its active category list and does not modify its history.
-- [ ] Product with transaction history can never be permanently deleted through the UI.
+- [ ] A product with or without transaction history can be permanently deleted only after explicit confirmation that the product and all its history will be lost.
+- [ ] Canceling Delete leaves the product and all transactions unchanged.
+- [ ] Deleting a history-bearing product removes only that product's transaction rows and product record atomically; no orphaned records remain.
+- [ ] Spending totals recalculate without the deleted product's Add transactions.
+- [ ] Deleting a starter product does not cause it to be silently recreated by a later seed/relaunch.
+- [ ] Archive is allowed regardless of current stock or transaction history.
+- [ ] Archive preserves the product's current stock as derived from history, transactions, and spending totals.
+- [ ] Archived products disappear from active category lists and cannot receive new transactions.
+- [ ] Settings > Archived Products shows archived items, including items with stock/history.
+- [ ] Restore returns the same product to its active category list with stock and history unchanged.
+- [ ] Archive and Restore never duplicate or reseed the product.
 
 ## J. Persistence and privacy
 
@@ -142,5 +146,6 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 10. Record shampoo purchase for ₹5.
 11. Verify all-time total increases by ₹5. If previous total was ₹5,000, verify ₹5,005.
 12. Test Last 7 days, This month, Last 3 months, Custom and All time against purchase dates.
-13. Archive a history-bearing product after its stock reaches zero; verify history/spending remain.
-14. Restart the app and repeat key checks with internet disabled.
+13. Archive a product with transaction history and non-zero stock; verify it disappears from active lists but restores with the same stock/history and unchanged spending.
+14. Permanently delete a separate product with transaction history; verify only its associated history is removed and spending totals update accordingly.
+15. Restart the app and verify deleted presets are not silently recreated, then repeat key checks with internet disabled.
