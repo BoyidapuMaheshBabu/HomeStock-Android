@@ -10,6 +10,7 @@ IntiVentory is for the user's sister and household. The repository remains named
 - Brand caption: **మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.**
 - Ask for the user's name on first launch.
 - Trim whitespace and reject a blank name.
+- Limit the display name to 10 characters in Welcome and Settings.
 - Save the name locally and reuse it on later launches.
 - Show a friendly time-based greeting using device-local time.
 - No account or internet connection is required.
@@ -38,14 +39,16 @@ Seed the preset product list once and begin all products with zero recorded stoc
 
 Product rows show the name and current quantity on the left, plus action and three-dot menu on the right. Tapping the main row opens product history.
 
-Creating a product is separate from purchasing it. Product creation asks for the name, fixed category context, and measurement type (Mass, Liquid, or Units); it does not ask for price, starting quantity, or a preferred unit. New products begin at zero stock.
+Creating a product is separate from purchasing it. Product creation asks for the name and one measurement type; the fixed category comes from the current category screen. It does not ask for a preferred unit, price, or starting quantity. New products begin at zero stock. Product names are limited to 40 characters.
 
-A product uses one measurement type:
-- Mass: kg/g.
-- Liquid: L/ml.
-- Units: pieces/items.
+Every product has exactly one measurement type:
+- **Mass:** compatible quantity-entry units are kg and g.
+- **Liquid:** compatible quantity-entry units are L and ml.
+- **Units:** compatible quantity-entry quantity is a whole-number count of pieces/items.
 
-Starter products have sensible measurement type defaults. A product's measurement type may be changed before any transaction exists. Once transactions exist, the measurement type cannot be changed.
+The user selects the quantity unit when recording each Add or Use transaction. Do not store a preferred/default unit on the product and do not treat compatible units as separate product types. Store Mass in integer grams, Liquid in integer millilitres, and Units as whole integer counts. Convert between compatible units exactly and display stock in a clear, readable form without requiring a product-level preferred-unit setting.
+
+For a product with no transaction history, allow the measurement type to be changed freely among Mass, Liquid, and Units, even after earlier type changes have been saved. Once any transaction exists, lock the measurement type permanently, even if current stock later returns to zero. The editor must continue to show the saved type as selected and must not remove the other type options from a product with no transaction history.
 
 ## 6. Product row actions and safety
 
@@ -55,19 +58,27 @@ Opens Add and Use choices:
 - **Use:** consumption/stock-out.
 
 ### Three-dot menu
-- **Edit:** product name and compatible preferred unit.
-- **Delete:** only when the product has no transaction history; require confirmation.
-- **Archive / Hide:** only when transaction history exists and stock is zero. Preserve all history and spending.
-- If stock remains, block archive. For consumed, expired or discarded stock, record the quantity through Use; no separate disposal feature.
-- Archived products disappear from active category lists and appear under Settings > Archived Products. Restore makes an archived item active again.
-- A product with transaction history must never be permanently deleted through the UI.
+- **Edit:** product name (maximum 40 characters) and measurement type, subject to the transaction-history rule above. Do not offer a preferred-unit setting.
+- **Delete permanently:** allow for a product with or without transaction history, after an explicit confirmation that the product and all associated history will be permanently deleted. The confirmation must clearly warn that this cannot be undone. Delete the product and its transactions atomically; a failure must not leave partial deletion. Recalculate spending totals without the deleted Add transactions. Ensure a deleted preset is not silently recreated by seeding.
+- **Archive / Hide:** allow when the user no longer wants an item, regardless of current stock or whether transaction history exists. Archive preserves the product, current derived stock, all transactions, and spending totals. It hides the product from active category lists and prevents new transactions while archived.
+- **Restore:** archived products appear under Settings > Archived Products. Restoring makes the original product active again with its previous stock and complete history. It must not create duplicates or reseed the product.
+- Archive is reversible; permanent deletion is not. Never use Archive as a reason to discard history, and never delete history as part of an Archive operation.
+
+### Edit form behavior
+
+- Disable **Save changes** when the effective edited values are unchanged from the saved product or invalid.
+- Enable Save only when a valid change exists. If the user changes a value and then restores its original value, disable Save again.
+- An unchanged save attempt must not write to the repository or close/navigate away from the editor.
+- On successful save, persist once and navigate back once. On failure, keep the editor open and show an error.
+- Reopening the same product's editor after save or cancel must reliably display the current saved value; it must not flash open and close.
+- Use clear enabled/disabled button states. UI styling is left to the implementation agent, following IntiVentory branding and Material 3.
 
 ## 7. Add transaction
 
 From a product's plus action, select Add. The form shows the product, quantity, compatible unit, actual total amount paid in INR, and purchase date.
 
 - Quantity must be positive and compatible with the product dimension.
-- Mass uses kg/g; volume uses L/ml; count uses whole pieces/units.
+- Mass uses kg/g; Liquid uses L/ml; Units use whole pieces/items.
 - kg/L input may use up to three decimal places; g/ml and count use whole numbers.
 - Amount paid is required, non-negative, and at most two decimal places. ₹0.00 is allowed for a free purchase.
 - Date defaults to today; past dates can be selected; future dates are disallowed.
@@ -89,7 +100,7 @@ From the plus action, select Use. Show current stock before the quantity input.
 
 ## 9. Stock calculation
 
-Stored base units are grams for mass, millilitres for volume, and pieces for count.
+Stored base units are grams for Mass, millilitres for Liquid, and pieces for Units.
 
 **Remaining stock = total Add quantities − total Use quantities**, after converting units to the base unit.
 
@@ -99,7 +110,7 @@ Examples:
 - 1 L cleaner purchased; 200 ml used; 800 ml remains.
 - 5 soap bars purchased; 1 used; 4 remain.
 
-Never mix mass, volume or count. Never allow negative stock.
+Never mix Mass, Liquid, or Units. Never allow negative stock.
 
 ## 10. Product history
 
