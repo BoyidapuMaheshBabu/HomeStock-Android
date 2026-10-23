@@ -2,8 +2,8 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–02 accepted; Phase 03 — Product catalogue and management is in progress, with final refinement and acceptance pending.
-**Working branch:** phase/03-product-catalogue-and-management.
+**Status:** Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is next.
+**Next implementation branch:** phase/04-add-use-transactions-and-stock-rules.
 **Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 ## Product at a glance
@@ -26,6 +26,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
 - [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
 - [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
+- [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -46,4 +47,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01 and 02 are accepted: the native Android foundation, Welcome/name setup and Home dashboard are implemented. Phase 03 is active for product catalogue and management; final implementation corrections and acceptance checks remain. Add/Use workflows, product history and full Insights behavior remain assigned to later phases. See [Phase 02 verification](docs/PHASE-02-VERIFICATION.md) for recorded evidence and its limits.
+Phases 01–03 are accepted: the native Android foundation, Welcome/name setup, Home dashboard, and product catalogue/management scope are implemented. Phase 04 will add the Add/Use transaction workflows and stock rules. Product history and full Insights behavior remain assigned to later phases. See the [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) for the accepted scope, the measurement-type reversal fix, and the limits of the recorded evidence.
