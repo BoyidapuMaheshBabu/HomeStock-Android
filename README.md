@@ -1,10 +1,10 @@
 # IntiVentory — Home Inventory & Spending Tracker
 
-IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
+IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phase 01 accepted; Phase 02 — Welcome and Home is next.
-**Working branch:** phase/02-welcome-and-home.
-**Baseline:** Phase 01 was merged into `main` via PR #2; this branch is based on the merged `main`.
+**Status:** Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is next.
+**Next implementation branch:** phase/04-add-use-transactions-and-stock-rules.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 ## Product at a glance
 
@@ -25,6 +25,8 @@ IntiVentory is a planned **offline-first native Android household inventory and 
 - [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
 - [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
+- [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
+- [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -32,15 +34,17 @@ IntiVentory is a planned **offline-first native Android household inventory and 
 
 - Native Android, local-first. No account, cloud sync or internet permission.
 - Stock starts at zero and is derived from saved Add/Use transactions.
-- Mass uses kg/g; volume uses L/ml; count uses whole pieces/units. Never mix dimensions.
-- Product creation is separate from a purchase.
+- Each product has one measurement type: Mass (kg/g), Liquid (L/ml), or Units (whole pieces). Compatible quantities convert exactly into integer base units.
+- Product creation asks for a name and measurement type, not a preferred unit, starting quantity, or price.
 - Add requires quantity, compatible unit, actual amount paid and date.
 - Use reduces stock only; it does not change money already spent.
 - Spending totals derive from Add transactions and update immediately.
 - Month filters follow calendar boundaries; custom ranges include both selected dates.
-- Delete products only if they have no transaction history, with confirmation. Products with history can be archived only at zero stock; their history still counts toward spending.
+- Measurement type can change only before a product's first transaction. After any transaction, it is locked even when stock returns to zero.
+- Archive hides a product while preserving stock-derived quantity, history and spending, regardless of current stock. Restore returns it to active use.
+- Delete permanently removes the product and all its associated transaction history after explicit destructive confirmation; the operation must be atomic and spending totals recalculate.
 - JSON backup/restore is deferred until after the intended user accepts the core app.
 
-## Status honesty
+## Implementation status
 
-This repository records planning decisions only. No app implementation, build, device run or test result is claimed as complete.
+Phases 01–03 are accepted: the native Android foundation, Welcome/name setup, Home dashboard, and product catalogue/management scope are implemented. Phase 04 will add the Add/Use transaction workflows and stock rules. Product history and full Insights behavior remain assigned to later phases. See the [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) for the accepted scope, the measurement-type reversal fix, and the limits of the recorded evidence.

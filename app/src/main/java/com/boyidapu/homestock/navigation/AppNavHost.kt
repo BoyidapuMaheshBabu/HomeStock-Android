@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -16,13 +17,20 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.boyidapu.homestock.app.AppContainer
+import com.boyidapu.homestock.ui.archived.ArchivedProductsScreen
+import com.boyidapu.homestock.ui.archived.ArchivedProductsViewModel
 import com.boyidapu.homestock.ui.category.CategoryScreen
+import com.boyidapu.homestock.ui.category.CategoryViewModel
 import com.boyidapu.homestock.ui.home.HomeScreen
 import com.boyidapu.homestock.ui.home.HomeViewModel
 import com.boyidapu.homestock.ui.insights.InsightsScreen
 import com.boyidapu.homestock.ui.insights.InsightsViewModel
 import com.boyidapu.homestock.ui.onboarding.WelcomeScreen
 import com.boyidapu.homestock.ui.onboarding.WelcomeViewModel
+import com.boyidapu.homestock.ui.product.CreateProductScreen
+import com.boyidapu.homestock.ui.product.CreateProductViewModel
+import com.boyidapu.homestock.ui.product.EditProductScreen
+import com.boyidapu.homestock.ui.product.EditProductViewModel
 import com.boyidapu.homestock.ui.settings.SettingsScreen
 import com.boyidapu.homestock.ui.settings.SettingsViewModel
 
@@ -88,8 +96,72 @@ fun HomeStockAppNavHost(
         }
 
         entry<Screen.CategoryProducts> { key ->
+            val categoryViewModel: CategoryViewModel = viewModel(
+                key = "category_${key.categoryId}",
+                factory = viewModelFactory {
+                    initializer {
+                        CategoryViewModel(
+                            key.categoryId,
+                            appContainer.productRepository
+                        )
+                    }
+                }
+            )
             CategoryScreen(
-                categoryId = key.categoryId,
+                viewModel = categoryViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                },
+                onAddProduct = { categoryId ->
+                    backStack += Screen.CreateProduct(categoryId)
+                },
+                onEditProduct = { productId ->
+                    backStack += Screen.EditProduct(productId)
+                }
+            )
+        }
+
+        entry<Screen.CreateProduct> { key ->
+            val createProductViewModel: CreateProductViewModel = viewModel(
+                key = "create_product_${key.categoryId}",
+                factory = viewModelFactory {
+                    initializer {
+                        CreateProductViewModel(
+                            key.categoryId,
+                            appContainer.productRepository
+                        )
+                    }
+                }
+            )
+            CreateProductScreen(
+                viewModel = createProductViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.EditProduct> { key ->
+            val editProductViewModel: EditProductViewModel = viewModel(
+                key = "edit_product_${key.productId}",
+                factory = viewModelFactory {
+                    initializer {
+                        EditProductViewModel(
+                            key.productId,
+                            appContainer.productRepository
+                        )
+                    }
+                }
+            )
+            LaunchedEffect(key.productId) {
+                editProductViewModel.loadProduct()
+            }
+            EditProductScreen(
+                viewModel = editProductViewModel,
                 onBack = {
                     if (backStack.isNotEmpty()) {
                         backStack.removeAt(backStack.lastIndex)
@@ -122,6 +194,25 @@ fun HomeStockAppNavHost(
             )
             SettingsScreen(
                 viewModel = settingsViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                },
+                onNavigateToArchivedProducts = {
+                    backStack += Screen.ArchivedProducts
+                }
+            )
+        }
+
+        entry<Screen.ArchivedProducts> {
+            val archivedViewModel: ArchivedProductsViewModel = viewModel(
+                factory = viewModelFactory {
+                    initializer { ArchivedProductsViewModel(appContainer.productRepository) }
+                }
+            )
+            ArchivedProductsScreen(
+                viewModel = archivedViewModel,
                 onBack = {
                     if (backStack.isNotEmpty()) {
                         backStack.removeAt(backStack.lastIndex)

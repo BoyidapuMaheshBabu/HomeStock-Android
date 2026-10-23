@@ -1,7 +1,7 @@
 # IntiVentory Architecture
 
-**Status:** Selected architecture for the planned MVP; not implemented or build-verified.
-**Current implementation branch:** phase/02-welcome-and-home.
+**Status:** MVP architecture; foundation (Phase 01) and Welcome/Home (Phase 02) implemented and accepted. Remaining features are pending their roadmap phases.
+**Current implementation branch:** phase/03-product-catalogue-and-management.
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
 
@@ -86,14 +86,13 @@ There is no Add Category feature and no separate Snacks or Drinks category.
 Each product stores:
 - stable product ID;
 - fixed category ID;
-- product name;
-- measurement dimension: MASS, VOLUME or COUNT;
-- preferred/default entry unit;
+- product name (maximum 40 characters);
+- measurement type: MASS (user-facing label: Mass), LIQUID (Liquid), or UNITS (Units);
 - whether it is a preset product;
 - whether it is archived;
 - creation metadata for stable ordering.
 
-A product does not store current stock or total spending. Both are derived from transaction history to prevent balances drifting from records.
+Do not store a preferred/default quantity unit on the product. Quantity-entry units are chosen per transaction from the units compatible with the product's measurement type. A product does not store current stock or total spending; both are derived from transaction history.
 
 ### 4.4 Inventory transaction table
 
@@ -106,7 +105,7 @@ Each successful Add or Use becomes one immutable historical record:
 - purchase amount in paise for ADD; null for USE;
 - local calendar transaction date stored as an epoch-day integer.
 
-The database must restrict deleting products with transaction references. App rules decide whether Delete or Archive is allowed.
+Protect product deletion with an explicit repository operation executed inside a Room database transaction: delete only the selected product's transaction rows and product row together. Do not leave orphaned transactions or partial deletion. Archive is a separate non-destructive update that preserves stock-derived history and spending.
 
 Transactions are not running-balance rows. In the first MVP, product history is read-only; transaction-row edit/delete controls are not included. This keeps the first version similar to a simple payment-history view. If the intended user later asks for corrections, design that as a deliberate follow-up rather than silently rewriting history.
 
@@ -116,23 +115,23 @@ Seed starter products once. Keep a Room metadata marker for the starter-catalog 
 
 ## 5. Unit and quantity model
 
-Each product has one measurement dimension, chosen during product creation.
+Each product has exactly one measurement type, chosen during product creation: Mass, Liquid, or Units. The type determines valid quantity-entry units.
 
-| Dimension | Base unit stored for calculation | Valid entry/display units |
+| Measurement type | Base unit stored for calculation | Valid quantity-entry units |
 |---|---|---|
 | Mass | whole grams | kg, g |
-| Volume | whole millilitres | L, ml |
-| Count | whole pieces | units/pieces |
+| Liquid | whole millilitres | L, ml |
+| Units | whole pieces/items | whole integer count |
 
 Rules:
-- Convert only within one dimension; never convert kg to ml or count.
-- kg and L input may use up to three decimal places, converted exactly to grams or millilitres.
-- g and ml input are whole numbers in the first MVP.
-- Count quantities must be whole positive integers.
-- All Add/Use quantities must be greater than zero.
-- Parse quantity using decimal-safe arithmetic (such as BigDecimal), not binary floating-point.
-- A product's dimension cannot change after it has transaction history. Preferred unit may change within the same dimension because quantities are normalized and each transaction retains its original entry unit.
-- Current stock uses the product's preferred unit. Each historical transaction displays its originally entered unit.
+- Convert only within one type; never convert Mass to Liquid or Units.
+- kg and L input may use up to three decimal places and must convert exactly to grams or millilitres.
+- g and ml inputs are whole numbers for this MVP.
+- Units quantities are positive whole integers.
+- All Add/Use quantities must be positive.
+- Parse with decimal-safe arithmetic such as BigDecimal and store exact integer base quantities; do not use binary floating-point.
+- Measurement type can be changed among all three options only while the product has no transaction history. Once at least one transaction exists, lock the type permanently, even if stock later returns to zero.
+- Do not store a preferred unit on the product. Each transaction stores the compatible unit actually entered; stock is normalized to base units and displayed in a readable format selected by application logic.
 
 ## 6. Money model
 
@@ -177,16 +176,15 @@ Do not store an editable stock balance or use UI state as a second source of tru
 
 ## 8. Product edit, delete, archive and restore
 
-- Product creation is separate from purchase and does not ask for price.
-- Preset and custom products start with zero recorded stock.
-- Edit can change name and preferred unit.
-- Dimension change is allowed only before the first transaction.
-- Delete is available only when there is no transaction history and always requires confirmation.
-- A product with transaction history and zero stock can be Archived/Hidden, not permanently deleted.
-- A product with positive stock cannot be archived. If stock was consumed, expired or thrown away, record it through Use first; no separate disposal feature is needed.
-- Archived products disappear from active category lists. History and purchase records remain intact and included in spending totals.
-- Settings includes Archived Products, where the user can review and restore an archived product to the active list. Archived products have zero stock by rule.
-- A history-bearing product must never be hard-deleted by the UI.
+- Product names have a 40-character limit; the user display name has a 10-character limit.
+- Product creation asks for the name and measurement type only; preset and custom products start with zero recorded stock.
+- A product with no transaction history may change measurement type freely among Mass, Liquid and Units, including reversing a previously saved change.
+- Once a product has any transaction history, measurement type cannot change, regardless of current stock.
+- **Delete permanently** is available for products with or without history, after explicit destructive confirmation. The operation permanently deletes the selected product and every transaction associated with it in one database transaction. On failure, do not report success or leave partial deletion. Spending totals must no longer include deleted Add transactions.
+- **Archive** is available regardless of current stock or history and preserves the product, its derived stock, all transaction history, and spending totals.
+- Archived products are hidden from active category lists and cannot receive new transactions until restored.
+- Settings includes Archived Products, where the user can review and restore an archived product to its active category. Restore preserves the same product identity, stock derived from history, and all transactions.
+- Seeding must not silently recreate a deliberately deleted starter product or duplicate a restored product.
 
 ## 9. Dates and spending filters
 
@@ -230,7 +228,7 @@ Home's This month card uses the current calendar-month range and opens Insights 
 1. **Welcome / Name setup:** shown only if no valid name is saved.
 2. **Home:** greeting top-left; Settings gear top-right; clickable This month card; three category hero cards.
 3. **Category Products:** product rows show name/current stock; plus and three-dot actions; tapping the main row opens history; Add Product is separate.
-4. **Create/Edit Product:** name, category fixed by the current category context, measurement dimension and preferred unit.
+4. **Create/Edit Product:** name and measurement type (Mass, Liquid, or Units); category is fixed by the current category context. Product creation does not ask for a preferred unit.
 5. **Add/Use chooser:** opened by plus action, with two clear choices.
 6. **Add transaction form:** quantity, compatible unit, amount paid and purchase date.
 7. **Use transaction form:** current stock, quantity to use, compatible unit and date.

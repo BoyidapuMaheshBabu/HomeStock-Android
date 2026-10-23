@@ -25,6 +25,7 @@ Implement one scoped phase at a time. A phase is complete only when acceptance t
 - GitHub is the source of truth for scope, planning documents, code and evidence.
 - The accepted planning baseline is merged into `main`.
 - Phase 01 was accepted and merged into `main` via PR #2.
-- The active implementation branch is `phase/02-welcome-and-home`, created from the updated `main`.
+- Phase 02 was accepted and merged into `main` via PR #3.
+- The active implementation branch is `phase/03-product-catalogue-and-management`, created from the updated `main`.
 - After each accepted implementation phase, merge it to main, update status/evidence, and create the next phase branch from latest main.
 - Keep README and portfolio claims aligned with verified repository evidence.

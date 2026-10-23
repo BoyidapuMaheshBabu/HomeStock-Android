@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phase 01 accepted; Phase 02 ready to implement.**
-**Current branch:** phase/02-welcome-and-home.
-**Planning baseline:** planning and branding merged via PR #1; Phase 01 implementation accepted and merged via PR #2.
+**Current status: Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is next.**
+**Next implementation branch:** phase/04-add-use-transactions-and-stock-rules.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -10,7 +10,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 - [x] Review and approve product requirements, architecture and acceptance tests for implementation.
 - [x] Confirm the intended phone runs Android 15 (API 35), compatible with the planned minimum API 26.
-- [x] Agree the three fixed categories and starter product names; choose sensible compatible preset units during Phase 03 catalog seeding.
+- [x] Agree the three fixed categories, starter product names, and product measurement types: Mass, Liquid, Units.
 - [x] Confirm the first MVP uses read-only transaction history.
 - [x] Merge the planning baseline into `main` and create the first implementation branch from it.
 
@@ -28,23 +28,29 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 02 — Welcome and Home
 
-- [ ] First-run name input, validation, and local persistence.
-- [ ] Time-based greeting top-left and Settings gear top-right.
-- [ ] Clickable This month spending preview, using calendar month boundaries.
-- [ ] This month card opens Insights with This month selected.
-- [ ] Three fixed rectangular category hero cards.
+- [x] First-run name input, validation, and local persistence.
+- [x] Time-based greeting top-left and Settings gear top-right.
+- [x] Clickable This month spending preview, using calendar month boundaries.
+- [x] This month card opens Insights with This month selected.
+- [x] Three fixed rectangular category hero cards.
+
+**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [PHASE-02-VERIFICATION.md](PHASE-02-VERIFICATION.md) for scope and evidence limits.
 
 ## Phase 03 — Product catalogue and management
 
-- [ ] Seed common starter products once with zero stock.
-- [ ] Fixed category product lists and separate custom product creation.
-- [ ] Product row with name/current stock, plus action and three-dot menu.
-- [ ] Edit product name and compatible preferred unit.
-- [ ] Delete only products with no transaction history, after confirmation.
-- [ ] Archive/hide products with history only when stock is zero.
-- [ ] Preserve archived history and spending; add Settings > Archived Products and Restore.
+**Status:** Accepted by Mahesh on October 24, 2026, following physical-device re-testing. See [Phase 03 verification](PHASE-03-VERIFICATION.md).
+
+- [x] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
+- [x] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
+- [x] Product row with name/current stock, plus action and three-dot menu.
+- [x] Allow repeated measurement-type changes only before the first transaction; lock type after any transaction, even at zero stock.
+- [x] Enforce a 40-character product-name limit and a 10-character user display-name limit.
+- [x] Permanently delete a product and all its associated transactions atomically after explicit destructive confirmation.
+- [x] Allow Archive at any stock/history state; preserve stock-derived balance, history and spending; add Settings > Archived Products and Restore.
 
 ## Phase 04 — Add/Use transactions and stock rules
+
+**Status:** Next phase. Create `phase/04-add-use-transactions-and-stock-rules` from the latest `main` after the Phase 03 merge.
 
 - [ ] Plus action opens separate Add and Use choices.
 - [ ] Add form: quantity, compatible unit, required amount paid and date.
@@ -90,7 +96,9 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 1. Keep research/design refinements on `planning/research` when needed; do not replace accepted implementation-branch requirements casually.
 2. The reviewed planning and branding baseline was merged into `main` via PR #1.
 3. Phase 01 was accepted and merged into `main` via PR #2.
-4. Phase 02 uses `phase/02-welcome-and-home`, created from the updated `main`.
-5. Implement one focused phase at a time and verify builds, tests and device behavior.
-6. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+4. Phase 02 was accepted and merged into `main` via PR #3.
+5. Phase 03 used `phase/03-product-catalogue-and-management`; it is accepted and is being merged into `main`.
+6. Phase 04 uses `phase/04-add-use-transactions-and-stock-rules`, created from the latest `main` after that merge.
+7. Implement one focused phase at a time and verify builds, tests and device behavior.
+8. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
 
