@@ -1,108 +1,123 @@
 # Product Requirements
 
-## 1. Problem statement
+## 1. Problem and intended user
 
-A household needs a simple way to track supplies purchased, purchase quantities and prices, consumption, remaining stock, and spending over time. Paper notes and memory make it difficult to answer everyday questions such as “How much rice is left?”, “When did we last buy floor cleaner?”, and “How much did we spend on household supplies this month?”
+HomeStock is for the user's sister and household. The intended user wants a simple Android app to understand which household products have been bought, how much remains, how much has been used, and especially how much money is spent on household products.
 
-## 2. Primary user
+The user is comfortable with a phone app and does not want to manage a website, account, or complicated inventory system.
 
-A household member who is comfortable using a phone app but does not want to manage a website, account, or complicated inventory system.
+## 2. Product outcome
 
-## 3. Product outcome
+The user can record new household purchases from the day she starts using HomeStock, track usage and remaining quantity, and review actual purchase spending over time—all offline on the phone.
 
-The user can personalize the app, record a product purchase, record usage, and see a credible remaining quantity and relevant history—all on the device and without internet access. The user can also export a JSON backup and restore saved data later.
+## 3. First-launch experience
 
-## 4. First-launch and home experience
+- On first launch, ask for the user's name.
+- Save the name locally and reuse it on later launches.
+- Show a time-appropriate greeting, such as “Good morning, Priya!”, based on the device's local time.
+- Do not require an account or internet connection.
+- The user is starting tracking from the app's beginning, so the first version does not require entering existing household stock as opening stock.
 
-- On first launch, request the user's name with a simple welcome screen.
-- Save the name locally and reuse it on later launches; do not ask every time.
-- Show a friendly greeting based on the device's local time, such as “Good morning, Priya!”, with appropriate afternoon/evening wording.
-- Let the user reach the main household categories quickly.
-- Include the saved name in the app's JSON backup so restoring a backup can restore personalization too.
-- Avoid requiring an account, network access, or cloud service.
+## 4. Fixed top-level home categories
 
-## 5. Product categories
+The first version has exactly three top-level home categories:
 
-The initial home screen has three fixed top-level categories:
+1. **Food & Kitchen:** preset examples include rice, dal, flour, oil, and spices.
+2. **Home Care & Cleaning:** preset examples include toilet/bathroom/floor cleaner, dishwashing liquid, detergent, and disinfectant.
+3. **Personal Care & Cosmetics:** preset examples include soap, shampoo, toothpaste, hair oil, and creams.
 
-1. **Food & Kitchen:** rice, dal, flour, oil, spices, sugar, and related items.
-2. **Home Care & Cleaning:** bathroom/toilet/floor cleaners, dishwashing liquid, detergent, disinfectant, and related items.
-3. **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, creams, and related items.
+Do not add separate top-level categories for snacks, drinks, or other groups in the first version. The category list should use familiar household language.
 
-Use familiar starter product choices within each category to make common entries fast. Users must also be able to add their own products within a category. Adding new top-level home categories is out of scope for the first version.
+## 5. Product customization within the fixed categories
 
-## 6. Core user journeys
+- Show a useful starter list of common products inside each of the three fixed categories.
+- Provide an **Add product** action within each category, so the user can add a product that is missing from the preset list.
+- Every product should have a three-dot overflow menu with **Edit** and **Delete** actions.
+- Edit should let the user change the product name and compatible measurement dimension/unit when data-integrity rules allow it.
+- Do not add a brand field or make the user choose a brand.
+- Preset product entries start with zero recorded stock. Purchases recorded in the app increase stock.
+- Do not confuse user-added products with the three fixed top-level home categories.
 
-### A. Add a product
-Choose a category, select a familiar starter product or enter a custom product name, select the appropriate unit family, and save. Products should be easy to find and edit.
+### Product-edit and delete safety
 
-### B. Record a purchase
-Select a product and enter the quantity, unit, actual amount paid in rupees, and purchase date. This creates a purchase-history entry and increases stock. A purchase record must retain its own price and quantity rather than relying only on a single current price on the product.
+- Mass units (kg/g) may be converted within the same measurement dimension; volume units (L/ml) may be converted within volume; count remains pieces/units.
+- Never let edits silently reinterpret existing quantities—for example, change a product with kg history to litres.
+- If a product has purchase/usage history, deleting it must not silently erase that history or distort spending. The final UI behavior for such deletion (for example, prevent deletion or offer an archive/hide option) should be researched before implementation.
+- Confirm destructive actions clearly.
 
-### C. Record usage
-Select a product and enter the quantity used and date. This creates a usage-history entry and reduces stock. The app must prevent or clearly handle usage greater than available stock.
+## 6. Units and quantity model
 
-### D. Review inventory
-See the current remaining quantity in the product's chosen unit. The UI must not mix incompatible measurement dimensions.
+Each product has a measurement dimension:
 
-### E. Review history and spending
-See dated purchase and usage entries. Spending summaries must use actual recorded purchase amounts, not an estimate of the value of remaining stock.
+- **Mass:** kilograms (kg) and grams (g).
+- **Volume:** litres (L) and millilitres (ml).
+- **Count:** pieces/units, such as bars of soap.
 
-### F. Back up and restore
-Allow the user to create a JSON backup through the Android file picker/share flow and restore from a selected JSON file. Include the saved name, products, purchase records, usage records, and required category/unit metadata. Validate the file before modifying current data, clearly explain whether restore replaces existing data, and require confirmation to avoid accidental overwrites. The core app must not need the internet for backup or restore.
+Only convert units within the same dimension. Do not convert mass to volume without product-specific density information. The user should not be forced to record soap in kg or liquid cleaner in grams.
 
-## 7. MVP requirements
+## 7. Purchase, usage, and inventory workflow
 
-- Native Android application; not a website wrapper.
-- Works offline for the core workflow.
-- Local persistence across app restarts.
-- First-launch name setup and time-appropriate personalized greeting.
-- Three fixed top-level categories with familiar starter product choices.
-- Create, view, and edit custom products within a category.
-- Product-appropriate units: mass (kg/g), volume (L/ml), and count (pieces/units).
-- Purchase entries: quantity, compatible unit, actual price paid, and date.
-- Usage entries: quantity, compatible unit, and date.
-- Calculated remaining stock.
-- Basic per-product history and total/period purchase spending.
-- User-initiated JSON backup and restore, including the saved name and household records.
-- Clear empty states, input validation, and understandable success/error feedback.
-- Usable on a physical Android phone with touch-friendly controls.
+### A. Record a purchase
 
-## 8. Calculation and data-integrity rules
+The user selects a product and enters quantity, compatible unit, actual price paid in INR (₹), and purchase date. Purchase amount is a core data point because spending insights are a primary reason for the app. Each purchase must preserve its own quantity, price, and date; do not rely only on one editable current price stored on the product.
 
-- Give each product a measurement dimension: mass, volume, or count. Quantities may convert only inside the same dimension.
-- Mass: kg and g can convert to each other.
-- Volume: litres (L) and millilitres (ml) can convert to each other.
-- Count: pieces/units, such as soap bars, stay separate unless a future requirement explicitly defines package-size conversions.
-- Never convert mass to volume without product-specific density information.
-- Stock = opening stock + valid purchased quantities − valid usage quantities, after unit normalization.
-- Do not silently mix quantities recorded using incompatible dimensions for the same product.
-- Opening stock, if offered, must be explicitly entered and must not silently count as current-period spending.
-- Purchase spend = sum of recorded purchase amounts for the selected period.
-- Validate positive quantities, non-negative prices, dates, and stock rules.
-- Define the currency as INR (₹) for this MVP.
-- Restore must validate schema/version and required fields before applying imported data. Failed validation must not partially overwrite the current inventory.
+### B. Record usage
 
-## 9. Out of scope for the first MVP
+The user selects a product and records the amount used and date. Usage reduces the available stock. The app must prevent or clearly handle usage greater than available stock.
 
-- User accounts, cloud backend, and multi-device sync.
-- AI recommendations or forecasting.
-- Barcode scanning, receipt OCR, and automatic price lookup.
-- Creating new top-level home categories.
-- Complex supplier/warehouse management.
-- Mandatory notifications or background services.
-- Online-only functionality.
+### C. Review inventory
 
-## 10. UX principles
+Show remaining quantity using the product's compatible unit. For stock tracking, the first version begins at zero and uses:
 
-- Build for a household member, not an inventory specialist.
-- Prioritize the common tasks: check stock, add a purchase, record usage.
-- Prefer plain labels, readable quantities, and large touch targets.
-- Use clear category cards and avoid cluttering the first screen.
-- Ask only for information needed for the chosen action.
-- Make destructive actions explicit and avoid silently losing records.
-- Use starter product choices for convenience, without trapping users in a fixed list.
+**Remaining stock = recorded purchases − recorded usage**, after compatible-unit normalization.
 
-## 11. MVP acceptance criteria
+Do not require opening-stock entry in the first version.
 
-A user can enter their name once, close and reopen the app, and receive a time-appropriate greeting using that saved name. The user can add rice, record a purchase of 5 kg for ₹350, record 1 kg used, and see 4 kg remaining. A liquid example must also pass: purchase 1 L of cleaner, record 200 ml used, and see 800 ml remaining. A count example must support soap bars as pieces/units without being forced into kg or litres. Purchase spending must match the amounts entered. All core data must survive app restart and work in airplane mode. A JSON backup must contain the saved name and household records, and a valid restore must recover them.
+### D. Review purchase history
+
+Keep dated purchase and usage records so the user can understand when items were bought, how quantities changed, and how much each purchase cost.
+
+## 8. Dashboard and spending insights
+
+Spending is a **primary feature**, not optional or secondary.
+
+The dashboard/Insights planning must prioritize:
+- Actual money spent on household products, in INR.
+- Spending over a meaningful period (at minimum, a monthly view should be considered).
+- Clear totals based on recorded purchase prices.
+- Stock quantities still available, with the correct unit for each product.
+- Product purchase/usage history to explain totals and changes.
+
+At the design stage, decide the clearest period filters and category-level breakdown without overcrowding the screen. Never represent unknown/unrecorded amounts as zero, and never confuse amount spent with the estimated value of inventory still remaining.
+
+## 9. Offline behavior and local data
+
+- Core product, purchase, usage, stock, and spending features work without internet.
+- User name and records persist across app restarts.
+- No login, cloud database, or multi-device sync is required for the first version.
+
+## 10. Deferred feature: JSON backup and restore
+
+JSON backup/restore is **not part of the initial accepted MVP scope**. Revisit it only after the core app is built and the intended user has reviewed and accepted it. When planned later, it should include the saved name and required household records, validate imported data, and protect against accidental replacement.
+
+## 11. First-version exclusions
+
+- Product brand selection or a brand-management field.
+- Additional top-level home categories, including separate snacks/drinks categories.
+- Mandatory opening-stock entry for items already in the home.
+- User accounts, cloud sync, and online-only functionality.
+- AI recommendations, barcode scanning, receipt OCR, and automatic price lookup.
+- JSON backup/restore in the first accepted core version.
+
+## 12. MVP acceptance criteria
+
+- First launch requests the user's name once; later launches reuse it and show an appropriate greeting.
+- Home presents exactly the three fixed top-level categories.
+- Starter products are available, and the user can add, edit, and delete products inside those categories without creating a new top-level home category.
+- A purchase stores its product, quantity, compatible unit, actual amount paid, and date.
+- A usage entry reduces the correct product's stock.
+- Example checks pass: 5 kg rice purchased, 1 kg used, 4 kg remains; 1 L cleaner purchased, 200 ml used, 800 ml remains; 10 soap bars purchased, 2 used, 8 remain.
+- Dashboard/Insights clearly reports recorded spending and remaining product quantities without misleading totals.
+- Data persists after app restart and the core workflows work in airplane mode.
+- Product edits/deletions cannot silently corrupt historical quantities or spending.
+- JSON backup/restore is excluded until after intended-user acceptance of the core app.
