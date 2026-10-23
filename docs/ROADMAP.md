@@ -10,7 +10,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 - [x] Review and approve product requirements, architecture and acceptance tests for implementation.
 - [x] Confirm the intended phone runs Android 15 (API 35), compatible with the planned minimum API 26.
-- [x] Agree the three fixed categories and starter product names; choose sensible compatible preset units during Phase 03 catalog seeding.
+- [x] Agree the three fixed categories, starter product names, and product measurement types: Mass, Liquid, Units.
 - [x] Confirm the first MVP uses read-only transaction history.
 - [x] Merge the planning baseline into `main` and create the first implementation branch from it.
 
@@ -40,13 +40,13 @@ The architecture and product specification are the working contract. Checkboxes 
 
 **Status:** Ready to implement on `phase/03-product-catalogue-and-management`.
 
-- [ ] Seed common starter products once with zero stock.
-- [ ] Fixed category product lists and separate custom product creation.
+- [ ] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
+- [ ] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
 - [ ] Product row with name/current stock, plus action and three-dot menu.
-- [ ] Edit product name and compatible preferred unit.
-- [ ] Delete only products with no transaction history, after confirmation.
-- [ ] Archive/hide products with history only when stock is zero.
-- [ ] Preserve archived history and spending; add Settings > Archived Products and Restore.
+- [ ] Allow repeated measurement-type changes only before the first transaction; lock type after any transaction, even at zero stock.
+- [ ] Enforce a 40-character product-name limit and a 10-character user display-name limit.
+- [ ] Permanently delete a product and all its associated transactions atomically after explicit destructive confirmation.
+- [ ] Allow Archive at any stock/history state; preserve stock-derived balance, history and spending; add Settings > Archived Products and Restore.
 
 ## Phase 04 — Add/Use transactions and stock rules
 
