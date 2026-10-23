@@ -35,6 +35,10 @@ The implementation is accepted only after relevant tests pass and the intended u
 - [ ] Tapping the product row opens history; tapping plus opens Add/Use choices in Phase 04.
 - [ ] Three-dot menu offers Edit, Archive, and Delete permanently with appropriate confirmation.
 - [ ] Editing a product's name or an allowed measurement type preserves product identity.
+- [ ] Save Changes is disabled when no effective change exists or the form is invalid.
+- [ ] Changing a value and restoring its original value disables Save Changes again.
+- [ ] An unchanged save causes no repository write or navigation.
+- [ ] A successful edit persists once, navigates back once, and the same editor can be reopened reliably without flicker.
 - [ ] No brand field or product-level preferred unit is required or stored.
 
 ## C. Add / Purchase
