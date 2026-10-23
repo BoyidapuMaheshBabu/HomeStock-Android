@@ -15,40 +15,43 @@ The roadmap is phase-based. Each phase should stay focused, be implemented on it
 
 **Acceptance:** The project builds, launches on the target phone, has a clear starting screen, and is ready for feature work.
 
-## Phase 02 — Home screen and category navigation
+## Phase 02 — First launch, home screen, and category navigation
 
-- [ ] Present Food & Kitchen, Home Care & Cleaning, and Personal Care & Cosmetics.
-- [ ] Add touch-friendly navigation and clear empty states.
-- [ ] Make the primary actions obvious without decorative complexity.
+- [ ] On first launch, ask for the user's name and save it locally.
+- [ ] Show a friendly greeting based on the device's local time, using the saved name.
+- [ ] Present three fixed categories: Food & Kitchen, Home Care & Cleaning, and Personal Care & Cosmetics.
+- [ ] Show touch-friendly category navigation and clear empty states.
+- [ ] Keep additional top-level category creation out of the first version.
 
-**Acceptance:** A user can understand the three categories and navigate between them.
+**Acceptance:** The user's name persists across restarts, the greeting is personalized, and the three categories are easy to navigate.
 
 ## Phase 03 — Product management and local storage
 
-- [ ] Add, view, and edit products.
-- [ ] Assign a category and compatible stock unit.
-- [ ] Persist data locally.
-- [ ] Validate required fields and prevent duplicate/ambiguous product entries where appropriate.
+- [ ] Provide familiar starter product choices in the appropriate category.
+- [ ] Allow custom products to be added and edited within a category.
+- [ ] Assign each product a compatible measurement dimension and unit.
+- [ ] Support mass (kg/g), volume (L/ml), and count (pieces/units).
+- [ ] Persist products and validate required fields.
 
-**Acceptance:** Products remain after app restart and can be found and edited.
+**Acceptance:** A user can select Rice or Soap from suitable choices, add another product, and see saved products after app restart.
 
 ## Phase 04 — Purchase records
 
-- [ ] Record product, quantity, unit, price paid, and date.
-- [ ] Keep purchase history.
+- [ ] Record product, quantity, unit, actual price paid, and date.
+- [ ] Keep dated purchase history for each product.
 - [ ] Update stock using unit-safe calculations.
 - [ ] Display money in INR (₹).
 
-**Acceptance:** A purchase increases stock and recorded spending matches the entered amount.
+**Acceptance:** A purchase increases stock and recorded spending matches the entered amount. Quantities and price belong to the specific purchase record.
 
 ## Phase 05 — Usage records and stock calculations
 
 - [ ] Record usage quantity and date.
 - [ ] Reduce stock using compatible units only.
 - [ ] Validate usage against available stock.
-- [ ] Show remaining quantity clearly.
+- [ ] Show remaining quantity clearly for weight, liquid, and count items.
 
-**Acceptance:** Example checks pass: 5 kg − 1 kg = 4 kg; 1 L − 200 ml = 800 ml. No mass/volume/count mixing.
+**Acceptance:** Example checks pass: 5 kg − 1 kg = 4 kg; 1 L − 200 ml = 800 ml; 10 soap bars − 2 bars = 8 bars. No mass/volume/count mixing.
 
 ## Phase 06 — History and spending
 
@@ -59,15 +62,18 @@ The roadmap is phase-based. Each phase should stay focused, be implemented on it
 
 **Acceptance:** Summaries reconcile with recorded purchase entries.
 
-## Phase 07 — Usability, backup, and release checks
+## Phase 07 — JSON backup/restore, usability, and release checks
 
-- [ ] Improve input validation, error messages, and touch usability.
+- [ ] Export a JSON backup through a user-initiated Android file flow.
+- [ ] Include the saved name, products, categories, purchase history, usage history, and required metadata.
+- [ ] Validate a selected JSON backup before restoring it.
+- [ ] Explain overwrite behavior and require confirmation before replacing existing data.
 - [ ] Test persistence after force-close/restart and core flows in airplane mode.
-- [ ] Consider a user-initiated local backup/export and restore after core data integrity is stable.
+- [ ] Test backup and restore with valid, invalid, and older/unsupported files.
 - [ ] Test on the target physical phone and review the release build.
 - [ ] Update the README with only verified features and evidence.
 
-**Acceptance:** Core flows are reliable, offline behavior is verified, and documentation matches the real app.
+**Acceptance:** Valid backup/restore recovers data and personalization without network access; invalid backup input does not partially overwrite existing data.
 
 ## Branch and phase workflow
 
