@@ -69,7 +69,7 @@ Opens Add and Use choices:
 From a product's plus action, select Add. The form shows the product, quantity, compatible unit, actual total amount paid in INR, and purchase date.
 
 - Quantity must be positive and compatible with the product dimension.
-- Mass uses kg/g; volume uses L/ml; count uses whole pieces/units.
+- Mass uses kg/g; Liquid uses L/ml; Units use whole pieces/items.
 - kg/L input may use up to three decimal places; g/ml and count use whole numbers.
 - Amount paid is required, non-negative, and at most two decimal places. ₹0.00 is allowed for a free purchase.
 - Date defaults to today; past dates can be selected; future dates are disallowed.
@@ -91,7 +91,7 @@ From the plus action, select Use. Show current stock before the quantity input.
 
 ## 9. Stock calculation
 
-Stored base units are grams for mass, millilitres for volume, and pieces for count.
+Stored base units are grams for Mass, millilitres for Liquid, and pieces for Units.
 
 **Remaining stock = total Add quantities − total Use quantities**, after converting units to the base unit.
 
@@ -101,7 +101,7 @@ Examples:
 - 1 L cleaner purchased; 200 ml used; 800 ml remains.
 - 5 soap bars purchased; 1 used; 4 remain.
 
-Never mix mass, volume or count. Never allow negative stock.
+Never mix Mass, Liquid, or Units. Never allow negative stock.
 
 ## 10. Product history
 
