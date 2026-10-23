@@ -68,7 +68,7 @@ The implementation is accepted only after relevant tests pass and the intended u
 - [ ] 2 kg rice purchased; 500 g used; 1.5 kg remains.
 - [ ] 1 L cleaner purchased; 200 ml used; 800 ml remains.
 - [ ] 5 soap bars purchased; 1 used; 4 remain.
-- [ ] Mass, volume and count cannot be mixed.
+- [ ] Mass, Liquid, and Units cannot be mixed; only compatible quantity-entry units are offered.
 - [ ] Count is whole units in the first MVP.
 - [ ] kg/L input allows up to three decimals; g/ml and count use whole numbers.
 
