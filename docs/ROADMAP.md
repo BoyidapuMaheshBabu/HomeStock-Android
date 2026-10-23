@@ -1,7 +1,7 @@
 # Roadmap
 
-**Current status: Phase 02 accepted; Phase 03 implementation in progress, final refinement and acceptance pending.**
-**Current branch:** phase/03-product-catalogue-and-management.
+**Current status: Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is next.**
+**Next implementation branch:** phase/04-add-use-transactions-and-stock-rules.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
@@ -38,17 +38,19 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 03 — Product catalogue and management
 
-**Status:** Active on `phase/03-product-catalogue-and-management`. Final measurement-model, product-lifecycle, and UX corrections must be verified before acceptance.
+**Status:** Accepted by Mahesh on October 24, 2026, following physical-device re-testing. See [Phase 03 verification](PHASE-03-VERIFICATION.md).
 
-- [ ] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
-- [ ] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
-- [ ] Product row with name/current stock, plus action and three-dot menu.
-- [ ] Allow repeated measurement-type changes only before the first transaction; lock type after any transaction, even at zero stock.
-- [ ] Enforce a 40-character product-name limit and a 10-character user display-name limit.
-- [ ] Permanently delete a product and all its associated transactions atomically after explicit destructive confirmation.
-- [ ] Allow Archive at any stock/history state; preserve stock-derived balance, history and spending; add Settings > Archived Products and Restore.
+- [x] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
+- [x] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
+- [x] Product row with name/current stock, plus action and three-dot menu.
+- [x] Allow repeated measurement-type changes only before the first transaction; lock type after any transaction, even at zero stock.
+- [x] Enforce a 40-character product-name limit and a 10-character user display-name limit.
+- [x] Permanently delete a product and all its associated transactions atomically after explicit destructive confirmation.
+- [x] Allow Archive at any stock/history state; preserve stock-derived balance, history and spending; add Settings > Archived Products and Restore.
 
 ## Phase 04 — Add/Use transactions and stock rules
+
+**Status:** Next phase. Create `phase/04-add-use-transactions-and-stock-rules` from the latest `main` after the Phase 03 merge.
 
 - [ ] Plus action opens separate Add and Use choices.
 - [ ] Add form: quantity, compatible unit, required amount paid and date.
@@ -95,7 +97,8 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 2. The reviewed planning and branding baseline was merged into `main` via PR #1.
 3. Phase 01 was accepted and merged into `main` via PR #2.
 4. Phase 02 was accepted and merged into `main` via PR #3.
-5. Phase 03 uses `phase/03-product-catalogue-and-management`, created from the latest merged `main`.
-6. Implement one focused phase at a time and verify builds, tests and device behavior.
-7. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+5. Phase 03 used `phase/03-product-catalogue-and-management`; it is accepted and is being merged into `main`.
+6. Phase 04 uses `phase/04-add-use-transactions-and-stock-rules`, created from the latest `main` after that merge.
+7. Implement one focused phase at a time and verify builds, tests and device behavior.
+8. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
 
