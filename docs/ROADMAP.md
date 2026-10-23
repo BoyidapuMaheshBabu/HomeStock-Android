@@ -17,8 +17,14 @@ The roadmap is provisional until the product flow, transaction model, date filte
 ## Phase 02 — Welcome and home categories (planned)
 
 - [ ] Ask for the user's name once and save it locally.
-- [ ] Show a greeting based on device local time.
+- [ ] Show a greeting based on device local time, aligned to the top-left.
+- [ ] Place a Settings gear icon in the top-right.
+- [ ] Show a compact clickable **This month** spending card below the top bar.
+- [ ] Calculate This month from the first calendar day of the current month through today.
+- [ ] Make the spending card open Insights with This month selected.
+- [ ] Show ₹0 and a clear empty state when there are no recorded purchases this month.
 - [ ] Present exactly three large, rectangular, clickable hero cards: Food & Kitchen, Home Care & Cleaning, Personal Care & Cosmetics.
+- [ ] Keep the home screen uncluttered; detailed spending filters live on Insights.
 
 ## Phase 03 — Product list and customization (planned)
 
@@ -56,7 +62,9 @@ The roadmap is provisional until the product flow, transaction model, date filte
 
 ## Phase 06 — Dashboard, spending filters, and usability (planned)
 
-- [ ] Make cumulative purchase spending since app start a primary dashboard metric.
+- [ ] Make cumulative purchase spending since app start a primary Insights metric.
+- [ ] Ensure the Home screen's This month preview uses current calendar-month spending and opens Insights with that filter selected.
+- [ ] Keep the home spending preview and Insights totals consistent after every saved purchase.
 - [ ] Provide Last 7 days (today plus the previous six calendar dates).
 - [ ] Provide This month (the first day of the current calendar month through today).
 - [ ] Provide Last 3 months (the first day of the calendar month two months before the current month through today).
