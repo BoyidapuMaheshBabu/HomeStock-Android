@@ -13,7 +13,17 @@ HomeStock is a planned **offline-first native Android household inventory and sp
 - Keep the core app usable offline.
 - Start tracking with the first purchase recorded in the app; no opening-stock entry is required.
 
-## Home screen: three fixed hero cards
+## Home screen layout
+
+Keep the home screen simple, with three visual zones in this order:
+
+1. **Top bar:** personalized time-based greeting aligned to the left (such as “Good morning, Priya!”) and a Settings gear icon aligned to the right.
+2. **Spending preview:** a compact, clickable card labeled **This month** showing the total of recorded purchases from the first day of the current calendar month through today. Tapping it opens Insights with the This month filter selected. New purchases update this amount immediately; usage does not change spending.
+3. **Category cards:** a short heading followed by three large, rectangular, clickable category hero cards.
+
+Show **₹0** and a clear no-purchases message when no purchases are recorded for the current month. Keep detailed date filters and breakdowns on the Insights screen so the home screen does not become cluttered.
+
+## Three fixed hero cards
 
 Show three large, rectangular, clickable category cards:
 
