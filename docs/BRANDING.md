@@ -1,14 +1,25 @@
-# Branding Direction
+# IntiVentory Branding
 
-**Status:** Logo concept and color theme locked for the first implementation. Final app name is pending the intended user's decision. Do not begin implementation until the name has been confirmed and the planning baseline is ready.
+**Status:** The user-facing name, logo direction, caption, and light theme are selected for the MVP. Implementation remains paused until the user explicitly starts it.
 
-## Logo concept
+## Approved app identity
 
-- A friendly, minimal home outline with a simple shelf inside.
-- Use clear, rounded geometry that remains recognizable as a small Android launcher icon.
-- Keep the mark standalone; do not bake the app name or tiny text into the icon.
-- Avoid busy illustrations, heavy shadows, neon colors, and complex gradients.
-- This document locks the concept, not final exported launcher assets. Export appropriate Android icon assets during UI implementation.
+- **English name:** IntiVentory
+- **Telugu name / pronunciation guide:** ఇంటి వెంటరీ
+- **Caption / tagline:** మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.
+- **English meaning:** Our household supplies, our household accounts.
+- **Name idea:** Inti (ఇంటి) + Inventory
+
+The repository remains named `HomeStock-Android` for now. Do not rename the repository or alter the Android application ID merely to match the display name.
+
+## Logo reference assets
+
+- [Full logo lockup — SVG](assets/intiventory-logo.svg)
+- [App icon concept — SVG](assets/intiventory-app-icon.svg)
+
+Use these SVGs as the visual source of truth for the logo concept: a rounded deep-teal tile containing a simple white home outline and shelf, with soft-sage household-product accents. The wordmark uses Deep Teal and the Telugu caption appears beneath it.
+
+The SVG assets are reference artwork. During implementation, prepare and verify the actual Android launcher/adaptive icon assets and inspect Telugu glyph rendering on-device. Do not invent a different logo or replace the palette without approval.
 
 ## Locked color palette
 
@@ -19,21 +30,23 @@
 | Main background | Warm Mist | `#F4F6F0` |
 | Surfaces / cards | Clean White | `#FFFFFF` |
 | Main text | Forest Charcoal | `#273832` |
+| Secondary text | Muted Sage-Gray | `#52665C` |
 
 ## UI direction
 
-- Calm, friendly, home-focused, and uncluttered.
-- Light-first Material 3 design.
-- Use Deep Teal for primary actions and key emphasis; Soft Sage for quiet accents.
-- Use Warm Mist as the page background, Clean White for cards and forms, and Forest Charcoal for readable text.
+- Calm, friendly, Telugu-household-friendly, and uncluttered.
+- Light-first Jetpack Compose + Material 3 design.
+- Use Deep Teal for primary actions, selected navigation, and key emphasis.
+- Use Soft Sage for quiet category/icon accents.
+- Use Warm Mist as the page background, and Clean White for cards and forms.
+- Use Forest Charcoal for main text and Muted Sage-Gray for secondary text.
 - Favor comfortable spacing, rounded cards, simple icons, and clear ₹ spending totals.
-- Avoid neon palettes, purple AI gradients, excessive shadows, and unnecessary animation.
+- Avoid neon palettes, purple AI gradients, excessive shadows, busy illustrations, and unnecessary animation.
+- Keep the logo mark recognizable at small sizes; do not put tiny text inside the app icon.
 
-## Name decision
+## Implementation guidance
 
-The user will ask the intended user (his sister) to choose the final Telugu-friendly app name. **No user-facing app name is approved yet.** “ఇంటి చిట్టి / Inti Chitti” is only a suggestion, not a final decision.
-
-Until the name is confirmed:
-- Keep `HomeStock-Android` as the repository/project identifier.
-- Do not change the Android application ID on account of the provisional name.
-- Do not rename the displayed app or prepare name-locked marketing assets.
+- App display name should be **IntiVentory**.
+- Keep the repository identifier `HomeStock-Android` unchanged unless a separate repository-renaming decision is made.
+- Do not add accounts, network services, analytics, or any unrelated feature as part of branding work.
+- Implementation has not started. These docs and SVG references are the planning artifacts only.
