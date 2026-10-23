@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">IntiVentory logo</title>
+  <desc id="desc">A calm deep-teal home and shelf symbol beside the IntiVentory wordmark, Telugu name, and caption.</desc>
+  <rect width="1200" height="420" rx="28" fill="#F4F6F0"/>
+  <g transform="translate(45 50)">
+    <rect width="320" height="320" rx="64" fill="#2F6B62"/>
+    <g stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" stroke-linejoin="round" fill="none">
+      <path d="M53 144 160 58 267 144"/>
+      <path d="M78 132 V260 H242 V132"/>
+      <path d="M96 218 H224"/>
+    </g>
+    <g fill="#B9D0C0">
+      <rect x="106" y="174" width="38" height="34" rx="6"/>
+      <path d="M174 165 Q174 155 184 155 H192 Q202 155 202 165 V208 H174 Z"/>
+      <rect x="181" y="145" width="14" height="12" rx="3"/>
+      <path d="M224 174 C211 174 202 185 202 199 C216 198 225 188 224 174Z"/>
+      <path d="M207 202 219 184" stroke="#2F6B62" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </g>
+    <g fill="#FFFFFF">
+      <rect x="139" y="112" width="14" height="14" rx="3"/>
+      <rect x="167" y="112" width="14" height="14" rx="3"/>
+      <rect x="139" y="137" width="14" height="14" rx="3"/>
+      <rect x="167" y="137" width="14" height="14" rx="3"/>
+    </g>
+  </g>
+  <g font-family="Noto Sans, 'Nirmala UI', 'Lohit Telugu', sans-serif">
+    <text x="415" y="167" font-size="82" font-weight="750" letter-spacing="-2" fill="#2F6B62">IntiVentory</text>
+    <text x="418" y="232" font-size="42" font-weight="600" fill="#2F6B62">ఇంటి వెంటరీ</text>
+    <text x="418" y="302" font-size="32" font-weight="500" fill="#52665C">మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.</text>
+    <text x="418" y="355" font-size="24" font-weight="400" fill="#273832">Inti (ఇంటి) + Inventory</text>
+  </g>
+</svg>
