@@ -64,6 +64,15 @@ Opens Add and Use choices:
 - **Restore:** archived products appear under Settings > Archived Products. Restoring makes the original product active again with its previous stock and complete history. It must not create duplicates or reseed the product.
 - Archive is reversible; permanent deletion is not. Never use Archive as a reason to discard history, and never delete history as part of an Archive operation.
 
+### Edit form behavior
+
+- Disable **Save changes** when the effective edited values are unchanged from the saved product or invalid.
+- Enable Save only when a valid change exists. If the user changes a value and then restores its original value, disable Save again.
+- An unchanged save attempt must not write to the repository or close/navigate away from the editor.
+- On successful save, persist once and navigate back once. On failure, keep the editor open and show an error.
+- Reopening the same product's editor after save or cancel must reliably display the current saved value; it must not flash open and close.
+- Use clear enabled/disabled button states. UI styling is left to the implementation agent, following IntiVentory branding and Material 3.
+
 ## 7. Add transaction
 
 From a product's plus action, select Add. The form shows the product, quantity, compatible unit, actual total amount paid in INR, and purchase date.
