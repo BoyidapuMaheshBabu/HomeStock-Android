@@ -4,11 +4,11 @@ import android.app.Application
 
 class HomeStockApplication : Application() {
 
-    lateinit var container: AppContainer
+    lateinit var appContainer: AppContainer
         private set
 
     override fun onCreate() {
         super.onCreate()
-        container = AppContainer(this)
+        appContainer = AppContainer(this)
     }
 }
