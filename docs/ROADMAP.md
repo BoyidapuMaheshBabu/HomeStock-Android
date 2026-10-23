@@ -27,8 +27,9 @@ The roadmap is provisional until the product flow, transaction model, date filte
 - [ ] New products start with zero recorded stock.
 - [ ] Display product rows with name on the left, plus action, and three-dot Edit/Delete menu.
 - [ ] Provide Edit for product name and compatible units.
-- [ ] Add a Delete confirmation dialog.
-- [ ] Resolve delete/archive behavior when a product has transaction history.
+- [ ] Add a Delete confirmation dialog for products with no transactions.
+- [ ] Offer Archive / Hide for products with transaction history only when current stock is zero.
+- [ ] Preserve all history and spending totals after archive; prevent archiving while stock remains.
 - [ ] Support mass (kg/g), volume (L/ml), and count (pieces/units).
 
 ## Phase 04 — Add and Use transactions (planned)
@@ -61,6 +62,8 @@ The roadmap is provisional until the product flow, transaction model, date filte
 - [ ] Update all relevant spending totals immediately after a saved purchase.
 - [ ] Keep usage from altering past spending totals.
 - [ ] Test period boundaries, invalid input, double submission, app restarts, and airplane mode.
+- [ ] Verify expired/discarded items can be recorded through Use without changing purchase spending.
+- [ ] Verify a product with history cannot be archived while stock remains, and can be archived at zero stock without losing history.
 
 **Acceptance:** Totals reconcile with dated purchase transactions; stock and spending remain correct after Add and Use.
 
