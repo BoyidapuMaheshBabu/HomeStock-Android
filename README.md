@@ -1,109 +1,43 @@
 # HomeStock
 
-HomeStock is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household. It tracks household products, purchases, usage, available stock, and—most importantly—money spent over time.
+HomeStock is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
 
-> **Project status:** Planning & Research — implementation has not started.
-> **Current planning branch:** planning/research.
-> Requirements are being refined. No app build or feature tests have been verified.
+**Status:** Planning & Research — implementation has not started.
+**Working branch:** planning/research.
 
-## First-use experience
+## Product at a glance
 
-- Ask for the user's name on first launch and save it locally.
-- Show a friendly time-based greeting, such as “Good morning, Priya!”
-- Keep the core app usable offline.
-- Start tracking with the first purchase recorded in the app; no opening-stock entry is required.
+- First-run name setup and personalized time-based greeting.
+- Home: greeting top-left, Settings top-right, clickable This month spending preview, three large category cards.
+- Fixed categories: Food & Kitchen; Home Care & Cleaning; Personal Care & Cosmetics.
+- Product rows: product name/current stock, plus action, three-dot menu. Tapping a row opens product history.
+- Plus opens separate Add and Use actions.
+- Add records quantity, compatible unit, actual amount paid and date. Use records quantity used and date.
+- Stock and spending update immediately after a successful transaction.
+- Date-grouped product history; no time-of-day display in the first version.
+- Insights filters: Last 7 days, This month, Last 3 months, Custom date range and All time.
 
-## Home screen layout
+## Source-of-truth planning documents
 
-Keep the home screen simple, with three visual zones in this order:
+- [Product requirements](docs/PRODUCT.md) — user flow, all product behaviors and business rules.
+- [Architecture](docs/ARCHITECTURE.md) — selected technical stack, package structure, schema, state flow, calculations, privacy and test layers.
+- [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
+- [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
+- [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
-1. **Top bar:** personalized time-based greeting aligned to the left (such as “Good morning, Priya!”) and a Settings gear icon aligned to the right.
-2. **Spending preview:** a compact, clickable card labeled **This month** showing the total of recorded purchases from the first day of the current calendar month through today. Tapping it opens Insights with the This month filter selected. New purchases update this amount immediately; usage does not change spending.
-3. **Category cards:** a short heading followed by three large, rectangular, clickable category hero cards.
+## Key rules
 
-Show **₹0** and a clear no-purchases message when no purchases are recorded for the current month. Keep detailed date filters and breakdowns on the Insights screen so the home screen does not become cluttered.
+- Native Android, local-first. No account, cloud sync or internet permission.
+- Stock starts at zero and is derived from saved Add/Use transactions.
+- Mass uses kg/g; volume uses L/ml; count uses whole pieces/units. Never mix dimensions.
+- Product creation is separate from a purchase.
+- Add requires quantity, compatible unit, actual amount paid and date.
+- Use reduces stock only; it does not change money already spent.
+- Spending totals derive from Add transactions and update immediately.
+- Month filters follow calendar boundaries; custom ranges include both selected dates.
+- Delete products only if they have no transaction history, with confirmation. Products with history can be archived only at zero stock; their history still counts toward spending.
+- JSON backup/restore is deferred until after the intended user accepts the core app.
 
-## Three fixed hero cards
+## Status honesty
 
-Show three large, rectangular, clickable category cards:
-
-1. **Food & Kitchen:** preset products such as rice, dal, flour, oil, and spices.
-2. **Home Care & Cleaning:** toilet/bathroom/floor cleaner, dishwashing liquid, detergent, disinfectant, and similar products.
-3. **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, creams, and similar products.
-
-These are the only top-level home categories in the first version. Users can add custom products inside them. There is no brand field and no extra top-level category creation.
-
-## Product list and actions
-
-Within a category, show products as clear horizontal rows:
-- Product name on the left.
-- A plus (+) action on the right.
-- A three-dot menu on the right with Edit and Delete.
-- Tapping the main product row opens its transaction history.
-
-The plus action opens two distinct actions: **Add** (record a purchase/increase stock) and **Use** (record consumption/reduce stock). Creating a new product is a separate workflow, not combined with a purchase.
-
-## Purchases and usage
-
-- **Add:** Enter the quantity, choose a compatible unit for the product, enter the actual amount paid in INR, and select the purchase date.
-- **Use:** Show current stock first; enter the quantity used and confirm. Usage is rejected if it exceeds available stock.
-- Save each successful action as a separate transaction.
-- Recalculate current stock and relevant spending views immediately after a transaction is saved.
-
-Units:
-- **Mass:** kg and g.
-- **Volume:** litres (L) and millilitres (ml).
-- **Count:** pieces/units, for items such as soap bars.
-
-Only convert within the same measurement dimension.
-
-## Product transaction history
-
-Tapping a product row opens a vertically scrollable history screen:
-- Show transactions grouped by date, with date labels such as Today, Yesterday, or a calendar date.
-- Show the transaction type (Add/Purchase or Use), quantity and unit.
-- For purchase entries, show the amount paid.
-- Show how the transaction affected the stock; include remaining/current stock clearly.
-- Show total recorded spending for that product if useful.
-- Date is required; transaction time-of-day is not required in the first version.
-
-## Spending dashboard and Insights
-
-The primary money metric is **cumulative purchase spending since the user started using HomeStock**, not the estimated market value of items remaining on shelves.
-
-Example: existing recorded spending is ₹5,000. The user records a new shampoo purchase for ₹5. The all-time total immediately becomes **₹5,005**. Recording usage changes stock quantity, not past spending. Adding or editing a product definition alone does not count as spending.
-
-Required views:
-- **Last 7 days:** today and the previous six calendar dates.
-- **This month:** from the first day of the current calendar month through today.
-- **Last 3 months:** from the first day of the calendar month two months before the current month through today (the current month plus the two preceding calendar months).
-- **Custom date range:** include both the start date and end date selected by the user.
-- **All time / Since app start:** all recorded purchases from the start of tracking through today.
-
-Month-based views use calendar-month boundaries, not rolling same-date ranges such as September 23–October 23. For example, on October 23, the This month view covers October 1–23, and Last 3 months covers August 1–October 23. Filtered totals come from purchase records dated within the selected inclusive range. The app should also make current quantities and transaction history easy to inspect.
-
-## Data safety
-
-- Do not allow usage greater than current stock.
-- Never mix incompatible units (for example, kg and ml).
-- Each purchase retains its own quantity, unit, actual amount paid, and date.
-- Delete an accidental product only when it has no transaction history, after a confirmation dialog.
-- If a product has history and zero stock, offer Archive / Hide to remove it from the active list while preserving its history and spending records.
-- Do not allow Archive / Hide while stock remains. If stock is expired or discarded, record that quantity through Use first; this changes stock but not recorded purchase spending.
-
-## First-version boundaries
-
-- Native Android app. Kotlin, Jetpack Compose, and Room/SQLite are candidates pending technical research.
-- Offline local persistence; no account or cloud service.
-- No brand field, AI features, barcode scanning, or additional top-level categories.
-- JSON backup/restore is deferred until after the core app is built and accepted by the intended user.
-
-## Documentation
-
-- [Product requirements](docs/PRODUCT.md)
-- [Roadmap and phase acceptance](docs/ROADMAP.md)
-- [Working philosophy](docs/WORKING-PHILOSOPHY.md)
-
-## Planning-first working rule
-
-We are researching and refining the specification, not implementing yet. Finalize the user workflow, data rules, date filters, deletion safety, technical choices, and acceptance criteria before starting implementation. No feature should be described as implemented or tested without evidence.
+This repository records planning decisions only. No app implementation, build, device run or test result is claimed as complete.
