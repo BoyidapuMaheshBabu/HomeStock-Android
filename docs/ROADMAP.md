@@ -2,7 +2,7 @@
 
 **Current project status: Planning & Research — implementation has not started.**
 
-**Current planning branch:** \`planning/research\`.
+**Current planning branch:** `planning/research`.
 
 The implementation roadmap below is provisional until product requirements, data rules, technical choices, and acceptance criteria have been reviewed. Do not start implementation simply because phases are listed.
 
@@ -76,11 +76,11 @@ Do not build this as part of the initial accepted core app. After the intended u
 
 ## Planning and branch workflow
 
-1. Continue product research and specification refinement on \`planning/research\`.
+1. Continue product research and specification refinement on `planning/research`.
 2. Close open product and data-model questions before implementation.
 3. Review the final product flow, technical choices, and acceptance criteria with the intended user.
-4. Only after planning is accepted, prepare the first implementation phase from the latest accepted \`main\`.
+4. Only after planning is accepted, prepare the first implementation phase from the latest accepted `main`.
 5. Implement in small phases, then build, test, and inspect the result before calling a phase complete.
-6. After the user accepts a phase, merge it into \`main\`, update project status/evidence, and create the next implementation branch from the latest \`main\`.
+6. After the user accepts a phase, merge it into `main`, update project status/evidence, and create the next implementation branch from the latest `main`.
 
 A roadmap checklist is a plan until verified; never treat planned work as completed work.
