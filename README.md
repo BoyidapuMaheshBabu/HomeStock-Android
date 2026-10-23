@@ -2,9 +2,9 @@
 
 IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
 
-**Status:** Phase 01 accepted; Phase 02 — Welcome and Home is next.
-**Working branch:** phase/02-welcome-and-home.
-**Baseline:** Phase 01 was merged into `main` via PR #2; this branch is based on the merged `main`.
+**Status:** Phases 01–02 accepted; Phase 03 — Product catalogue and management is ready to implement.
+**Working branch:** phase/03-product-catalogue-and-management.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 ## Product at a glance
 
@@ -25,6 +25,7 @@ IntiVentory is a planned **offline-first native Android household inventory and 
 - [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
 - [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
+- [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -41,6 +42,6 @@ IntiVentory is a planned **offline-first native Android household inventory and 
 - Delete products only if they have no transaction history, with confirmation. Products with history can be archived only at zero stock; their history still counts toward spending.
 - JSON backup/restore is deferred until after the intended user accepts the core app.
 
-## Status honesty
+## Implementation status
 
-This repository records planning decisions only. No app implementation, build, device run or test result is claimed as complete.
+Phases 01 and 02 are accepted: the native Android foundation, Welcome/name setup and Home dashboard are implemented. Phase 03 is active for product catalogue and management. Add/Use workflows, product history and full Insights behavior remain assigned to later phases. See [Phase 02 verification](docs/PHASE-02-VERIFICATION.md) for recorded evidence and its limits.
