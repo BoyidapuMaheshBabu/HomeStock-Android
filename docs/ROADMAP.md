@@ -2,80 +2,79 @@
 
 **Current status: Planning & Research — implementation has not started.**
 
-**Current planning branch:** \`planning/research\`.
+**Current planning branch:** planning/research.
 
-This roadmap remains provisional until product requirements, date-filter definitions, data rules, technical decisions, and acceptance criteria have been reviewed.
+The roadmap is provisional until the product flow, transaction model, date filters, deletion safety, technical choices, and acceptance criteria are reviewed.
 
 ## Phase 01 — Foundation and project setup (planned)
 
-- [ ] Confirm native Android project setup, application ID, minimum Android version, language, and build tools.
-- [ ] Evaluate UI and local-storage options; Kotlin + Jetpack Compose + Room/SQLite is a proposal, not yet a verified decision.
+- [ ] Confirm native Android setup, application ID, minimum Android version, language, and build tools.
+- [ ] Evaluate UI and local-storage choices; Kotlin + Jetpack Compose + Room/SQLite are candidates pending research.
 - [ ] Establish project structure and app theme.
 - [ ] Build a runnable HomeStock shell.
-- [ ] Document build and physical-device run steps.
-- [ ] Verify debug build and launch on the intended physical device.
+- [ ] Verify a debug build and launch on the intended physical device.
 
-## Phase 02 — Welcome, home, and fixed categories (planned)
+## Phase 02 — Welcome and home categories (planned)
 
 - [ ] Ask for the user's name once and save it locally.
-- [ ] Show a greeting based on the device's local time.
-- [ ] Show exactly three top-level categories: Food & Kitchen, Home Care & Cleaning, and Personal Care & Cosmetics.
-- [ ] Keep navigation simple and touch-friendly.
+- [ ] Show a greeting based on device local time.
+- [ ] Present exactly three large, rectangular, clickable hero cards: Food & Kitchen, Home Care & Cleaning, Personal Care & Cosmetics.
 
-## Phase 03 — Preset products and customization (planned)
+## Phase 03 — Product list and customization (planned)
 
-- [ ] Provide starter products inside each fixed category.
-- [ ] Provide Add product inside each category.
-- [ ] Provide three-dot Edit and Delete actions.
-- [ ] Allow safe changes to product name and compatible unit.
+- [ ] Show preset starter products inside each fixed category.
+- [ ] Allow custom product creation as a separate workflow from a purchase.
+- [ ] New products start with zero recorded stock.
+- [ ] Display product rows with name on the left, plus action, and three-dot Edit/Delete menu.
+- [ ] Provide Edit for product name and compatible units.
+- [ ] Add a Delete confirmation dialog.
+- [ ] Resolve delete/archive behavior when a product has transaction history.
 - [ ] Support mass (kg/g), volume (L/ml), and count (pieces/units).
-- [ ] Start products at zero recorded stock; do not require opening inventory.
-- [ ] Resolve delete/archive behavior for products that have history before implementation.
 
-## Phase 04 — Purchase records and immediate recalculation (planned)
+## Phase 04 — Add and Use transactions (planned)
 
-- [ ] Record product, quantity, compatible unit, actual amount paid, and purchase date.
-- [ ] Preserve each purchase as its own transaction.
-- [ ] Recalculate stock, history, and all applicable spending totals as soon as a purchase is saved.
-- [ ] Ensure the same transaction is not counted twice.
-- [ ] Display money in INR (₹).
+- [ ] The product plus action opens separate Add and Use choices.
+- [ ] Add form records quantity, compatible unit, amount paid, and purchase date.
+- [ ] Use form shows current stock, requests usage quantity, and records date.
+- [ ] Add increases stock; Use decreases stock.
+- [ ] Reject usage greater than available stock and prevent negative stock.
+- [ ] Store each Add/Use as a separate dated transaction.
+- [ ] Recalculate stock and relevant spending totals immediately after successful saves.
 
-**Acceptance:** A purchase adds to stock and recorded spending exactly once. Example: existing all-time purchases total ₹5,000; a new ₹5 shampoo purchase immediately changes the all-time total to ₹5,005.
+**Acceptance:** 10 kg purchased and 1 kg used leaves 9 kg. If 1 kg remains, a 10 kg usage entry is rejected. A purchase is counted exactly once in spending totals.
 
-## Phase 05 — Usage records and stock calculation (planned)
+## Phase 05 — Product transaction history (planned)
 
-- [ ] Record usage quantity and date.
-- [ ] Reduce available stock only using compatible units.
-- [ ] Validate usage against available stock.
-- [ ] Update remaining quantity immediately after a usage record is saved.
-- [ ] Do not subtract usage from historical spending.
+- [ ] Tapping a product row opens its vertically scrollable transaction history.
+- [ ] Group history entries by date with familiar date headings.
+- [ ] Show Add/Purchase or Use, quantity/unit, and stock impact.
+- [ ] Show amount paid for purchase transactions.
+- [ ] Date is required; time-of-day is not required in the first version.
 
-**Acceptance:** 5 kg − 1 kg = 4 kg; 1 L − 200 ml = 800 ml; 10 soap bars − 2 bars = 8 bars.
+**Acceptance:** The user can inspect how much and when she purchased or used a product, and review its current stock and recorded purchase spending.
 
-## Phase 06 — Dashboard, spending filters, history, and usability (planned)
+## Phase 06 — Dashboard, spending filters, and usability (planned)
 
-- [ ] Make cumulative recorded purchase spending since app start a primary dashboard metric.
-- [ ] Provide Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start views.
-- [ ] Finalize rolling-window versus calendar-month semantics for the 1-month and 3-month filters.
-- [ ] Calculate each period total from dated purchase records and display the selected date range.
-- [ ] Show remaining quantities and compatible units without confusing them with money spent.
-- [ ] Provide purchase/usage history.
-- [ ] Test totals against known transaction examples, period boundaries, empty ranges, app restarts, and airplane mode.
-- [ ] Update README only with verified outcomes.
+- [ ] Make cumulative purchase spending since app start a primary dashboard metric.
+- [ ] Provide Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
+- [ ] Finalize rolling-window versus calendar-month semantics.
+- [ ] Update all relevant spending totals immediately after a saved purchase.
+- [ ] Keep usage from altering past spending totals.
+- [ ] Test period boundaries, invalid input, double submission, app restarts, and airplane mode.
 
-**Acceptance:** Date-filtered and all-time totals reconcile with the saved purchase records; stock remains correct; spending and usage are not conflated.
+**Acceptance:** Totals reconcile with dated purchase transactions; stock and spending remain correct after Add and Use.
 
 ## Deferred follow-up — JSON backup and restore
 
-Do not include JSON backup/restore in the initial core-app implementation. Plan it after the intended user has reviewed and accepted the core app.
+Plan JSON backup/restore only after the intended user has reviewed and accepted the core app.
 
 ## Planning-first workflow
 
-1. Continue research and specification refinement on \`planning/research\`.
-2. Close remaining product, data model, date-filter, delete-history, and technical questions.
-3. Review the product flow and acceptance criteria with the intended user.
-4. Once planning is accepted, prepare an implementation-phase branch from the latest accepted \`main\`.
-5. Implement in small phases and verify with builds/tests/physical-device evidence.
-6. After a phase is accepted, merge to \`main\`, update status/evidence, and create the next phase branch from the latest \`main\`.
+1. Continue research on planning/research.
+2. Close product-flow, data-model, date-filter, history and delete-safety questions.
+3. Review requirements with the intended user.
+4. After planning is accepted, create an implementation branch from the latest accepted main.
+5. Implement in focused phases and verify with tests/build/device evidence.
+6. After user acceptance of a phase, merge to main, update status, and create the next branch from the latest main.
 
-A roadmap checklist represents planned work until verification evidence exists.
+A roadmap checklist is planned work, not evidence of implementation.
