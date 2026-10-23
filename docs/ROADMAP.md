@@ -1,97 +1,95 @@
 # Roadmap
 
 **Current status: Planning & Research — implementation has not started.**
+**Current branch:** planning/research.
 
-**Current planning branch:** planning/research.
+The architecture and product specification are the working contract. Checkboxes below are planned work, not evidence that the app has been implemented.
 
-The roadmap is provisional until the product flow, transaction model, date filters, deletion safety, technical choices, and acceptance criteria are reviewed.
+## Planning sign-off
 
-## Phase 01 — Foundation and project setup (planned)
+- [ ] Review product requirements, architecture and acceptance tests.
+- [ ] Verify the target phone is compatible with the planned minimum Android API.
+- [ ] Agree the starter product list and default units.
+- [ ] Confirm the first MVP uses read-only transaction history.
+- [ ] Approve the planning specification before creating the implementation branch.
 
-- [ ] Confirm native Android setup, application ID, minimum Android version, language, and build tools.
-- [ ] Evaluate UI and local-storage choices; Kotlin + Jetpack Compose + Room/SQLite are candidates pending research.
-- [ ] Establish project structure and app theme.
-- [ ] Build a runnable HomeStock shell.
-- [ ] Verify a debug build and launch on the intended physical device.
+## Phase 01 — Android foundation
 
-## Phase 02 — Welcome and home categories (planned)
+- [ ] Native Kotlin Android project, Gradle Kotlin DSL, version catalog, single Activity and single app module.
+- [ ] Jetpack Compose + Material 3, Navigation 3, screen ViewModels, Kotlin coroutines/Flow, Room/SQLite, Preferences DataStore.
+- [ ] Manual AppContainer dependency wiring.
+- [ ] Create package structure from ARCHITECTURE.md.
+- [ ] Set up app theme, local database, preferences and navigation.
+- [ ] Build and launch a minimal app on the intended phone.
+- [ ] Record actual dependency versions and verified build evidence.
 
-- [ ] Ask for the user's name once and save it locally.
-- [ ] Show a greeting based on device local time, aligned to the top-left.
-- [ ] Place a Settings gear icon in the top-right.
-- [ ] Show a compact clickable **This month** spending card below the top bar.
-- [ ] Calculate This month from the first calendar day of the current month through today.
-- [ ] Make the spending card open Insights with This month selected.
-- [ ] Show ₹0 and a clear empty state when there are no recorded purchases this month.
-- [ ] Present exactly three large, rectangular, clickable hero cards: Food & Kitchen, Home Care & Cleaning, Personal Care & Cosmetics.
-- [ ] Keep the home screen uncluttered; detailed spending filters live on Insights.
+**Acceptance:** App compiles and launches on the intended device. No features are claimed complete based only on code generation.
 
-## Phase 03 — Product list and customization (planned)
+## Phase 02 — Welcome and Home
 
-- [ ] Show preset starter products inside each fixed category.
-- [ ] Allow custom product creation as a separate workflow from a purchase.
-- [ ] New products start with zero recorded stock.
-- [ ] Display product rows with name on the left, plus action, and three-dot Edit/Delete menu.
-- [ ] Provide Edit for product name and compatible units.
-- [ ] Add a Delete confirmation dialog for products with no transactions.
-- [ ] Offer Archive / Hide for products with transaction history only when current stock is zero.
-- [ ] Preserve all history and spending totals after archive; prevent archiving while stock remains.
-- [ ] Support mass (kg/g), volume (L/ml), and count (pieces/units).
+- [ ] First-run name input, validation, and local persistence.
+- [ ] Time-based greeting top-left and Settings gear top-right.
+- [ ] Clickable This month spending preview, using calendar month boundaries.
+- [ ] This month card opens Insights with This month selected.
+- [ ] Three fixed rectangular category hero cards.
 
-## Phase 04 — Add and Use transactions (planned)
+## Phase 03 — Product catalogue and management
 
-- [ ] The product plus action opens separate Add and Use choices.
-- [ ] Add form records quantity, compatible unit, amount paid, and purchase date.
-- [ ] Use form shows current stock, requests usage quantity, and records date.
-- [ ] Add increases stock; Use decreases stock.
-- [ ] Reject usage greater than available stock and prevent negative stock.
-- [ ] Store each Add/Use as a separate dated transaction.
-- [ ] Recalculate stock and relevant spending totals immediately after successful saves.
+- [ ] Seed common starter products once with zero stock.
+- [ ] Fixed category product lists and separate custom product creation.
+- [ ] Product row with name/current stock, plus action and three-dot menu.
+- [ ] Edit product name and compatible preferred unit.
+- [ ] Delete only products with no transaction history, after confirmation.
+- [ ] Archive/hide products with history only when stock is zero.
+- [ ] Preserve archived history and spending; add Settings > Archived Products and Restore.
 
-**Acceptance:** 10 kg purchased and 1 kg used leaves 9 kg. If 1 kg remains, a 10 kg usage entry is rejected. A purchase is counted exactly once in spending totals.
+## Phase 04 — Add/Use transactions and stock rules
 
-## Phase 05 — Product transaction history (planned)
+- [ ] Plus action opens separate Add and Use choices.
+- [ ] Add form: quantity, compatible unit, required amount paid and date.
+- [ ] Use form: current stock, quantity, compatible unit and date.
+- [ ] Base-unit conversions and positive quantity validation.
+- [ ] Atomic stock check and Use insert; reject over-use.
+- [ ] Disable Save while write is pending and prevent duplicate submissions.
+- [ ] Update Room-derived stock, history and spending immediately after successful saves.
 
-- [ ] Tapping a product row opens its vertically scrollable transaction history.
-- [ ] Group history entries by date with familiar date headings.
-- [ ] Show Add/Purchase or Use, quantity/unit, and stock impact.
-- [ ] Show amount paid for purchase transactions.
-- [ ] Date is required; time-of-day is not required in the first version.
+## Phase 05 — Product transaction history
 
-**Acceptance:** The user can inspect how much and when she purchased or used a product, and review its current stock and recorded purchase spending.
+- [ ] Tapping product row opens scrollable date-grouped read-only history.
+- [ ] Add entries display quantity, unit, amount paid and date.
+- [ ] Use entries display quantity, unit and stock impact.
+- [ ] Show product-specific purchase spending.
+- [ ] No time-of-day display or transaction-row edit/delete in the first MVP.
 
-## Phase 06 — Dashboard, spending filters, and usability (planned)
+## Phase 06 — Spending Dashboard and Insights
 
-- [ ] Make cumulative purchase spending since app start a primary Insights metric.
-- [ ] Ensure the Home screen's This month preview uses current calendar-month spending and opens Insights with that filter selected.
-- [ ] Keep the home spending preview and Insights totals consistent after every saved purchase.
-- [ ] Provide Last 7 days (today plus the previous six calendar dates).
-- [ ] Provide This month (the first day of the current calendar month through today).
-- [ ] Provide Last 3 months (the first day of the calendar month two months before the current month through today).
-- [ ] Provide Custom date range, inclusive of both selected start and end dates.
-- [ ] Provide All time / Since app start.
-- [ ] Use calendar-month boundaries, not rolling same-date periods; show the actual date range for each view.
-- [ ] Update all relevant spending totals immediately after a saved purchase.
-- [ ] Keep usage from altering past spending totals.
-- [ ] Test period boundaries, invalid input, double submission, app restarts, and airplane mode.
-- [ ] Verify monthly boundaries with a known example: on October 23, This month = October 1–23; Last 3 months = August 1–October 23.
-- [ ] Verify custom-range totals include both selected dates and no purchases outside the selected range.
-- [ ] Verify expired/discarded items can be recorded through Use without changing purchase spending.
-- [ ] Verify a product with history cannot be archived while stock remains, and can be archived at zero stock without losing history.
+- [ ] Current calendar-month spending preview on Home.
+- [ ] Last 7 days, This month, Last 3 months, Custom date range and All time filters.
+- [ ] Inclusive date boundaries and visible selected range.
+- [ ] Calculate totals from saved Add transactions; Use does not alter spending.
+- [ ] Include purchases belonging to archived products in historical totals.
+- [ ] Test monthly boundaries, custom range, empty range and immediate recalculation.
 
-**Acceptance:** Totals reconcile with dated purchase transactions; stock and spending remain correct after Add and Use.
+## Phase 07 — Verification and intended-user review
 
-## Deferred follow-up — JSON backup and restore
+- [ ] Run tests listed in ACCEPTANCE-TESTS.md.
+- [ ] Test core flow in airplane mode.
+- [ ] Verify persistence across restart/force close.
+- [ ] Test unit conversions, over-use rejection, double taps, price parsing, date filters and archive/delete.
+- [ ] Install on the intended physical phone and let the intended user try the app.
+- [ ] Fix feedback that affects agreed MVP requirements.
+- [ ] Update README only with verified features and evidence.
 
-Plan JSON backup/restore only after the intended user has reviewed and accepted the core app.
+## Deferred follow-up — JSON backup/restore
 
-## Planning-first workflow
+Do not implement JSON backup/restore in the core MVP. Revisit after the intended user reviews and accepts the working app.
+
+## Branch workflow
 
 1. Continue research on planning/research.
-2. Close product-flow, data-model, date-filter, history and delete-safety questions.
-3. Review requirements with the intended user.
-4. After planning is accepted, create an implementation branch from the latest accepted main.
-5. Implement in focused phases and verify with tests/build/device evidence.
-6. After user acceptance of a phase, merge to main, update status, and create the next branch from the latest main.
+2. Review and approve the product, architecture and acceptance tests.
+3. Commit the accepted planning documents to main.
+4. Create the first implementation branch from the latest main.
+5. Implement one focused phase at a time and verify builds/tests/device behavior.
+6. After user acceptance, merge each phase to main, update evidence, and create the next branch from the latest main.
 
-A roadmap checklist is planned work, not evidence of implementation.
