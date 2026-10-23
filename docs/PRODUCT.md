@@ -2,10 +2,12 @@
 
 ## 1. Purpose and user
 
-HomeStock is for the user's sister and household. It is a simple offline native Android app to track household products, purchases, usage, quantities remaining and money spent on household products.
+IntiVentory is for the user's sister and household. The repository remains named HomeStock-Android. It is a simple offline native Android app to track household products, purchases, usage, quantities remaining and money spent on household products.
 
 ## 2. First launch
 
+- Display the approved app name **IntiVentory** and use the logo assets documented in [Branding](BRANDING.md).
+- Brand caption: **మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.**
 - Ask for the user's name on first launch.
 - Trim whitespace and reject a blank name.
 - Save the name locally and reuse it on later launches.
