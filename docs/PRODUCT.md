@@ -124,13 +124,13 @@ This amount means total recorded purchase spending, not the current market value
 ### Date filters
 
 Provide:
-- **Last 7 days**
-- **Last 1 month**
-- **Last 3 months**
-- **Custom date range**
-- **All time / Since app start**
+- **Last 7 days:** today and the previous six calendar dates.
+- **This month:** the first day of the current calendar month through today.
+- **Last 3 months:** the first day of the calendar month two months before the current month through today. This includes the current month-to-date plus the two preceding calendar months.
+- **Custom date range:** the user chooses a start date and end date; both dates are included.
+- **All time / Since app start:** all recorded purchases from the start of tracking through today.
 
-Each filtered total is the sum of purchase amounts whose purchase dates fall in the selected period. Show the selected range and use the device's local date context. Finalize during planning whether month filters are rolling intervals or calendar months.
+Month-based filters must follow calendar-month boundaries, not rolling same-date intervals. For example, on October 23, 2026, This month covers October 1–23, while Last 3 months covers August 1–October 23. Each filtered total is the sum of purchase amounts whose purchase dates fall within the selected inclusive range. Show the selected range and use the device's local calendar/date context. The rolling-versus-calendar-month decision is settled: use calendar-month boundaries.
 
 ### Immediate updates
 
@@ -175,7 +175,7 @@ JSON backup/restore is deferred until after the core app is built and accepted b
 - Add/Purchase history shows amount paid; Use history shows quantity consumed and stock impact.
 - Product Edit/Delete/Archive behavior is safe: Delete is for products with no transactions and requires confirmation; products with history can be archived only when stock is zero, preserving history and spending.
 - The all-time total changes immediately from ₹5,000 to ₹5,005 after saving a ₹5 purchase.
-- Dashboard spending filters support Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
+- Dashboard spending filters support Last 7 days, This month (from the 1st through today), Last 3 months (from the 1st of the month two months earlier through today), Custom date range (inclusive), and All time / Since app start.
 - Use can represent consumption or expired/discarded stock. Use changes stock, not past purchase spending.
 - A product with no transactions can be deleted after confirmation. A product with history can be archived only when stock is zero, and its history/spending remain preserved.
 - Core records persist across restart and work offline.
