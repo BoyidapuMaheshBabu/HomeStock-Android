@@ -1,9 +1,11 @@
-# HomeStock Architecture
+# IntiVentory Architecture
 
 **Status:** Selected architecture for the planned MVP; not implemented or build-verified.
 **Working branch:** planning/research.
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
+
+**Product identity:** IntiVentory. Use the exact name, logo SVGs, caption, and colors specified in [Branding](BRANDING.md). The repository and proposed application ID remain technical identifiers, not the user-facing brand.
 
 ## 1. Architecture decisions
 
