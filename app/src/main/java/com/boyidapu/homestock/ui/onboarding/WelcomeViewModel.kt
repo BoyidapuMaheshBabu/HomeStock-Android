@@ -20,13 +20,18 @@ class WelcomeViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
+    companion object {
+        const val MAX_USER_NAME_LENGTH = 10
+    }
+
     private val _uiState = MutableStateFlow(WelcomeUiState())
     val uiState: StateFlow<WelcomeUiState> = _uiState.asStateFlow()
 
     fun onNameInputChanged(input: String) {
+        val truncated = if (input.length > MAX_USER_NAME_LENGTH) input.take(MAX_USER_NAME_LENGTH) else input
         _uiState.update {
             it.copy(
-                nameInput = input,
+                nameInput = truncated,
                 errorMessage = null
             )
         }
@@ -41,10 +46,17 @@ class WelcomeViewModel(
             return
         }
 
+        if (trimmedName.length > MAX_USER_NAME_LENGTH) {
+            _uiState.update {
+                it.copy(errorMessage = "Name must be at most $MAX_USER_NAME_LENGTH characters")
+            }
+            return
+        }
+
         viewModelScope.launch {
             _uiState.update { it.copy(isSaving = true, errorMessage = null) }
             try {
-                userRepository.saveUserName(trimmedName)
+                userRepository.saveUserName(trimmedName.take(MAX_USER_NAME_LENGTH))
                 _uiState.update {
                     it.copy(isSaving = false, isSaveSuccess = true)
                 }

@@ -68,6 +68,23 @@ class QuantityUtilsTest {
     }
 
     @Test
+    fun autoFormatStock_formatsMassVolumeCountCorrectly() {
+        // Mass
+        assertEquals("0 kg", QuantityUtils.autoFormatStock(0L, MeasurementDimension.MASS))
+        assertEquals("2.5 kg", QuantityUtils.autoFormatStock(2500L, MeasurementDimension.MASS))
+        assertEquals("750 g", QuantityUtils.autoFormatStock(750L, MeasurementDimension.MASS))
+
+        // Liquid / Volume
+        assertEquals("0 L", QuantityUtils.autoFormatStock(0L, MeasurementDimension.VOLUME))
+        assertEquals("1.5 L", QuantityUtils.autoFormatStock(1500L, MeasurementDimension.VOLUME))
+        assertEquals("800 ml", QuantityUtils.autoFormatStock(800L, MeasurementDimension.VOLUME))
+
+        // Units / Count
+        assertEquals("0 pieces", QuantityUtils.autoFormatStock(0L, MeasurementDimension.COUNT))
+        assertEquals("4 pieces", QuantityUtils.autoFormatStock(4L, MeasurementDimension.COUNT))
+    }
+
+    @Test
     fun validateQuantityInput_dimensionMismatchAndValidation() {
         assertTrue(QuantityUtils.validateQuantityInput("1.5", MeasurementDimension.MASS, UnitType.KG))
         assertFalse(QuantityUtils.validateQuantityInput("1.5", MeasurementDimension.COUNT, UnitType.PIECES))

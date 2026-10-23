@@ -1,9 +1,9 @@
 package com.boyidapu.homestock.domain.model
 
 enum class MeasurementDimension(val displayName: String) {
-    MASS("Mass (kg/g)"),
-    VOLUME("Volume (L/ml)"),
-    COUNT("Count (pieces/units)");
+    MASS("Mass"),
+    VOLUME("Liquid"),
+    COUNT("Units");
 
     val validUnits: List<UnitType>
         get() = when (this) {

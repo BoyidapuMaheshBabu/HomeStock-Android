@@ -26,7 +26,11 @@ class AppContainer(private val context: Context) {
     }
 
     val productRepository: ProductRepository by lazy {
-        ProductRepositoryImpl(database.productDao())
+        ProductRepositoryImpl(
+            database = database,
+            productDao = database.productDao(),
+            transactionDao = database.transactionDao()
+        )
     }
 
     val transactionRepository: TransactionRepository by lazy {

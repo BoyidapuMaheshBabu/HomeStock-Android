@@ -5,7 +5,6 @@ import androidx.room.PrimaryKey
 import com.boyidapu.homestock.domain.model.FixedCategory
 import com.boyidapu.homestock.domain.model.MeasurementDimension
 import com.boyidapu.homestock.domain.model.Product
-import com.boyidapu.homestock.domain.model.UnitType
 
 @Entity(tableName = "products")
 data class ProductEntity(
@@ -23,7 +22,6 @@ data class ProductEntity(
         category = FixedCategory.fromId(categoryId),
         name = name,
         dimension = MeasurementDimension.valueOf(dimension),
-        preferredUnit = UnitType.fromSymbol(preferredUnit),
         isPreset = isPreset,
         isArchived = isArchived,
         createdAtEpochMs = createdAtEpochMs
