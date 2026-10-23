@@ -228,7 +228,7 @@ Home's This month card uses the current calendar-month range and opens Insights 
 1. **Welcome / Name setup:** shown only if no valid name is saved.
 2. **Home:** greeting top-left; Settings gear top-right; clickable This month card; three category hero cards.
 3. **Category Products:** product rows show name/current stock; plus and three-dot actions; tapping the main row opens history; Add Product is separate.
-4. **Create/Edit Product:** name, category fixed by the current category context, measurement dimension and preferred unit.
+4. **Create/Edit Product:** name and measurement type (Mass, Liquid, or Units); category is fixed by the current category context. Product creation does not ask for a preferred unit.
 5. **Add/Use chooser:** opened by plus action, with two clear choices.
 6. **Add transaction form:** quantity, compatible unit, amount paid and purchase date.
 7. **Use transaction form:** current stock, quantity to use, compatible unit and date.
