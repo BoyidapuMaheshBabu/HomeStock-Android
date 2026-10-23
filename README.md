@@ -2,9 +2,9 @@
 
 IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
 
-**Status:** Ready for implementation — application code has not started.
-**Working branch:** phase/01-foundation-and-project-setup.
-**Planning baseline:** reviewed and merged into `main`; Phase 01 branch created from the merged baseline.
+**Status:** Phase 01 accepted; Phase 02 — Welcome and Home is next.
+**Working branch:** phase/02-welcome-and-home.
+**Baseline:** Phase 01 was merged into `main` via PR #2; this branch is based on the merged `main`.
 
 ## Product at a glance
 
@@ -24,6 +24,7 @@ IntiVentory is a planned **offline-first native Android household inventory and 
 - [Architecture](docs/ARCHITECTURE.md) — selected technical stack, package structure, schema, state flow, calculations, privacy and test layers.
 - [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
+- [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
