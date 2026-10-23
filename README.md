@@ -2,8 +2,9 @@
 
 IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
 
-**Status:** Planning & Research — implementation has not started.
-**Working branch:** planning/research.
+**Status:** Ready for implementation — application code has not started.
+**Working branch:** phase/01-foundation-and-project-setup.
+**Planning baseline:** reviewed and merged into `main`; Phase 01 branch created from the merged baseline.
 
 ## Product at a glance
 

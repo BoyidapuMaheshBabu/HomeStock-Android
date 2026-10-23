@@ -1,17 +1,18 @@
 # Roadmap
 
-**Current status: Planning & Research — implementation has not started.**
-**Current branch:** planning/research.
+**Current status: Phase 01 ready — branch created; application implementation has not started.**
+**Current branch:** phase/01-foundation-and-project-setup.
+**Planning baseline:** merged into `main` via PR #1.
 
 The architecture and product specification are the working contract. Checkboxes below are planned work, not evidence that the app has been implemented.
 
 ## Planning sign-off
 
-- [ ] Review product requirements, architecture and acceptance tests.
-- [ ] Verify the target phone is compatible with the planned minimum Android API.
-- [ ] Agree the starter product list and default units.
-- [ ] Confirm the first MVP uses read-only transaction history.
-- [ ] Approve the planning specification before creating the implementation branch.
+- [x] Review and approve product requirements, architecture and acceptance tests for implementation.
+- [x] Confirm the intended phone runs Android 15 (API 35), compatible with the planned minimum API 26.
+- [x] Agree the three fixed categories and starter product names; choose sensible compatible preset units during Phase 03 catalog seeding.
+- [x] Confirm the first MVP uses read-only transaction history.
+- [x] Merge the planning baseline into `main` and create the first implementation branch from it.
 
 ## Phase 01 — Android foundation
 
@@ -86,10 +87,9 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 
 ## Branch workflow
 
-1. Continue research on planning/research.
-2. Review and approve the product, architecture and acceptance tests.
-3. Commit the accepted planning documents to main.
-4. Create the first implementation branch from the latest main.
-5. Implement one focused phase at a time and verify builds/tests/device behavior.
-6. After user acceptance, merge each phase to main, update evidence, and create the next branch from the latest main.
+1. Keep research/design refinements on `planning/research` when needed; do not replace accepted implementation-branch requirements casually.
+2. The reviewed planning and branding baseline has been merged into `main`.
+3. Phase 01 implementation runs on `phase/01-foundation-and-project-setup`, created from the latest `main`.
+4. Implement one focused phase at a time and verify builds, tests and device behavior.
+5. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
 

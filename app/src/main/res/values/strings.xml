@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">IntiVentory</string>
+    <string name="telugu_app_name">ఇంటి వెంటరీ</string>
+    <string name="telugu_app_caption">మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.</string>
+    <string name="app_tagline">Inti (ఇంటి) + Inventory</string>
+    <string name="status_phase_01">Phase 01 — Foundation Ready</string>
+</resources>
