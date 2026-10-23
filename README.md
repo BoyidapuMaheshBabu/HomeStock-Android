@@ -33,13 +33,15 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 - Native Android, local-first. No account, cloud sync or internet permission.
 - Stock starts at zero and is derived from saved Add/Use transactions.
-- Mass uses kg/g; volume uses L/ml; count uses whole pieces/units. Never mix dimensions.
-- Product creation is separate from a purchase.
+- Each product has one measurement type: Mass (kg/g), Liquid (L/ml), or Units (whole pieces). Compatible quantities convert exactly into integer base units.
+- Product creation asks for a name and measurement type, not a preferred unit, starting quantity, or price.
 - Add requires quantity, compatible unit, actual amount paid and date.
 - Use reduces stock only; it does not change money already spent.
 - Spending totals derive from Add transactions and update immediately.
 - Month filters follow calendar boundaries; custom ranges include both selected dates.
-- Delete products only if they have no transaction history, with confirmation. Products with history can be archived only at zero stock; their history still counts toward spending.
+- Measurement type can change only before a product's first transaction. After any transaction, it is locked even when stock returns to zero.
+- Archive hides a product while preserving stock-derived quantity, history and spending, regardless of current stock. Restore returns it to active use.
+- Delete permanently removes the product and all its associated transaction history after explicit destructive confirmation; the operation must be atomic and spending totals recalculate.
 - JSON backup/restore is deferred until after the intended user accepts the core app.
 
 ## Implementation status
