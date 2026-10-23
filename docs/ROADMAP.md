@@ -1,10 +1,10 @@
 # Roadmap
 
-**Current status: Phase 01 ready — branch created; application implementation has not started.**
-**Current branch:** phase/01-foundation-and-project-setup.
-**Planning baseline:** merged into `main` via PR #1.
+**Current status: Phase 01 accepted; Phase 02 ready to implement.**
+**Current branch:** phase/02-welcome-and-home.
+**Planning baseline:** planning and branding merged via PR #1; Phase 01 implementation accepted and merged via PR #2.
 
-The architecture and product specification are the working contract. Checkboxes below are planned work, not evidence that the app has been implemented.
+The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
 ## Planning sign-off
 
@@ -16,15 +16,15 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 01 — Android foundation
 
-- [ ] Native Kotlin Android project, Gradle Kotlin DSL, version catalog, single Activity and single app module.
-- [ ] Jetpack Compose + Material 3, Navigation 3, screen ViewModels, Kotlin coroutines/Flow, Room/SQLite, Preferences DataStore.
-- [ ] Manual AppContainer dependency wiring.
-- [ ] Create package structure from ARCHITECTURE.md.
-- [ ] Set up app theme, local database, preferences and navigation.
-- [ ] Build and launch a minimal app on the intended phone.
-- [ ] Record actual dependency versions and verified build evidence.
+- [x] Native Kotlin Android project, Gradle Kotlin DSL, version catalog, single Activity and single app module.
+- [x] Jetpack Compose + Material 3, Navigation 3, screen ViewModels, Kotlin coroutines/Flow, Room/SQLite, Preferences DataStore.
+- [x] Manual AppContainer dependency wiring.
+- [x] Create package structure from ARCHITECTURE.md.
+- [x] Set up app theme, local database, preferences and navigation.
+- [x] Build and launch a minimal app on the intended phone.
+- [x] Record actual dependency versions and verified build evidence.
 
-**Acceptance:** App compiles and launches on the intended device. No features are claimed complete based only on code generation.
+**Acceptance:** Accepted by Mahesh after a successful physical-phone launch, icon verification and Telugu-text rendering check. Friday reported successful debug build and 13/13 passing unit tests; see PHASE-01-VERIFICATION.md.
 
 ## Phase 02 — Welcome and Home
 
@@ -88,8 +88,9 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 ## Branch workflow
 
 1. Keep research/design refinements on `planning/research` when needed; do not replace accepted implementation-branch requirements casually.
-2. The reviewed planning and branding baseline has been merged into `main`.
-3. Phase 01 implementation runs on `phase/01-foundation-and-project-setup`, created from the latest `main`.
-4. Implement one focused phase at a time and verify builds, tests and device behavior.
-5. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+2. The reviewed planning and branding baseline was merged into `main` via PR #1.
+3. Phase 01 was accepted and merged into `main` via PR #2.
+4. Phase 02 uses `phase/02-welcome-and-home`, created from the updated `main`.
+5. Implement one focused phase at a time and verify builds, tests and device behavior.
+6. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
 
