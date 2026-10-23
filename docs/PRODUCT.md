@@ -44,11 +44,13 @@ Creating a product is a separate workflow. It asks for the product name, categor
 - Never let a unit change silently reinterpret old transaction quantities.
 - If transaction history already exists and a dimension change is requested (such as mass to volume), block it or require a safe migration path rather than changing old meaning.
 
-### Delete confirmation and history safety
+### Delete, archive, and history safety
 
-- Delete opens a confirmation dialog before any change.
-- Product deletion must not silently remove purchase/usage history or alter spending totals.
-- Decide during planning whether a product with history is archived/hidden or whether deletion is blocked. Products without history may be permanently deleted after confirmation.
+- **Delete:** If a product has no purchase or usage transactions, allow permanent deletion only after a confirmation dialog. This is for products created accidentally or never used.
+- **Archive / Hide:** If a product has transaction history and its current stock is zero, offer Archive / Hide. Remove it from the active product list, but preserve its transaction history and all spending totals.
+- **Stock remains:** Do not allow Archive / Hide while current stock is greater than zero. The user can record the remaining quantity through Use if it was consumed, expired, or thrown away; when stock reaches zero, the product can be archived.
+- An archived product's historic transactions remain available from its history and remain included in the date-appropriate spending totals.
+- Editing or deleting must never silently reinterpret old quantities or corrupt spending.
 
 ## 5. Unit model
 
@@ -74,9 +76,11 @@ On confirmation, save a separate purchase transaction. Increase stock by the ent
 
 ### B. Use transaction (consumption / stock-out)
 
-The user taps the product's plus action and chooses **Use**. The form shows the current available stock and its unit before requesting how much was used.
+The user taps the product's plus action and chooses **Use**. The form shows the current available stock and its unit before requesting the quantity.
 
-On confirmation, save a dated usage transaction and deduct the quantity immediately. Usage does not reduce recorded purchase spending because the money was already spent when the purchase occurred.
+Use represents stock leaving inventory. It covers normal consumption and, when needed, stock that expired or was thrown away. The user records the amount through the same Use flow; no separate disposal feature is needed in the first version.
+
+On confirmation, save a dated Use transaction and deduct the quantity immediately. Use does not reduce recorded purchase spending because the money was already spent when the purchase occurred.
 
 ### C. Stock validation
 
@@ -169,9 +173,10 @@ JSON backup/restore is deferred until after the core app is built and accepted b
 - If 1 kg remains, trying to use 10 kg is rejected and creates no invalid transaction.
 - Product tap opens a scrollable transaction history grouped by date, without requiring time-of-day.
 - Add/Purchase history shows amount paid; Use history shows quantity consumed and stock impact.
-- Product Edit/Delete actions are available; Delete asks for confirmation and does not silently corrupt history or spending.
+- Product Edit/Delete/Archive behavior is safe: Delete is for products with no transactions and requires confirmation; products with history can be archived only when stock is zero, preserving history and spending.
 - The all-time total changes immediately from ₹5,000 to ₹5,005 after saving a ₹5 purchase.
 - Dashboard spending filters support Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
-- Usage changes stock, not past purchase spending.
+- Use can represent consumption or expired/discarded stock. Use changes stock, not past purchase spending.
+- A product with no transactions can be deleted after confirmation. A product with history can be archived only when stock is zero, and its history/spending remain preserved.
 - Core records persist across restart and work offline.
 - JSON backup/restore remains deferred until after user acceptance.
