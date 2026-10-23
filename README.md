@@ -2,7 +2,7 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–02 accepted; Phase 03 — Product catalogue and management is ready to implement.
+**Status:** Phases 01–02 accepted; Phase 03 — Product catalogue and management is in progress, with final refinement and acceptance pending.
 **Working branch:** phase/03-product-catalogue-and-management.
 **Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
@@ -46,4 +46,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01 and 02 are accepted: the native Android foundation, Welcome/name setup and Home dashboard are implemented. Phase 03 is active for product catalogue and management. Add/Use workflows, product history and full Insights behavior remain assigned to later phases. See [Phase 02 verification](docs/PHASE-02-VERIFICATION.md) for recorded evidence and its limits.
+Phases 01 and 02 are accepted: the native Android foundation, Welcome/name setup and Home dashboard are implemented. Phase 03 is active for product catalogue and management; final implementation corrections and acceptance checks remain. Add/Use workflows, product history and full Insights behavior remain assigned to later phases. See [Phase 02 verification](docs/PHASE-02-VERIFICATION.md) for recorded evidence and its limits.
