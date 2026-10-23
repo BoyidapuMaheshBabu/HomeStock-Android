@@ -1,7 +1,7 @@
 # IntiVentory Architecture
 
 **Status:** Selected architecture for the planned MVP; not implemented or build-verified.
-**Implementation branch:** phase/01-foundation-and-project-setup.
+**Current implementation branch:** phase/02-welcome-and-home.
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
 
