@@ -2,156 +2,176 @@
 
 ## 1. Problem and intended user
 
-HomeStock is for the user's sister and household. The main need is to record household-product purchases and quantities, see what remains, and monitor how much money is spent on home products over time.
+HomeStock is for the user's sister and household. It is a simple offline Android app for tracking household-product purchases, usage, available quantities, and—especially—how much money the household spends over time.
 
-The intended user wants a simple Android app rather than a website or complicated inventory system.
+## 2. First launch
 
-## 2. Product outcome
-
-Starting from the first day she uses HomeStock, the user can record each household purchase, track product usage and remaining quantity, and see spending totals for selected time periods. The core experience works offline and updates totals immediately after a purchase is saved.
-
-## 3. First-launch experience
-
-- On first launch, ask for the user's name.
-- Save the name locally and reuse it on later launches.
-- Show a greeting based on device local time, such as “Good morning, Priya!”
+- Ask for the user's name on first launch and save it locally.
+- Show a friendly time-based greeting, such as “Good morning, Priya!”
 - Do not require an account or internet connection.
-- The user begins tracking with purchases recorded from that point onward. No opening-stock entry is required.
+- Tracking begins with purchases the user records after starting to use the app. Do not require opening-stock entry for products already in the house.
 
-## 4. Fixed top-level home categories
+## 3. Home screen and fixed categories
 
-The first version has exactly three top-level categories:
+The home screen shows exactly three large, rectangular, clickable hero cards:
 
-1. **Food & Kitchen:** rice, dal, flour, oil, spices, and related household food staples.
+1. **Food & Kitchen:** rice, dal, flour, oil, spices, and related staples.
 2. **Home Care & Cleaning:** toilet/bathroom/floor cleaner, dishwashing liquid, detergent, disinfectant, and related products.
 3. **Personal Care & Cosmetics:** soap, shampoo, toothpaste, hair oil, creams, and related products.
 
-Do not add separate top-level categories for snacks, drinks, or other groups in the first version. The intended user does not want those categories. Keep the three main home categories fixed.
+Do not add separate top-level categories for snacks, drinks, or other groups in the first version. Do not provide a feature to add top-level categories.
 
-## 5. Product customization within fixed categories
+## 4. Product management within each category
 
-- Provide common starter products inside each fixed category.
-- Provide **Add product** inside each category for items not included in the starter list.
-- Each product has a three-dot menu with **Edit** and **Delete**.
-- Edit allows the user to change the product name and compatible unit, subject to data-integrity safeguards.
-- Do not ask the user to select or maintain a brand.
-- New starter/custom product definitions begin with zero recorded stock. The first recorded purchase increases available stock.
+Each category contains a list of preset starter products and an option to add a custom product.
 
-### Product edit/delete safety
+Each product row should have:
+- Product name on the left.
+- Plus (+) action on the right.
+- Three-dot overflow menu with Edit and Delete.
+- A tappable main row area that opens product transaction history.
 
-- Convert units only within their measurement dimension: kg/g, L/ml, or pieces/units.
-- Never reinterpret existing kg history as litres or otherwise change the meaning of saved quantities.
-- If a product has purchase or usage history, deletion must not silently erase transactions or alter spending totals. Final behavior (such as archive/hide or blocking deletion) remains an open design decision for planning.
-- Require confirmation for destructive actions.
+Tapping the plus action opens two separate transaction actions: **Add** and **Use**. These are not the same as creating a product.
 
-## 6. Unit model
+### New product setup
+
+Creating a product is a separate workflow. It asks for the product name, category, and measurement dimension/unit. It does not automatically open a purchase form or require a price. The new product starts with zero recorded stock until the user records a purchase.
+
+### Product editing
+
+- Allow editing of the product name and its compatible measurement unit.
+- Do not ask for or store a brand.
+- Never let a unit change silently reinterpret old transaction quantities.
+- If transaction history already exists and a dimension change is requested (such as mass to volume), block it or require a safe migration path rather than changing old meaning.
+
+### Delete confirmation and history safety
+
+- Delete opens a confirmation dialog before any change.
+- Product deletion must not silently remove purchase/usage history or alter spending totals.
+- Decide during planning whether a product with history is archived/hidden or whether deletion is blocked. Products without history may be permanently deleted after confirmation.
+
+## 5. Unit model
 
 Each product uses one measurement dimension:
 - **Mass:** kilograms (kg), grams (g).
 - **Volume:** litres (L), millilitres (ml).
 - **Count:** pieces/units, such as bars of soap.
 
-Only convert units within the same dimension. Do not convert mass to volume without product-specific density information.
+Only convert within the same dimension. Do not convert mass to volume without product-specific density information. Show appropriate unit choices for the product's dimension; never allow kg/ml/count to be mixed within one product's stock arithmetic.
 
-## 7. Purchase, usage, and stock workflow
+## 6. Product list and plus-action workflow
 
-### A. Record a purchase
+### A. Add transaction (purchase / stock-in)
 
-For every purchase, the user selects the product and records:
-- Quantity and compatible unit
-- Actual amount paid in INR (₹)
-- Purchase date
+The user taps the product's plus action and chooses **Add**. The app shows an Add form for that product, including:
+- Product name for context.
+- Quantity.
+- A unit selector restricted to that product's measurement dimension (for example, kg/g for rice; L/ml for oil or cleaner; pieces/units for soap).
+- Actual amount paid in INR (₹).
+- Purchase date.
 
-Each purchase is a separate dated record. Do not store only one mutable price on the product: the same product may have a different price on a later purchase.
+On confirmation, save a separate purchase transaction. Increase stock by the entered quantity and include the paid amount in spending totals for the purchase date. Update relevant UI immediately. The same transaction must not count twice.
 
-Saving a purchase must immediately update available stock, purchase history, and all applicable dashboard/Insights spending totals. Totals should derive from the saved transaction, not be incremented separately in a way that can count it twice. There should be no manual refresh requirement.
+### B. Use transaction (consumption / stock-out)
 
-### B. Record usage
+The user taps the product's plus action and chooses **Use**. The form shows the current available stock and its unit before requesting how much was used.
 
-The user records the quantity used and date. Usage reduces available stock and updates the displayed remaining quantity immediately. Usage does **not** subtract from historical purchase spending, because the money was already spent when the purchase was made.
+On confirmation, save a dated usage transaction and deduct the quantity immediately. Usage does not reduce recorded purchase spending because the money was already spent when the purchase occurred.
 
-The app must prevent or clearly handle usage greater than available stock.
+### C. Stock validation
 
-### C. Current stock
+- Reject zero or negative usage quantities.
+- Do not allow a usage quantity greater than current stock.
+- If current stock is 1 kg and the user enters 10 kg, reject the transaction and explain the available stock.
+- Normalize compatible units before checking and subtracting (for example, 500 g used from 2 kg stock leaves 1.5 kg).
+- Never allow negative stock due to invalid input, double taps, or stale displayed values.
+- Only update stock after the transaction is successfully saved.
 
-The first version starts with zero recorded stock and does not require the user to declare products already in the home. For each product:
+## 7. Product transaction history screen
 
-**Remaining stock = recorded purchased quantity − recorded used quantity**, after compatible-unit normalization.
+Tapping the product row (not its plus action or overflow menu) opens that product's transaction history.
 
-Quantity and unit show what remains; they are not a financial estimate of the amount of money currently on the shelf.
+Requirements:
+- Vertically scrollable transaction list.
+- Group entries by date, using familiar date labels such as Today, Yesterday, or a calendar date.
+- Date is required; time-of-day is not required in the first version.
+- Label each entry clearly as Add/Purchase or Use.
+- Show quantity and compatible unit.
+- For Add/Purchase entries, show the actual amount paid.
+- Show stock impact or resulting balance so users can understand how stock changed.
+- Show total recorded spending for this product if it can be presented clearly.
+- The list must preserve transaction history rather than deriving it from only the product's current values.
 
 ## 8. Dashboard and spending Insights
 
-Spending is the **primary dashboard metric**. The app is a practical household expense and inventory tracker: she records purchases and the app calculates the totals.
+Spending is the primary money metric.
 
-### Cumulative spending since app start
+### Cumulative spending
 
-The app must show total money spent on purchases recorded since the user's first recorded purchase in HomeStock, through today. This total does not decrease when a product is used, because usage does not reverse money already spent.
+Show total money spent on purchases recorded since the user started using HomeStock, through today. It does not decrease when products are used.
 
-**Example:**
-- Previously recorded household purchases: ₹5,000
-- Newly saved shampoo purchase: ₹5
-- New cumulative spending total: **₹5,005**
+Example:
+- Previously recorded purchase spending: ₹5,000.
+- Newly saved shampoo purchase: ₹5.
+- Immediately displayed all-time total: **₹5,005**.
 
-This number means **total recorded purchase spending**, not the estimated market value of current remaining stock. Adding/editing a product definition alone does not change spending. Saving a purchase with its actual amount does.
+This amount means total recorded purchase spending, not the current market value of products remaining in the home. Adding/editing a product alone does not affect spending.
 
 ### Date filters
 
-Provide these spending views:
+Provide:
 - **Last 7 days**
 - **Last 1 month**
 - **Last 3 months**
 - **Custom date range**
 - **All time / Since app start**
 
-Each filtered total is the sum of actual purchase amounts whose purchase dates fall within the selected range. Use the device's local calendar/date context for filter boundaries and display the range clearly. Exact semantics for “Last 1 month” and “Last 3 months” (rolling intervals versus calendar months) must be finalized during planning before implementation.
+Each filtered total is the sum of purchase amounts whose purchase dates fall in the selected period. Show the selected range and use the device's local date context. Finalize during planning whether month filters are rolling intervals or calendar months.
 
-### Quantity alongside spending
+### Immediate updates
 
-The dashboard/Insights must also make available remaining product quantities using appropriate units, with access to purchase and usage history. Keep monetary totals distinct from remaining stock quantities. Category-level spending may be included if it helps the user's decisions without cluttering the screen.
+After an Add/Purchase transaction is saved:
+- Update current stock and the product's transaction history.
+- Update applicable date-filtered spending.
+- Update all-time spending.
+- Count the transaction exactly once.
 
-### Immediate recalculation rules
+After a Use transaction is saved:
+- Update current stock and usage history.
+- Do not change purchase-spending totals.
 
-After a purchase is successfully saved:
-- Recalculate the applicable date-filtered spending total.
-- Recalculate the all-time spending total.
-- Update purchase history and available stock.
-- Ensure the same saved purchase is counted exactly once.
+## 9. Offline behavior and persistence
 
-After usage is saved:
-- Recalculate remaining quantity and usage history.
-- Do not alter historical purchase-spending totals.
+Product definitions, saved user name, purchase transactions, usage transactions, stock, and spending summaries must persist locally and work without internet access. No account or cloud sync is required.
 
-## 9. Offline behavior and local persistence
+## 10. Deferred backup
 
-- Core product, purchase, usage, stock, and spending features work without internet.
-- Name, product definitions, purchase records, and usage records persist across app restarts.
-- No account, cloud database, or multi-device sync is required in the first version.
-
-## 10. Deferred feature: JSON backup and restore
-
-JSON backup/restore is **not part of the initial core-app scope**. Revisit it only after the core app is built and the intended user has reviewed and accepted it.
+JSON backup/restore is deferred until after the core app is built and accepted by the intended user.
 
 ## 11. First-version exclusions
 
-- Product brand selection or brand management.
-- Additional top-level home categories.
-- Mandatory opening-stock entry for products already in the home.
-- User accounts, cloud sync, or online-only behavior.
-- AI recommendations, barcode scanning, receipt OCR, or automatic price lookup.
-- JSON backup/restore in the initial core version.
+- Product brands.
+- Additional top-level categories.
+- Mandatory opening-stock entry.
+- Account/cloud sync.
+- AI recommendations, barcode scanning, receipt OCR, automatic price lookup.
+- JSON backup/restore in the core MVP.
 
 ## 12. MVP acceptance criteria
 
-- First launch asks for the user's name once, saves it, and later shows a time-appropriate greeting.
-- Home shows exactly the three fixed categories.
-- The user can select preset products, add custom products, and edit/delete products without silently corrupting historical records.
-- A purchase records product, quantity, compatible unit, actual amount paid, and date.
-- A usage entry reduces the correct product's stock.
-- Example stock checks pass: 5 kg rice purchased, 1 kg used, 4 kg remains; 1 L cleaner purchased, 200 ml used, 800 ml remains; 10 soap bars purchased, 2 used, 8 remain.
-- If the tracked purchase total is ₹5,000 and a ₹5 purchase is saved, the all-time spending total immediately shows ₹5,005.
-- The dashboard supports Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
-- Date-filtered totals reconcile exactly with purchase transactions in each range.
+- Home has exactly three large clickable category cards.
+- A category shows product rows with the name on the left, plus action, and three-dot menu.
+- Creating a product is separate from recording a purchase; a new product starts at zero stock.
+- Plus opens separate Add and Use actions.
+- Add records quantity, compatible unit, actual amount paid, and date; stock and spending update immediately.
+- Use displays current stock, records quantity used and date, and subtracts only if valid.
+- Example: 10 kg rice purchased, 1 kg used, 9 kg remains.
+- If 1 kg remains, trying to use 10 kg is rejected and creates no invalid transaction.
+- Product tap opens a scrollable transaction history grouped by date, without requiring time-of-day.
+- Add/Purchase history shows amount paid; Use history shows quantity consumed and stock impact.
+- Product Edit/Delete actions are available; Delete asks for confirmation and does not silently corrupt history or spending.
+- The all-time total changes immediately from ₹5,000 to ₹5,005 after saving a ₹5 purchase.
+- Dashboard spending filters support Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
 - Usage changes stock, not past purchase spending.
-- Totals persist and remain correct after app restart; core workflows work in airplane mode.
-- JSON backup/restore is deferred until the intended user accepts the core app.
+- Core records persist across restart and work offline.
+- JSON backup/restore remains deferred until after user acceptance.
