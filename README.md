@@ -1,6 +1,6 @@
 # IntiVentory — Home Inventory & Spending Tracker
 
-IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
+IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
 **Status:** Phases 01–02 accepted; Phase 03 — Product catalogue and management is ready to implement.
 **Working branch:** phase/03-product-catalogue-and-management.
