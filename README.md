@@ -1,6 +1,6 @@
-# HomeStock
+# IntiVentory — Home Inventory & Spending Tracker
 
-HomeStock is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
+IntiVentory is a planned **offline-first native Android household inventory and spending tracker** for the user's sister and household.
 
 **Status:** Planning & Research — implementation has not started.
 **Working branch:** planning/research.
@@ -23,7 +23,7 @@ HomeStock is a planned **offline-first native Android household inventory and sp
 - [Architecture](docs/ARCHITECTURE.md) — selected technical stack, package structure, schema, state flow, calculations, privacy and test layers.
 - [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
-- [Branding direction](docs/BRANDING.md) — locked logo concept and color palette; final app name pending the intended user's decision.
+- [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
 ## Key rules
