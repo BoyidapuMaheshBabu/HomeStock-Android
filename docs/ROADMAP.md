@@ -57,11 +57,17 @@ The roadmap is provisional until the product flow, transaction model, date filte
 ## Phase 06 — Dashboard, spending filters, and usability (planned)
 
 - [ ] Make cumulative purchase spending since app start a primary dashboard metric.
-- [ ] Provide Last 7 days, Last 1 month, Last 3 months, Custom date range, and All time / Since app start.
-- [ ] Finalize rolling-window versus calendar-month semantics.
+- [ ] Provide Last 7 days (today plus the previous six calendar dates).
+- [ ] Provide This month (the first day of the current calendar month through today).
+- [ ] Provide Last 3 months (the first day of the calendar month two months before the current month through today).
+- [ ] Provide Custom date range, inclusive of both selected start and end dates.
+- [ ] Provide All time / Since app start.
+- [ ] Use calendar-month boundaries, not rolling same-date periods; show the actual date range for each view.
 - [ ] Update all relevant spending totals immediately after a saved purchase.
 - [ ] Keep usage from altering past spending totals.
 - [ ] Test period boundaries, invalid input, double submission, app restarts, and airplane mode.
+- [ ] Verify monthly boundaries with a known example: on October 23, This month = October 1–23; Last 3 months = August 1–October 23.
+- [ ] Verify custom-range totals include both selected dates and no purchases outside the selected range.
 - [ ] Verify expired/discarded items can be recorded through Use without changing purchase spending.
 - [ ] Verify a product with history cannot be archived while stock remains, and can be archived at zero stock without losing history.
 
