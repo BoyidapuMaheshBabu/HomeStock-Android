@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deep_teal">#2F6B62</color>
+    <color name="soft_sage">#B9D0C0</color>
+    <color name="warm_mist">#F4F6F0</color>
+    <color name="clean_white">#FFFFFF</color>
+    <color name="forest_charcoal">#273832</color>
+    <color name="muted_sage_gray">#52665C</color>
+</resources>
