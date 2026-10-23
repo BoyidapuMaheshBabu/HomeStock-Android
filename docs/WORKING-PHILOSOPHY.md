@@ -24,6 +24,7 @@ Implement one scoped phase at a time. A phase is complete only when acceptance t
 ## Repository workflow
 - GitHub is the source of truth for scope, planning documents, code and evidence.
 - The accepted planning baseline is merged into `main`.
-- The active implementation branch is `phase/01-foundation-and-project-setup`, created from that baseline.
+- Phase 01 was accepted and merged into `main` via PR #2.
+- The active implementation branch is `phase/02-welcome-and-home`, created from the updated `main`.
 - After each accepted implementation phase, merge it to main, update status/evidence, and create the next phase branch from latest main.
 - Keep README and portfolio claims aligned with verified repository evidence.

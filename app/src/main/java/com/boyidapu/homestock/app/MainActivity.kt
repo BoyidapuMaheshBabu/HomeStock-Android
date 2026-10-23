@@ -13,12 +13,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val appContainer = (application as HomeStockApplication).appContainer
         setContent {
             IntiVentoryTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    HomeStockAppNavHost()
+                    HomeStockAppNavHost(appContainer = appContainer)
                 }
             }
         }

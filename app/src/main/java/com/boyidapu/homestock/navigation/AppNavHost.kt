@@ -2,37 +2,132 @@ package com.boyidapu.homestock.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.boyidapu.homestock.R
-import com.boyidapu.homestock.ui.theme.DeepTeal
-import com.boyidapu.homestock.ui.theme.ForestCharcoal
-import com.boyidapu.homestock.ui.theme.MutedSageGray
+import com.boyidapu.homestock.app.AppContainer
+import com.boyidapu.homestock.ui.category.CategoryScreen
+import com.boyidapu.homestock.ui.home.HomeScreen
+import com.boyidapu.homestock.ui.home.HomeViewModel
+import com.boyidapu.homestock.ui.insights.InsightsScreen
+import com.boyidapu.homestock.ui.insights.InsightsViewModel
+import com.boyidapu.homestock.ui.onboarding.WelcomeScreen
+import com.boyidapu.homestock.ui.onboarding.WelcomeViewModel
+import com.boyidapu.homestock.ui.settings.SettingsScreen
+import com.boyidapu.homestock.ui.settings.SettingsViewModel
 
 @Composable
 fun HomeStockAppNavHost(
+    appContainer: AppContainer,
     modifier: Modifier = Modifier
 ) {
-    val backStack = rememberNavBackStack(Screen.Home)
+    val isOnboardingCompleted by appContainer.userRepository.isOnboardingCompleted.collectAsState(initial = null)
+
+    // While loading onboarding status from DataStore, render clean background to prevent startup flash
+    if (isOnboardingCompleted == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+        )
+        return
+    }
+
+    val initialScreen: NavKey = if (isOnboardingCompleted == true) Screen.Home else Screen.Welcome
+    val backStack = rememberNavBackStack(initialScreen)
+
     val entries = entryProvider<NavKey> {
+        entry<Screen.Welcome> {
+            val welcomeViewModel: WelcomeViewModel = viewModel(
+                factory = viewModelFactory {
+                    initializer { WelcomeViewModel(appContainer.userRepository) }
+                }
+            )
+            WelcomeScreen(
+                viewModel = welcomeViewModel,
+                onOnboardingComplete = {
+                    backStack.clear()
+                    backStack += Screen.Home
+                }
+            )
+        }
+
         entry<Screen.Home> {
-            FoundationHomeScreen()
+            val homeViewModel: HomeViewModel = viewModel(
+                factory = viewModelFactory {
+                    initializer {
+                        HomeViewModel(
+                            appContainer.userRepository,
+                            appContainer.transactionRepository
+                        )
+                    }
+                }
+            )
+            HomeScreen(
+                viewModel = homeViewModel,
+                onNavigateToCategory = { categoryId ->
+                    backStack += Screen.CategoryProducts(categoryId)
+                },
+                onNavigateToInsights = {
+                    backStack += Screen.Insights
+                },
+                onNavigateToSettings = {
+                    backStack += Screen.Settings
+                }
+            )
+        }
+
+        entry<Screen.CategoryProducts> { key ->
+            CategoryScreen(
+                categoryId = key.categoryId,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.Insights> {
+            val insightsViewModel: InsightsViewModel = viewModel(
+                factory = viewModelFactory {
+                    initializer { InsightsViewModel(appContainer.transactionRepository) }
+                }
+            )
+            InsightsScreen(
+                viewModel = insightsViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.Settings> {
+            val settingsViewModel: SettingsViewModel = viewModel(
+                factory = viewModelFactory {
+                    initializer { SettingsViewModel(appContainer.userRepository) }
+                }
+            )
+            SettingsScreen(
+                viewModel = settingsViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
         }
     }
 
@@ -41,54 +136,4 @@ fun HomeStockAppNavHost(
         entryProvider = entries,
         modifier = modifier.fillMaxSize()
     )
-}
-
-@Composable
-fun FoundationHomeScreen() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(24.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = stringResource(id = R.string.app_name),
-                fontSize = 36.sp,
-                fontWeight = FontWeight.Bold,
-                color = DeepTeal
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(id = R.string.telugu_app_name),
-                fontSize = 24.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = DeepTeal
-            )
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(
-                text = stringResource(id = R.string.telugu_app_caption),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal,
-                color = MutedSageGray
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = stringResource(id = R.string.app_tagline),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-                color = ForestCharcoal
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = stringResource(id = R.string.status_phase_01),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium,
-                color = DeepTeal
-            )
-        }
-    }
 }
