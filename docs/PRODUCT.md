@@ -10,6 +10,7 @@ IntiVentory is for the user's sister and household. The repository remains named
 - Brand caption: **మన ఇంటి సరుకులు, మన ఇంటి లెక్కలు.**
 - Ask for the user's name on first launch.
 - Trim whitespace and reject a blank name.
+- Limit the display name to 10 characters in Welcome and Settings.
 - Save the name locally and reuse it on later launches.
 - Show a friendly time-based greeting using device-local time.
 - No account or internet connection is required.
@@ -38,14 +39,16 @@ Seed the preset product list once and begin all products with zero recorded stoc
 
 Product rows show the name and current quantity on the left, plus action and three-dot menu on the right. Tapping the main row opens product history.
 
-Creating a product is separate from purchasing it. Product creation asks for the name, fixed category context, and measurement dimension/default unit; it does not ask for price or starting quantity. New products begin at zero stock.
+Creating a product is separate from purchasing it. Product creation asks for the name and one measurement type; the fixed category comes from the current category screen. It does not ask for a preferred unit, price, or starting quantity. New products begin at zero stock. Product names are limited to 40 characters.
 
-A product uses one dimension:
-- Mass: kg/g.
-- Volume: L/ml.
-- Count: pieces/units.
+Every product has exactly one measurement type:
+- **Mass:** compatible quantity-entry units are kg and g.
+- **Liquid:** compatible quantity-entry units are L and ml.
+- **Units:** compatible quantity-entry quantity is a whole-number count of pieces/items.
 
-Starter products have sensible unit defaults. A unit dimension may be changed before any transaction exists. Once transactions exist, the dimension cannot be changed; a preferred unit may change within the same dimension.
+The user selects the quantity unit when recording each Add or Use transaction. Do not store a preferred/default unit on the product and do not treat compatible units as separate product types. Store Mass in integer grams, Liquid in integer millilitres, and Units as whole integer counts. Convert between compatible units exactly and display stock in a clear, readable form without requiring a product-level preferred-unit setting.
+
+For a product with no transaction history, allow the measurement type to be changed freely among Mass, Liquid, and Units, even after earlier type changes have been saved. Once any transaction exists, lock the measurement type permanently, even if current stock later returns to zero. The editor must continue to show the saved type as selected and must not remove the other type options from a product with no transaction history.
 
 ## 6. Product row actions and safety
 
@@ -55,12 +58,11 @@ Opens Add and Use choices:
 - **Use:** consumption/stock-out.
 
 ### Three-dot menu
-- **Edit:** product name and compatible preferred unit.
-- **Delete:** only when the product has no transaction history; require confirmation.
-- **Archive / Hide:** only when transaction history exists and stock is zero. Preserve all history and spending.
-- If stock remains, block archive. For consumed, expired or discarded stock, record the quantity through Use; no separate disposal feature.
-- Archived products disappear from active category lists and appear under Settings > Archived Products. Restore makes an archived item active again.
-- A product with transaction history must never be permanently deleted through the UI.
+- **Edit:** product name (maximum 40 characters) and measurement type, subject to the transaction-history rule above. Do not offer a preferred-unit setting.
+- **Delete permanently:** allow for a product with or without transaction history, after an explicit confirmation that the product and all associated history will be permanently deleted. The confirmation must clearly warn that this cannot be undone. Delete the product and its transactions atomically; a failure must not leave partial deletion. Recalculate spending totals without the deleted Add transactions. Ensure a deleted preset is not silently recreated by seeding.
+- **Archive / Hide:** allow when the user no longer wants an item, regardless of current stock or whether transaction history exists. Archive preserves the product, current derived stock, all transactions, and spending totals. It hides the product from active category lists and prevents new transactions while archived.
+- **Restore:** archived products appear under Settings > Archived Products. Restoring makes the original product active again with its previous stock and complete history. It must not create duplicates or reseed the product.
+- Archive is reversible; permanent deletion is not. Never use Archive as a reason to discard history, and never delete history as part of an Archive operation.
 
 ## 7. Add transaction
 
