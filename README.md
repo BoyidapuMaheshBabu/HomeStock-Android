@@ -23,6 +23,7 @@ HomeStock is a planned **offline-first native Android household inventory and sp
 - [Architecture](docs/ARCHITECTURE.md) — selected technical stack, package structure, schema, state flow, calculations, privacy and test layers.
 - [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
 - [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
+- [Branding direction](docs/BRANDING.md) — locked logo concept and color palette; final app name pending the intended user's decision.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
 ## Key rules
