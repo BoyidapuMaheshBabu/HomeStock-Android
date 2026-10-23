@@ -1,6 +1,8 @@
 # HomeStock Acceptance Tests
 
-**Status:** Planned test catalogue. None of these tests have been run because implementation has not started.
+**Status:** Active test catalogue; implementation has begun.
+
+**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). Individual test checkboxes remain unchecked unless that specific case has a recorded pass; product catalogue and later-phase scenarios remain pending.
 
 The implementation is accepted only after relevant tests pass and the intended user has reviewed the app.
 
