@@ -23,7 +23,9 @@ A phase is done only after its acceptance criteria have been reviewed and the re
 
 ## Repository workflow
 - GitHub is the source of truth for scope, changes, and phase status.
-- Work on the named phase branch, not directly on main.
-- After the user accepts a phase, merge it to main.
-- Update status and verified evidence, then create the next branch from the latest main.
+- During planning and research, use the `planning/research` branch and do not begin app implementation until the requirements and technical decisions have been reviewed and accepted.
+- After planning is accepted, integrate the accepted planning documents into main and create the first implementation-phase branch from the latest main.
+- Implement each phase on its own named branch, not directly on main.
+- After the user accepts an implementation phase, merge it to main.
+- Update status and verified evidence, then create the next implementation branch from the latest main.
 - Keep claims in README and portfolio descriptions aligned with the repository's real, tested state.
