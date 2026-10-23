@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phase 01 accepted; Phase 02 ready to implement.**
-**Current branch:** phase/02-welcome-and-home.
-**Planning baseline:** planning and branding merged via PR #1; Phase 01 implementation accepted and merged via PR #2.
+**Current status: Phase 02 accepted; Phase 03 ready to implement.**
+**Current branch:** phase/03-product-catalogue-and-management.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -28,13 +28,17 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 02 — Welcome and Home
 
-- [ ] First-run name input, validation, and local persistence.
-- [ ] Time-based greeting top-left and Settings gear top-right.
-- [ ] Clickable This month spending preview, using calendar month boundaries.
-- [ ] This month card opens Insights with This month selected.
-- [ ] Three fixed rectangular category hero cards.
+- [x] First-run name input, validation, and local persistence.
+- [x] Time-based greeting top-left and Settings gear top-right.
+- [x] Clickable This month spending preview, using calendar month boundaries.
+- [x] This month card opens Insights with This month selected.
+- [x] Three fixed rectangular category hero cards.
+
+**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [PHASE-02-VERIFICATION.md](PHASE-02-VERIFICATION.md) for scope and evidence limits.
 
 ## Phase 03 — Product catalogue and management
+
+**Status:** Ready to implement on `phase/03-product-catalogue-and-management`.
 
 - [ ] Seed common starter products once with zero stock.
 - [ ] Fixed category product lists and separate custom product creation.
@@ -90,7 +94,8 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 1. Keep research/design refinements on `planning/research` when needed; do not replace accepted implementation-branch requirements casually.
 2. The reviewed planning and branding baseline was merged into `main` via PR #1.
 3. Phase 01 was accepted and merged into `main` via PR #2.
-4. Phase 02 uses `phase/02-welcome-and-home`, created from the updated `main`.
-5. Implement one focused phase at a time and verify builds, tests and device behavior.
-6. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+4. Phase 02 was accepted and merged into `main` via PR #3.
+5. Phase 03 uses `phase/03-product-catalogue-and-management`, created from the latest merged `main`.
+6. Implement one focused phase at a time and verify builds, tests and device behavior.
+7. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
 
