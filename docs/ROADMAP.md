@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is active.**
+**Current status: Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is implemented and ready for physical verification.**
 **Current branch:** phase/04-add-use-transactions-and-stock-rules.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -50,15 +50,15 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 04 — Add/Use transactions and stock rules
 
-**Status:** Active on `phase/04-add-use-transactions-and-stock-rules`, created from the post-Phase-03 `main` commit `e62c5f903e82a0606176446dd8de1b44e7500539`. Implementation is pending.
+**Status:** Implemented on `phase/04-add-use-transactions-and-stock-rules`, ready for Mahesh's physical-device review.
 
-- [ ] Plus action opens separate Add and Use choices.
-- [ ] Add form: quantity, compatible unit, required amount paid and date.
-- [ ] Use form: current stock, quantity, compatible unit and date.
-- [ ] Base-unit conversions and positive quantity validation.
-- [ ] Atomic stock check and Use insert; reject over-use.
-- [ ] Disable Save while write is pending and prevent duplicate submissions.
-- [ ] Update Room-derived stock, history and spending immediately after successful saves.
+- [x] Plus action opens separate Add and Use choices.
+- [x] Add form: quantity, compatible unit, required amount paid and date.
+- [x] Use form: current stock, quantity, compatible unit and date.
+- [x] Base-unit conversions and positive quantity validation.
+- [x] Atomic stock check and Use insert; reject over-use.
+- [x] Disable Save while write is pending and prevent duplicate submissions.
+- [x] Update Room-derived stock, history and spending immediately after successful saves.
 
 ## Phase 05 — Product transaction history
 
@@ -101,4 +101,3 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 6. Phase 04 uses `phase/04-add-use-transactions-and-stock-rules`, created from the post-Phase-03 `main` commit.
 7. Implement one focused phase at a time and verify builds, tests and device behavior.
 8. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
-
