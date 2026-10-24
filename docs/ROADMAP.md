@@ -1,8 +1,9 @@
 # Roadmap
 
-**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is implemented and ready for physical verification.**
-**Current branch:** phase/05-product-transaction-history.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
+**Current status: Phases 01–05 accepted; Phase 06 — Spending Dashboard and Insights is next.**
+**Current baseline branch:** main.
+**Next implementation branch:** phase/06-spending-dashboard-and-insights.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -62,7 +63,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Implemented on `phase/05-product-transaction-history`, ready for Mahesh's physical-device review.
+**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). See [Phase 05 verification](PHASE-05-VERIFICATION.md) for scope and evidence limits; the implementation branch README reported 54 passing unit tests.
 
 - [x] Tapping product row opens scrollable date-grouped transaction history.
 - [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
@@ -103,6 +104,7 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 4. Phase 02 was accepted and merged into `main` via PR #3.
 5. Phase 03 used `phase/03-product-catalogue-and-management`; it was accepted and merged into `main` via PR #5.
 6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules` and was merged into `main` via PR #6.
-7. Phase 05 uses `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit.
-8. Implement one focused phase at a time and verify builds, tests and device behavior.
-9. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+7. Phase 05 used `phase/05-product-transaction-history`; after Mahesh accepted it, PR #7 was squash-merged into `main`, and `docs/PHASE-05-VERIFICATION.md` records the accepted scope and evidence limits.
+8. Phase 06 uses `phase/06-spending-dashboard-and-insights`, created from the Phase 05 merge commit on `main`.
+9. Implement one focused phase at a time and verify builds, tests and device behavior.
+10. After Mahesh accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
