@@ -62,7 +62,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). The branch README reported 54 passing unit tests; this is implementation-reported evidence.
+**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). See [Phase 05 verification](PHASE-05-VERIFICATION.md) for scope and evidence limits; the branch README reported 54 passing unit tests.
 
 - [x] Tapping product row opens scrollable date-grouped transaction history.
 - [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
