@@ -1,7 +1,7 @@
 # IntiVentory Architecture
 
-**Status:** Phases 01–04 accepted for progression; Phase 05 product transaction history is next. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for reported verification evidence and its limits.
-**Next implementation branch:** phase/05-product-transaction-history.
+**Status:** Phases 01–04 accepted; Phase 05 product transaction history is active. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for reported verification evidence and its limits.
+**Current implementation branch:** phase/05-product-transaction-history.
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
 
