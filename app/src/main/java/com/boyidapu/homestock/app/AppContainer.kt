@@ -18,7 +18,9 @@ class AppContainer(private val context: Context) {
             context,
             AppDatabase::class.java,
             "homestock_db"
-        ).build()
+        )
+            .addMigrations(AppDatabase.MIGRATION_1_2)
+            .build()
     }
 
     val userPreferences: UserPreferences by lazy {
@@ -34,7 +36,12 @@ class AppContainer(private val context: Context) {
     }
 
     val transactionRepository: TransactionRepository by lazy {
-        TransactionRepositoryImpl(database, database.transactionDao())
+        TransactionRepositoryImpl(
+            database = database,
+            transactionDao = database.transactionDao(),
+            transactionAuditDao = database.transactionAuditDao(),
+            productDao = database.productDao()
+        )
     }
 
     val userRepository: UserRepository by lazy {

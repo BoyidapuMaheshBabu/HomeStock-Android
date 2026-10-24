@@ -27,7 +27,8 @@ data class TransactionEntity(
     val baseQuantity: Long,
     val entryUnit: String,
     val amountPaidPaise: Long?,
-    val transactionEpochDay: Long
+    val transactionEpochDay: Long,
+    val createdAtEpochMs: Long = 0L
 ) {
     fun toDomain(): InventoryTransaction = InventoryTransaction(
         id = id,
@@ -36,7 +37,8 @@ data class TransactionEntity(
         baseQuantity = baseQuantity,
         entryUnit = UnitType.fromSymbol(entryUnit),
         amountPaidPaise = amountPaidPaise,
-        transactionEpochDay = transactionEpochDay
+        transactionEpochDay = transactionEpochDay,
+        createdAtEpochMs = createdAtEpochMs
     )
 
     companion object {
@@ -47,7 +49,8 @@ data class TransactionEntity(
             baseQuantity = transaction.baseQuantity,
             entryUnit = transaction.entryUnit.symbol,
             amountPaidPaise = transaction.amountPaidPaise,
-            transactionEpochDay = transaction.transactionEpochDay
+            transactionEpochDay = transaction.transactionEpochDay,
+            createdAtEpochMs = transaction.createdAtEpochMs
         )
     }
 }

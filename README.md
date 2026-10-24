@@ -2,9 +2,9 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–04 accepted; Phase 05 — Product transaction history is next. Phase 04's implementation README reports 47 passing unit tests; see the verification record for evidence limits.
-**Next implementation branch:** phase/05-product-transaction-history.
-**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
+**Status:** Phases 01–04 accepted. Phase 05 — Product transaction history is implemented on branch `phase/05-product-transaction-history` with 54 passing unit tests, ready for Mahesh's physical-device review.
+**Working branch:** phase/05-product-transaction-history.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
 
 ## Product at a glance
 
@@ -15,7 +15,8 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Plus opens separate Add and Use actions.
 - Add records quantity, compatible unit, actual amount paid and date. Use records quantity used and date.
 - Stock and spending update immediately after a successful transaction.
-- Date-grouped product history; no time-of-day display in the first version.
+- Date-grouped product history; no time-of-day display in the history list.
+- Every transaction can be edited; individual transaction deletion is available only for 30 minutes after recording.
 - Insights filters: Last 7 days, This month, Last 3 months, Custom date range and All time.
 
 ## Source-of-truth planning documents
@@ -44,8 +45,9 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Measurement type can change only before a product's first transaction. After any transaction, it is locked even when stock returns to zero.
 - Archive hides a product while preserving stock-derived quantity, history and spending, regardless of current stock. Restore returns it to active use.
 - Delete permanently removes the product and all its associated transaction history after explicit destructive confirmation; the operation must be atomic and spending totals recalculate.
+- Transaction correction rules preserve stock integrity: Delete is time-limited to 30 minutes after recording, while Edit remains available.
 - JSON backup/restore is deferred until after the intended user accepts the core app.
 
 ## Implementation status
 
-Phases 01–04 are accepted for progression: the native Android foundation, Welcome/name setup, Home dashboard, product catalogue/management, and Add/Use transaction workflows with stock rules are implemented. The Phase 04 README reports 47 passing unit tests; see [Phase 04 verification](docs/PHASE-04-VERIFICATION.md) for the evidence limits. Phase 05 covers the dedicated product-history screen; full Insights behavior remains planned for Phase 06.
+Phases 01–04 are accepted: the native Android foundation, Welcome/name setup, Home dashboard, product catalogue/management, and Add/Use transaction workflows with stock rules are implemented. Phase 05 — Product transaction history with always-available editing and 30-minute Delete window is implemented on branch `phase/05-product-transaction-history` with 54 passing unit tests, ready for physical-device review. Full Insights behavior remains assigned to Phase 06.

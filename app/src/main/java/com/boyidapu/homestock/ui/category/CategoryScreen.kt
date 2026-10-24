@@ -67,6 +67,7 @@ fun CategoryScreen(
     onBack: () -> Unit,
     onAddProduct: (String) -> Unit,
     onEditProduct: (Long) -> Unit,
+    onNavigateToHistory: (Long) -> Unit,
     onNavigateToAddTransaction: (Long) -> Unit,
     onNavigateToUseTransaction: (Long) -> Unit
 ) {
@@ -157,6 +158,7 @@ fun CategoryScreen(
                     ) { item ->
                         ProductItemCard(
                             item = item,
+                            onRowClicked = { onNavigateToHistory(item.product.id) },
                             onPlusClicked = { productForChooser = item },
                             onEditClicked = { onEditProduct(item.product.id) },
                             onDeleteClicked = { productToDelete = item },
@@ -323,6 +325,7 @@ fun CategoryScreen(
 @Composable
 private fun ProductItemCard(
     item: ProductWithStock,
+    onRowClicked: () -> Unit,
     onPlusClicked: () -> Unit,
     onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
@@ -334,7 +337,9 @@ private fun ProductItemCard(
         colors = CardDefaults.cardColors(containerColor = CleanWhite),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onRowClicked() }
     ) {
         Row(
             modifier = Modifier

@@ -1,6 +1,6 @@
 # HomeStock Acceptance Tests
 
-**Status:** Active test catalogue; Phases 01–04 are accepted for progression. Individual scenarios are not marked passed unless that specific case has recorded evidence.
+**Status:** Active test catalogue; Phases 01–04 are accepted. Phase 05 — Product transaction history is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
 
 **Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. Do not infer that every unchecked item in this catalogue passed.
 
@@ -102,18 +102,44 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Changing filters updates total and displayed range correctly.
 - [ ] Home's This month card always agrees with Insights' This month total.
 
-## H. Product history
+## H. Product transaction history
 
-- [ ] Tapping product row opens a vertically scrollable history for that product.
+- [ ] Tapping a product row opens a vertically scrollable history for that product.
 - [ ] Entries are grouped by local transaction date, with Today/Yesterday/date labels.
-- [ ] Newer dates first; same-date transactions ordered newest inserted first.
-- [ ] Time-of-day is not shown.
-- [ ] Add/Purchase entries show quantity, unit and actual amount paid.
-- [ ] Use entries show quantity, unit and stock impact.
-- [ ] Product-specific spending matches the sum of its Add transactions.
-- [ ] History rows are read-only in the first MVP; no transaction-row edit/delete controls.
+- [ ] Newer dates appear first; same-date transactions are ordered newest recorded first.
+- [ ] Time-of-day is not shown in the history list.
+- [ ] Add/Purchase entries show quantity, compatible unit and actual amount paid.
+- [ ] Use entries show quantity, compatible unit and stock impact, with no money amount.
+- [ ] Product-specific spending matches the sum of its saved Add transactions.
+- [ ] Tapping a history row opens transaction details with an Edit action regardless of transaction age.
+- [ ] No permanent Edit/Delete buttons clutter every row; actions live in transaction details.
+- [ ] Edit preserves the transaction ID, product association, transaction type and original recorded-at timestamp.
+- [ ] ADD can edit quantity, compatible unit, amount paid and transaction date.
+- [ ] USE can edit quantity, compatible unit and transaction date; it has no money field.
+- [ ] Transaction date may be changed to a permitted past/current date but not a future date.
+- [ ] Edits use the same quantity, dimension, precision and money validation as transaction creation.
+- [ ] An edit that would cause negative derived stock is rejected atomically; the previous record remains unchanged.
+- [ ] Successful edits update stock and spending via Room-derived state without manual refresh.
+- [ ] ADD amount/date edits recalculate affected spending ranges; USE edits never change spending.
+- [ ] Existing transactions of archived products can be corrected without automatically unarchiving the product.
+- [ ] Editing does not reset or extend the 30-minute Delete deadline.
 
-## I. Delete, Archive and Restore
+## I. Transaction editing and time-limited deletion policy
+
+- [ ] Every saved transaction has an immutable recorded-at timestamp separate from its editable transaction date.
+- [ ] Delete is available only while less than 30 minutes have elapsed since the transaction was actually recorded.
+- [ ] The 30-minute rule uses recorded-at time, not a backdated purchase/usage date.
+- [ ] At exactly 30 minutes and afterward, the delete action is unavailable and the repository rejects deletion even if the UI is stale.
+- [ ] Canceling the transaction-delete confirmation leaves the transaction unchanged.
+- [ ] Deleting a transaction inside the eligible window is atomic and refreshes derived stock/spending immediately.
+- [ ] Deletion is blocked if removing that transaction would make derived stock negative; the record remains intact and an explanatory error is shown.
+- [ ] Transactions predating the recorded-at timestamp migration are considered outside the Delete window because their original save time is unknown.
+- [ ] A transaction's Delete deadline remains unchanged after any edit.
+- [ ] After an Add or Use transaction is deleted, a product's `hasEverHadTransactions` flag remains true; its measurement type stays locked permanently.
+- [ ] Measurement type remains locked if all transaction rows for that product have been deleted.
+- [ ] Schema migration preserves existing product/transaction data and does not use destructive database fallback.
+
+## J. Delete, Archive and Restore
 
 - [ ] A product with or without transaction history can be permanently deleted only after explicit confirmation that the product and all its history will be lost.
 - [ ] Canceling Delete leaves the product and all transactions unchanged.
@@ -127,7 +153,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Restore returns the same product to its active category list with stock and history unchanged.
 - [ ] Archive and Restore never duplicate or reseed the product.
 
-## J. Persistence and privacy
+## K. Persistence and privacy
 
 - [ ] Name, products, archive state and transactions survive restart/force close.
 - [ ] Stock and spending after restart equal values before restart.
@@ -136,7 +162,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Future database migrations preserve existing data; destructive migration fallback is not used after real user records exist.
 - [ ] JSON backup/restore is deferred and is not represented as a completed core feature.
 
-## K. Demonstration scenario
+## L. Demonstration scenario
 
 1. Fresh launch: save the name Priya.
 2. Home: verify greeting, Settings, This month ₹0 and the three categories.

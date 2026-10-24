@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is next.**
-**Next implementation branch:** phase/05-product-transaction-history.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
+**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is implemented and ready for physical verification.**
+**Current branch:** phase/05-product-transaction-history.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -50,7 +50,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 04 — Add/Use transactions and stock rules
 
-**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported implementation/test evidence and its limits.
+**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md).
 
 - [x] Plus action opens separate Add and Use choices.
 - [x] Add form: quantity, compatible unit, required amount paid and date.
@@ -62,13 +62,15 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Next phase. Create `phase/05-product-transaction-history` from the latest `main` after the Phase 04 merge.
+**Status:** Implemented on `phase/05-product-transaction-history`, ready for Mahesh's physical-device review.
 
-- [ ] Tapping product row opens scrollable date-grouped read-only history.
-- [ ] Add entries display quantity, unit, amount paid and date.
-- [ ] Use entries display quantity, unit and stock impact.
-- [ ] Show product-specific purchase spending.
-- [ ] No time-of-day display or transaction-row edit/delete in the first MVP.
+- [x] Tapping product row opens scrollable date-grouped transaction history.
+- [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
+- [x] Show product-specific purchase spending and omit time-of-day from the history list.
+- [x] Every transaction can be edited: Add quantity/unit/amount/date; Use quantity/unit/date.
+- [x] Delete a transaction only during the 30 minutes after it was recorded; enforce the cutoff in domain/repository logic as well as the UI.
+- [x] Preserve transaction IDs/recorded-at timestamps on edit; prevent corrections/deletions from making stock negative.
+- [x] Preserve the permanent product measurement-type lock even if all transaction rows are deleted.
 
 ## Phase 06 — Spending Dashboard and Insights
 
@@ -100,7 +102,7 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 3. Phase 01 was accepted and merged into `main` via PR #2.
 4. Phase 02 was accepted and merged into `main` via PR #3.
 5. Phase 03 used `phase/03-product-catalogue-and-management`; it was accepted and merged into `main` via PR #5.
-6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules`; it has been accepted to advance to Phase 05 and is being merged into `main`.
-7. Phase 05 uses `phase/05-product-transaction-history`, created from the latest `main` after the Phase 04 merge.
+6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules` and was merged into `main` via PR #6.
+7. Phase 05 uses `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit.
 8. Implement one focused phase at a time and verify builds, tests and device behavior.
 9. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.

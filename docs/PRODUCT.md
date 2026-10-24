@@ -112,16 +112,48 @@ Examples:
 
 Never mix Mass, Liquid, or Units. Never allow negative stock.
 
-## 10. Product history
+## 10. Product transaction history and corrections
 
-Tapping a product row opens a vertically scrollable, read-only transaction history:
-- Group entries by local calendar date using Today, Yesterday or a readable date.
-- Newer dates first; same-day entries newest-inserted first.
-- Show Add/Purchase or Use, quantity, compatible unit and stock impact.
-- Add/Purchase entries show actual amount paid; Use entries do not show a money amount.
+Tapping a product row opens a vertically scrollable transaction history for that product:
+- Group entries by the local calendar date using Today, Yesterday, or a readable date.
+- Show newer dates first; order entries on the same date by newest recorded first.
+- Show Add/Purchase or Use, quantity, compatible unit, and the stock effect.
+- Add/Purchase entries show the actual amount paid; Use entries do not show a money amount.
 - Show product-specific total recorded purchase spending.
-- Do not display time-of-day in the first MVP.
-- Transaction-row edit/delete controls are excluded from the first MVP.
+- Do not display time-of-day in the history list in the first MVP.
+- Keep each history row visually simple. Tapping a row opens its transaction details and correction actions rather than displaying permanent Edit/Delete buttons on every row.
+
+### Edit any transaction
+
+Every saved transaction remains editable regardless of its age, including transactions that are more than 30 minutes old.
+
+- For an **ADD** transaction, allow editing quantity, compatible unit, actual total amount paid, and transaction date.
+- For a **USE** transaction, allow editing quantity, compatible unit, and transaction date. Do not show a money field for Use.
+- The transaction's product association and type (ADD or USE) remain fixed in this phase; editing does not move a record to another product or convert a purchase into consumption.
+- Do not introduce a free-text note/description field as part of this scope.
+- Validate edited quantities and amounts using the same rules as creating transactions. Keep the original product's measurement type and compatible-unit restrictions.
+- Preserve the transaction ID and original `createdAtEpochMs` when updating a transaction. Editing must never reset or extend its Delete eligibility window.
+- Apply an edit atomically. Recalculate derived stock and spending from saved transactions; do not maintain independently edited totals.
+- Reject an edit if it would make the product's derived current stock negative. Show an understandable error and keep the previous transaction unchanged.
+- Recalculate date-filtered purchase totals when an ADD amount or transaction date changes. USE edits affect stock but never affect spending.
+- Editing an archived product's existing transaction does not unarchive the product.
+
+### Delete a transaction within 30 minutes
+
+- Permanently deleting an individual transaction is available only during the first 30 minutes after that transaction was recorded.
+- Calculate the window from the immutable `createdAtEpochMs` recorded when the save succeeded—not from the editable purchase/usage date and not from the time the editor was last opened.
+- At or after the exact 30-minute boundary, Delete is unavailable. The UI should hide or disable the action, and the repository/domain layer must enforce the same deadline so stale UI cannot bypass it.
+- Confirm deletion explicitly while the action is available. Once confirmed, delete only that transaction atomically.
+- Reject deletion if removing the transaction would make derived stock negative. Explain why and preserve the existing record.
+- After a successful deletion, stock and all relevant spending totals must recalculate immediately. Deletion must not recreate preset products or leave partial writes.
+- Editing a transaction does not restart the 30-minute countdown.
+- Transactions that existed before the recorded-time field was introduced must be treated as outside the Delete window during migration, because their true recording time cannot be reconstructed safely.
+
+### Preserve the permanent measurement-type lock
+
+A product's measurement type locks permanently once any transaction has ever been successfully recorded. Deleting that transaction within the 30-minute window must not unlock the product. Store a durable product-level flag such as `hasEverHadTransactions`, set atomically when the first transaction is recorded and never reset by transaction editing or deletion.
+
+Transaction correction does not add transaction-row editing to the product row itself; use the transaction details flow.
 
 ## 11. Dashboard and spending Insights
 

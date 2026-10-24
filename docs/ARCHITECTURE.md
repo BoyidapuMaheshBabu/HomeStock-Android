@@ -1,7 +1,7 @@
 # IntiVentory Architecture
 
-**Status:** Phases 01–04 accepted for progression; Phase 05 product transaction history is next. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for reported verification evidence and its limits.
-**Next implementation branch:** phase/05-product-transaction-history.
+**Status:** Phases 01–04 accepted; Phase 05 product transaction history is active. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for reported verification evidence and its limits.
+**Current implementation branch:** phase/05-product-transaction-history.
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
 
@@ -90,24 +90,38 @@ Each product stores:
 - measurement type: MASS (user-facing label: Mass), LIQUID (Liquid), or UNITS (Units);
 - whether it is a preset product;
 - whether it is archived;
+- durable `hasEverHadTransactions` flag, set on the first successful transaction and never reset, so transaction deletion cannot unlock measurement-type editing;
 - creation metadata for stable ordering.
 
 Do not store a preferred/default quantity unit on the product. Quantity-entry units are chosen per transaction from the units compatible with the product's measurement type. A product does not store current stock or total spending; both are derived from transaction history.
 
 ### 4.4 Inventory transaction table
 
-Each successful Add or Use becomes one immutable historical record:
+Each successful Add or Use is stored as a transaction with a stable identity. The following values are persisted:
 - auto-generated transaction ID;
-- product ID as a foreign key;
-- type: ADD or USE;
+- product ID as a foreign key (immutable after creation in Phase 05);
+- type: ADD or USE (immutable after creation in Phase 05);
 - positive quantity normalized to base units;
-- unit selected for that entry, so history shows what the user entered;
-- purchase amount in paise for ADD; null for USE;
-- local calendar transaction date stored as an epoch-day integer.
+- compatible unit selected for that entry;
+- purchase amount in integer paise for ADD; null for USE;
+- editable local calendar transaction date stored as an epoch-day integer;
+- immutable `createdAtEpochMs`, recording the actual time the transaction was saved, separate from the editable transaction date.
 
-Protect product deletion with an explicit repository operation executed inside a Room database transaction: delete only the selected product's transaction rows and product row together. Do not leave orphaned transactions or partial deletion. Archive is a separate non-destructive update that preserves stock-derived history and spending.
+The transaction ID and `createdAtEpochMs` must be preserved during edits. Editing updates the existing record; do not implement edit as delete-and-reinsert because it would change transaction identity and could incorrectly restart the Delete window.
 
-Transactions are not running-balance rows. In the first MVP, product history is read-only; transaction-row edit/delete controls are not included. This keeps the first version similar to a simple payment-history view. If the intended user later asks for corrections, design that as a deliberate follow-up rather than silently rewriting history.
+For an ADD, quantity, compatible unit, amount paid, and transaction date are editable. For a USE, quantity, compatible unit, and transaction date are editable; amount paid remains null. Product association and transaction type are fixed in Phase 05. All edits must validate against the original product's dimension and current transaction rules.
+
+Individual transaction deletion is permitted only when the current time is at least the recorded time and strictly less than 30 minutes after `createdAtEpochMs`. The transaction date is not used to determine this deadline. At or after the 30-minute boundary, deletion must be rejected in both UI and repository/domain logic. Inject or otherwise control the clock in tests to verify the exact boundary. Editing does not change `createdAtEpochMs` or extend the deadline.
+
+Adding `createdAtEpochMs` requires a safe Room migration. Existing transaction rows do not have a trustworthy recording timestamp, so backfill them as already outside the Delete window rather than accidentally granting a fresh 30-minute deletion period at upgrade.
+
+Transactions are not running-balance rows. Stock and spending remain derived from transaction records. Each edit or delete must be atomic and must recompute the affected derived results through Room's observable queries. Reject an edit or deletion if it would produce negative derived stock; preserve the prior record and show an understandable error. Recalculate date-filtered spending when an ADD amount/date changes, and never change spending as a result of a USE edit.
+
+### 4.5 Permanent measurement-type lock after transaction history
+
+The product's measurement type locks forever after the first transaction is successfully recorded, even if all transaction rows are later deleted within their permitted Delete windows. Add a durable product-level flag such as `hasEverHadTransactions`. Set it to true atomically with the first successful transaction and never reset it through transaction edits or deletes. A Room migration must preserve the lock for products that already have transaction history.
+
+Protect whole-product deletion with an explicit repository operation executed inside a Room database transaction: delete only the selected product's remaining transaction rows and product row together. Archive remains a separate non-destructive update that preserves the product and its transaction history.
 
 ### 4.5 Starter-catalog seed metadata
 
@@ -268,9 +282,9 @@ Never keep a separate editable/cached total in UI state.
 ## 13. Test layers
 
 - **Pure unit tests:** unit conversion, stock math, validation, date boundaries and spending calculations.
-- **Room tests:** foreign-key safety, queries, atomic transaction writes, seed idempotency, archive preservation and observable updates.
-- **ViewModel tests:** form validation, saving states, errors and state refresh.
-- **Compose UI tests:** first launch, home layout, category/product actions, Add/Use validation, history navigation and Insights filters.
+- **Room tests:** foreign-key safety, queries, atomic transaction writes/edits/deletes, the 30-minute deletion deadline, no-negative-stock invariants, seed idempotency, archive preservation and observable updates.
+- **ViewModel tests:** form validation, saving states, errors, edit/delete eligibility and state refresh; inject a controllable clock for deletion-boundary tests.
+- **Compose UI tests:** first launch, home layout, category/product actions, Add/Use validation, history navigation, transaction detail/edit actions, expired Delete visibility and Insights filters.
 - **Physical-device checks:** offline use, persistence after restart, local dates and touch usability.
 
 ## 14. Official Android references
