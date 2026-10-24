@@ -1,10 +1,10 @@
 # HomeStock Acceptance Tests
 
-**Status:** Active test catalogue; Phases 01–05 are accepted. Phase 06 — Spending Dashboard and Insights is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
+**Status:** Active test catalogue; Phases 01–06 are accepted. Phase 07 — Verification and intended-user review is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
 
-**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](PHASE-05-VERIFICATION.md). The Phase 05 branch README reported 54 passing unit tests; this is implementation-reported evidence. Do not infer that every unchecked item in this catalogue passed.
+**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](PHASE-05-VERIFICATION.md). **Phase 06:** Accepted and merged via PR #8; see [Phase 06 verification](PHASE-06-VERIFICATION.md). Phase 05 and Phase 06 test results remain implementation-reported where noted in those records. Do not infer that every unchecked item in this catalogue passed.
 
-Phase 05 was accepted by Mahesh and merged via PR #7. Phase 06 focuses on the Home monthly spending preview, Insights date filters, inclusive calendar-date boundaries, and correct transaction-derived spending totals. The implementation is accepted only after relevant tests pass and the intended user has reviewed the app.
+Phases 05 and 06 have been accepted and merged via PRs #7 and #8. Phase 06 acceptance covered the expanded Insights screen; its test/build evidence limits are recorded in [Phase 06 verification](PHASE-06-VERIFICATION.md). Phase 07 is for full regression, offline, persistence, Insights, and intended-user device review. The unchecked items below are not considered passed without recorded evidence.
 
 ## A. Onboarding and Home
 
