@@ -15,7 +15,8 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Plus opens separate Add and Use actions.
 - Add records quantity, compatible unit, actual amount paid and date. Use records quantity used and date.
 - Stock and spending update immediately after a successful transaction.
-- Date-grouped product history; no time-of-day display in the first version.
+- Date-grouped product history; no time-of-day display in the history list.
+- Every transaction can be edited; individual transaction deletion is available only for 30 minutes after recording.
 - Insights filters: Last 7 days, This month, Last 3 months, Custom date range and All time.
 
 ## Source-of-truth planning documents
@@ -44,6 +45,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Measurement type can change only before a product's first transaction. After any transaction, it is locked even when stock returns to zero.
 - Archive hides a product while preserving stock-derived quantity, history and spending, regardless of current stock. Restore returns it to active use.
 - Delete permanently removes the product and all its associated transaction history after explicit destructive confirmation; the operation must be atomic and spending totals recalculate.
+- Transaction correction rules preserve stock integrity: Delete is time-limited to 30 minutes after recording, while Edit remains available.
 - JSON backup/restore is deferred until after the intended user accepts the core app.
 
 ## Implementation status
