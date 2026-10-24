@@ -2,9 +2,9 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–04 accepted; Phase 05 — Product transaction history is next. Phase 04's implementation README reports 47 passing unit tests; see the verification record for evidence limits.
-**Next implementation branch:** phase/05-product-transaction-history.
-**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
+**Status:** Phases 01–04 accepted; Phase 05 — Product transaction history is active. Phase 04's implementation README reports 47 passing unit tests; see its verification record for evidence limits.
+**Working branch:** phase/05-product-transaction-history.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
 
 ## Product at a glance
 
