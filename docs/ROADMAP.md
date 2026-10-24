@@ -74,14 +74,20 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 06 — Spending Dashboard and Insights
 
-**Status:** Active on `phase/06-spending-dashboard-and-insights`, created from the latest `main` after the Phase 05 squash merge (`2f7d4bc4c53318e8bedfd0b206273785aa055b85`). No Phase 06 implementation changes are included yet.
+**Status:** Active on `phase/06-spending-dashboard-and-insights`. The phase scope has been expanded to complete the Insights screen with a summary, spending trend, category breakdown, and top spending products. See [Phase 06 Insights screen design](PHASE-06-INSIGHTS-DESIGN.md) for the exact screen specification.
 
-- [ ] Current calendar-month spending preview on Home.
-- [ ] Last 7 days, This month, Last 3 months, Custom date range and All time filters.
-- [ ] Inclusive date boundaries and visible selected range.
-- [ ] Calculate totals from saved Add transactions; Use does not alter spending.
-- [ ] Include purchases belonging to archived products in historical totals.
-- [ ] Test monthly boundaries, custom range, empty range and immediate recalculation.
+- [ ] Home This month card shows real current-calendar-month purchase spending and the local date range; opens Insights with This month selected.
+- [ ] Five global filters: Last 7 days, This month, Last 3 months, Custom date range, and All time; every screen section follows the same selected period.
+- [ ] Enforce inclusive local-calendar boundaries and future-date restrictions for custom ranges.
+- [ ] Summary card shows total spending, number of ADD purchase records, and average amount per purchase with safe empty/zero handling.
+- [ ] Spending trend bar chart uses consistent period-specific daily/weekly/monthly buckets; values are readable and accessible.
+- [ ] Category breakdown shows spending amount, share percentage, and proportion bar for each of the three fixed categories.
+- [ ] Top spending products lists up to five products in descending spending order with category and amount; archive status is shown and archived purchases remain included.
+- [ ] All summary/chart/breakdown values derive from saved ADD transactions. USE never affects spending. Free purchases count as records but contribute zero money.
+- [ ] Transaction edits/deletes refresh every affected section through observable data; permanently deleted product history is excluded.
+- [ ] Keep the screen vertically scrollable, responsive, consistent with IntiVentory branding and Material 3, and fully offline.
+- [ ] Add regression coverage for period calculations, chart bucket aggregation, summary metrics, category/product grouping, archive inclusion, free purchases, empty states, and live updates.
+- [ ] Run Gradle tests and a debug build; record actual results without claiming unrun scenarios.
 
 ## Phase 07 — Verification and intended-user review
 
