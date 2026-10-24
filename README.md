@@ -2,9 +2,9 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–05 accepted. Phase 05 — Product transaction history and correction safeguards was merged into `main` via PR #7. Phase 06 — Spending Dashboard and Insights is active on branch `phase/06-spending-dashboard-and-insights`; its expanded screen design is specified in [PHASE-06-INSIGHTS-DESIGN.md](docs/PHASE-06-INSIGHTS-DESIGN.md).
-**Working branch:** phase/06-spending-dashboard-and-insights.
-**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7.
+**Status:** Phases 01–06 accepted. Phase 06 — Spending Dashboard and Insights was merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). See [Phase 06 verification](docs/PHASE-06-VERIFICATION.md) for scope and evidence limits. Phase 07 — Verification and intended-user review is active on `phase/07-verification-and-intended-user-review`.
+**Working branch:** phase/07-verification-and-intended-user-review.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
 ## Product at a glance
 
@@ -17,7 +17,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Stock and spending update immediately after a successful transaction.
 - Date-grouped product history; no time-of-day display in the history list.
 - Every transaction can be edited; individual transaction deletion is available only for 30 minutes after recording.
-- Insights (Phase 06 scope): five date filters, spending total/purchase count/average, purchase trend chart, category spending shares, and top five spending products.
+- Insights: five date filters, total purchase spending, purchase count and average, a spending trend chart, category spending shares, and top five spending products.
 
 ## Source-of-truth planning documents
 
@@ -31,6 +31,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
 - [Phase 04 verification record](docs/PHASE-04-VERIFICATION.md) — accepted Add/Use transaction scope and reported automated test evidence.
 - [Phase 05 verification record](docs/PHASE-05-VERIFICATION.md) — accepted product history, transaction corrections, time-limited deletion, and reported automated test evidence.
+- [Phase 06 verification record](docs/PHASE-06-VERIFICATION.md) — accepted spending filters, summary metrics, trend, category breakdown, product ranking, and evidence limits.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -52,4 +53,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01–05 are accepted. Phase 05 added product-specific date-grouped transaction history, always-available transaction editing with an audit trail, a 30-minute post-recording Delete window, safe Room migration, and stock/spending integrity safeguards; it was merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). The Phase 05 README reported 54 passing unit tests; that result is implementation-reported evidence. Phase 06 — Spending Dashboard and Insights is active on branch `phase/06-spending-dashboard-and-insights`, with the screen expanded to include summary metrics, a spending trend chart, category breakdown, and top spending products. See [the Phase 06 screen design](docs/PHASE-06-INSIGHTS-DESIGN.md).
+Phases 01–06 are accepted. Phase 05 added product-specific transaction history, auditable corrections, a 30-minute post-recording Delete window, safe Room migration, and stock/spending safeguards; it was merged via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). Phase 06 added five spending-period filters, summary metrics, a trend chart, category breakdown, and top spending products; it was merged via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). See [Phase 06 verification](docs/PHASE-06-VERIFICATION.md) for the reported scope and evidence limits. Phase 07 — Verification and intended-user review is active on `phase/07-verification-and-intended-user-review`.
