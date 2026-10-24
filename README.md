@@ -2,9 +2,9 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–04 accepted. Phase 05 — Product transaction history is implemented on branch `phase/05-product-transaction-history` with 54 passing unit tests, ready for Mahesh's physical-device review.
-**Working branch:** phase/05-product-transaction-history.
-**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
+**Status:** Phases 01–05 accepted. Phase 05 — Product transaction history and correction safeguards was merged into `main` via PR #7. Phase 06 — Spending Dashboard and Insights is active on branch `phase/06-spending-dashboard-and-insights`.
+**Working branch:** phase/06-spending-dashboard-and-insights.
+**Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7.
 
 ## Product at a glance
 
@@ -50,4 +50,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01–04 are accepted: the native Android foundation, Welcome/name setup, Home dashboard, product catalogue/management, and Add/Use transaction workflows with stock rules are implemented. Phase 05 — Product transaction history with always-available editing and 30-minute Delete window is implemented on branch `phase/05-product-transaction-history` with 54 passing unit tests, ready for physical-device review. Full Insights behavior remains assigned to Phase 06.
+Phases 01–05 are accepted. Phase 05 added product-specific date-grouped transaction history, always-available transaction editing with an audit trail, a 30-minute post-recording Delete window, safe Room migration, and stock/spending integrity safeguards; it was merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). The Phase 05 README reported 54 passing unit tests; that result is implementation-reported evidence. Phase 06 — Spending Dashboard and Insights is active on branch `phase/06-spending-dashboard-and-insights`.
