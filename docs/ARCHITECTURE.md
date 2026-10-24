@@ -237,6 +237,39 @@ Example:
 
 Home's This month card uses the current calendar-month range and opens Insights with This month selected. With no purchases this month, show ₹0 and a clear no-purchases message.
 
+
+### Insights presentation and derived analytics
+
+Insights uses one selected period shared by every section, with This month selected by default. Keep the data path consistent with the rest of the app:
+
+**Compose Insights screen → Insights ViewModel → TransactionRepository → parameterized Room queries / pure Kotlin date-bucket calculations.**
+
+The ViewModel exposes one coherent UI state (or coordinated observable flows) containing:
+- The selected period and displayed inclusive date range.
+- Total purchase amount in integer paise.
+- Count of ADD transaction records in the period.
+- Average per purchase, derived from total paise divided by count and rounded to the nearest paise; unavailable when count is zero.
+- Time-bucketed purchase totals for the trend chart.
+- Amount and percentage share for each of the three fixed product categories.
+- Up to five products ranked by positive purchase spending, including product/category labels and archived status.
+
+Data queries and calculations must all use the exact same inclusive local-calendar boundaries. Only ADD amounts contribute. Archived products are included because their history and spending remain valid. Use transactions are excluded. No separately persisted summary, category, or product total is allowed.
+
+Prefer Room aggregate queries for totals/count/category/product groupings, and testable pure Kotlin logic for date-bucket boundaries where appropriate. Ensure query changes are observable so saved, edited, or deleted transactions automatically refresh the displayed data. Avoid N+1 per-product queries; obtain product ranking through one grouped query or another batched approach.
+
+Trend bucket granularity:
+- Last 7 days: daily.
+- This month: daily from month start through today.
+- Last 3 months: monthly.
+- Custom: daily for up to 31 calendar days; weekly for 32–180 days using Monday–Sunday weeks clipped to selected boundaries; monthly beyond 180 days.
+- All time: monthly from the month of the first ADD transaction through the current local month.
+
+Include zero-value buckets within a defined time range when there is purchase-history context to plot. If there is no positive spending, show an empty/no-spending state rather than fabricated data. Label buckets, expose chart values to accessibility semantics, and keep long ranges readable.
+
+For category shares, calculate against total spending only when the total is greater than zero. For the average, avoid division by zero and do not use floating-point currency math. For the top-products list, include only products with positive spending in the selected range, include archived products, mark archived status, sort descending by amount, and use deterministic tie-breaking.
+
+Use existing Material 3 and branding tokens. Reuse an existing chart dependency only if it is already available; otherwise prefer a small Compose-native chart. Do not add a new chart dependency without a concrete justification.
+
 ## 10. Screen map
 
 1. **Welcome / Name setup:** shown only if no valid name is saved.
