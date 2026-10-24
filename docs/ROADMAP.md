@@ -62,13 +62,15 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Active on `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit `8d64ed09769e4b09ae59a99296f489693d138870`. Implementation is pending.
+**Status:** Active on `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit `8d64ed09769e4b09ae59a99296f489693d138870`. Scope includes always-available transaction editing and a 30-minute post-recording Delete window.
 
-- [ ] Tapping product row opens scrollable date-grouped read-only history.
-- [ ] Add entries display quantity, unit, amount paid and date.
-- [ ] Use entries display quantity, unit and stock impact.
-- [ ] Show product-specific purchase spending.
-- [ ] No time-of-day display or transaction-row edit/delete in the first MVP.
+- [ ] Tapping product row opens scrollable date-grouped transaction history.
+- [ ] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
+- [ ] Show product-specific purchase spending and omit time-of-day from the history list.
+- [ ] Every transaction can be edited: Add quantity/unit/amount/date; Use quantity/unit/date.
+- [ ] Delete a transaction only during the 30 minutes after it was recorded; enforce the cutoff in domain/repository logic as well as the UI.
+- [ ] Preserve transaction IDs/recorded-at timestamps on edit; prevent corrections/deletions from making stock negative.
+- [ ] Preserve the permanent product measurement-type lock even if all transaction rows are deleted.
 
 ## Phase 06 — Spending Dashboard and Insights
 
