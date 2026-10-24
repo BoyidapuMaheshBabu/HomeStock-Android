@@ -124,7 +124,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Existing transactions of archived products can be corrected without automatically unarchiving the product.
 - [ ] Editing does not reset or extend the 30-minute Delete deadline.
 
-## H2. Transaction edit and time-limited deletion policy
+## I. Transaction editing and time-limited deletion policy
 
 - [ ] Every saved transaction has an immutable recorded-at timestamp separate from its editable transaction date.
 - [ ] Delete is available only while less than 30 minutes have elapsed since the transaction was actually recorded.
@@ -139,7 +139,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Measurement type remains locked if all transaction rows for that product have been deleted.
 - [ ] Schema migration preserves existing product/transaction data and does not use destructive database fallback.
 
-## I. Delete, Archive and Restore
+## J. Delete, Archive and Restore
 
 - [ ] A product with or without transaction history can be permanently deleted only after explicit confirmation that the product and all its history will be lost.
 - [ ] Canceling Delete leaves the product and all transactions unchanged.
@@ -153,7 +153,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Restore returns the same product to its active category list with stock and history unchanged.
 - [ ] Archive and Restore never duplicate or reseed the product.
 
-## J. Persistence and privacy
+## K. Persistence and privacy
 
 - [ ] Name, products, archive state and transactions survive restart/force close.
 - [ ] Stock and spending after restart equal values before restart.
@@ -162,7 +162,7 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Future database migrations preserve existing data; destructive migration fallback is not used after real user records exist.
 - [ ] JSON backup/restore is deferred and is not represented as a completed core feature.
 
-## K. Demonstration scenario
+## L. Demonstration scenario
 
 1. Fresh launch: save the name Priya.
 2. Home: verify greeting, Settings, This month ₹0 and the three categories.
