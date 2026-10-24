@@ -2,8 +2,8 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–03 accepted. Phase 04 — Add/Use transactions and stock rules is implemented on branch `phase/04-add-use-transactions-and-stock-rules` with 47 passing unit tests, ready for Mahesh's physical-device review.
-**Working branch:** phase/04-add-use-transactions-and-stock-rules.
+**Status:** Phases 01–04 accepted; Phase 05 — Product transaction history is next. Phase 04's implementation README reports 47 passing unit tests; see the verification record for evidence limits.
+**Next implementation branch:** phase/05-product-transaction-history.
 **Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
 
 ## Product at a glance
@@ -27,6 +27,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
 - [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
 - [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
+- [Phase 04 verification record](docs/PHASE-04-VERIFICATION.md) — accepted Add/Use transaction scope and reported automated test evidence.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -47,4 +48,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01–03 are accepted: the native Android foundation, Welcome/name setup, Home dashboard, and product catalogue/management scope are implemented. Phase 04 — Add/Use transaction workflows and stock rules is implemented on branch `phase/04-add-use-transactions-and-stock-rules` with 47 passing unit tests, ready for physical-device review. Product history and full Insights behavior remain assigned to later phases. See the [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) for the accepted Phase 03 scope.
+Phases 01–04 are accepted for progression: the native Android foundation, Welcome/name setup, Home dashboard, product catalogue/management, and Add/Use transaction workflows with stock rules are implemented. The Phase 04 README reports 47 passing unit tests; see [Phase 04 verification](docs/PHASE-04-VERIFICATION.md) for the evidence limits. Phase 05 covers the dedicated product-history screen; full Insights behavior remains planned for Phase 06.
