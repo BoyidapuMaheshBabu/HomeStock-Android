@@ -2,7 +2,7 @@
 
 **Status:** Active test catalogue; Phases 01–05 are accepted. Phase 06 — Spending Dashboard and Insights is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
 
-**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. Do not infer that every unchecked item in this catalogue passed.
+**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](PHASE-05-VERIFICATION.md). The Phase 05 branch README reported 54 passing unit tests; this is implementation-reported evidence. Do not infer that every unchecked item in this catalogue passed.
 
 Phase 05 was accepted by Mahesh and merged via PR #7. Phase 06 focuses on the Home monthly spending preview, Insights date filters, inclusive calendar-date boundaries, and correct transaction-derived spending totals. The implementation is accepted only after relevant tests pass and the intended user has reviewed the app.
 
