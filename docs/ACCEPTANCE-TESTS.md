@@ -1,6 +1,6 @@
 # HomeStock Acceptance Tests
 
-**Status:** Active test catalogue; Phases 01–04 are accepted for progression. Individual scenarios are not marked passed unless that specific case has recorded evidence.
+**Status:** Active test catalogue; Phases 01–04 are accepted. Phase 05 — Product transaction history is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
 
 **Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. Do not infer that every unchecked item in this catalogue passed.
 
