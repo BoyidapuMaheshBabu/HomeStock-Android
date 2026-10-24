@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is implemented and ready for physical verification.**
-**Current branch:** phase/05-product-transaction-history.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
+**Current status: Phases 01–05 accepted; Phase 06 — Spending Dashboard and Insights is active.**
+**Current branch:** phase/06-spending-dashboard-and-insights.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -11,7 +11,7 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] Review and approve product requirements, architecture and acceptance tests for implementation.
 - [x] Confirm the intended phone runs Android 15 (API 35), compatible with the planned minimum API 26.
 - [x] Agree the three fixed categories, starter product names, and product measurement types: Mass, Liquid, Units.
-- [x] Confirm the first MVP uses read-only transaction history.
+- [x] Confirm product transaction history with auditable corrections and time-limited deletion.
 - [x] Merge the planning baseline into `main` and create the first implementation branch from it.
 
 ## Phase 01 — Android foundation
@@ -62,7 +62,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Implemented on `phase/05-product-transaction-history`, ready for Mahesh's physical-device review.
+**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). The branch README reported 54 passing unit tests; this is implementation-reported evidence.
 
 - [x] Tapping product row opens scrollable date-grouped transaction history.
 - [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
@@ -73,6 +73,8 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] Preserve the permanent product measurement-type lock even if all transaction rows are deleted.
 
 ## Phase 06 — Spending Dashboard and Insights
+
+**Status:** Active on `phase/06-spending-dashboard-and-insights`, created from the latest `main` after the Phase 05 squash merge (`2f7d4bc4c53318e8bedfd0b206273785aa055b85`). No Phase 06 implementation changes are included yet.
 
 - [ ] Current calendar-month spending preview on Home.
 - [ ] Last 7 days, This month, Last 3 months, Custom date range and All time filters.
@@ -103,6 +105,7 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 4. Phase 02 was accepted and merged into `main` via PR #3.
 5. Phase 03 used `phase/03-product-catalogue-and-management`; it was accepted and merged into `main` via PR #5.
 6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules` and was merged into `main` via PR #6.
-7. Phase 05 uses `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit.
-8. Implement one focused phase at a time and verify builds, tests and device behavior.
-9. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
+7. Phase 05 used `phase/05-product-transaction-history`; after Mahesh accepted it, PR #7 was squash-merged into `main`.
+8. Phase 06 uses `phase/06-spending-dashboard-and-insights`, created from the Phase 05 merge commit currently at `main` (`2f7d4bc4c53318e8bedfd0b206273785aa055b85`).
+9. Implement one focused phase at a time and verify builds, tests and device behavior.
+10. After Mahesh accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
