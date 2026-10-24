@@ -102,6 +102,32 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Changing filters updates total and displayed range correctly.
 - [ ] Home's This month card always agrees with Insights' This month total.
 
+### Phase 06 Insights screen analytics
+
+- [ ] The Insights screen order is app bar, five period filters, summary, spending trend, category breakdown, top spending products.
+- [ ] This month is the default selected filter; Home opens Insights with This month selected.
+- [ ] One selected period drives the summary, purchase count, average, trend, category rows, and top products.
+- [ ] Purchase count counts ADD transaction records, including free purchases; it does not count USE records.
+- [ ] Average per purchase equals selected-range total paise divided by ADD record count, rounded to paise; zero purchases show an em dash and no divide-by-zero.
+- [ ] Last 7 days chart has seven daily buckets.
+- [ ] This month chart has one bucket per local calendar day from month start through today.
+- [ ] Last 3 months chart has three calendar-month buckets, with the current month-to-date.
+- [ ] Custom range chart uses daily buckets for <=31 days, weekly Monday–Sunday buckets clipped to the selected range for 32–180 days, and monthly buckets for >180 days.
+- [ ] All time chart uses monthly buckets from the month of the first ADD through the current local month.
+- [ ] Trend uses ADD amounts only, includes appropriate zero-value intervals, clearly labels buckets, and exposes values accessibly.
+- [ ] Category breakdown shows the three fixed categories, correct amount, percent of selected-range total, and proportional bar.
+- [ ] Category share avoids division by zero when total spending is zero.
+- [ ] Top spending products shows up to five products sorted by purchase spending descending, with product name, category, amount, and archived indicator where applicable.
+- [ ] Archived-product purchases remain included in summary, trend, categories, top products, count, and average.
+- [ ] Top spending products exclude products with zero spending; ties sort deterministically.
+- [ ] Permanently deleted products' transactions no longer contribute to any Insights section.
+- [ ] A period with no ADD records shows ₹0, 0 purchases, an em dash average, and appropriate empty states.
+- [ ] A period containing only free ADD records counts those purchases but displays no misleading positive-spending chart or percentage.
+- [ ] Editing an ADD amount/date refreshes all affected Insights sections; editing or saving USE never alters spending analytics.
+- [ ] Insights is vertically scrollable, the filter row does not overflow narrow screens, and charts/cards remain usable on the intended phone.
+- [ ] No hard-coded demo totals, fake purchase counts, fake chart bars, budget forecasts, or external/network data appear in production.
+
+
 ## H. Product transaction history
 
 - [ ] Tapping a product row opens a vertically scrollable history for that product.
