@@ -29,6 +29,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
 - [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
 - [Phase 04 verification record](docs/PHASE-04-VERIFICATION.md) — accepted Add/Use transaction scope and reported automated test evidence.
+- [Phase 05 verification record](docs/PHASE-05-VERIFICATION.md) — accepted product history, transaction corrections, time-limited deletion, and reported automated test evidence.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
