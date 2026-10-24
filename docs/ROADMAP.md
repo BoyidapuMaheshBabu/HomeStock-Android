@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is active.**
+**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is implemented and ready for physical verification.**
 **Current branch:** phase/05-product-transaction-history.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -50,7 +50,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 04 — Add/Use transactions and stock rules
 
-**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported implementation/test evidence and its limits.
+**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md).
 
 - [x] Plus action opens separate Add and Use choices.
 - [x] Add form: quantity, compatible unit, required amount paid and date.
@@ -62,15 +62,15 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Active on `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit `8d64ed09769e4b09ae59a99296f489693d138870`. Scope includes always-available transaction editing and a 30-minute post-recording Delete window.
+**Status:** Implemented on `phase/05-product-transaction-history`, ready for Mahesh's physical-device review.
 
-- [ ] Tapping product row opens scrollable date-grouped transaction history.
-- [ ] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
-- [ ] Show product-specific purchase spending and omit time-of-day from the history list.
-- [ ] Every transaction can be edited: Add quantity/unit/amount/date; Use quantity/unit/date.
-- [ ] Delete a transaction only during the 30 minutes after it was recorded; enforce the cutoff in domain/repository logic as well as the UI.
-- [ ] Preserve transaction IDs/recorded-at timestamps on edit; prevent corrections/deletions from making stock negative.
-- [ ] Preserve the permanent product measurement-type lock even if all transaction rows are deleted.
+- [x] Tapping product row opens scrollable date-grouped transaction history.
+- [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
+- [x] Show product-specific purchase spending and omit time-of-day from the history list.
+- [x] Every transaction can be edited: Add quantity/unit/amount/date; Use quantity/unit/date.
+- [x] Delete a transaction only during the 30 minutes after it was recorded; enforce the cutoff in domain/repository logic as well as the UI.
+- [x] Preserve transaction IDs/recorded-at timestamps on edit; prevent corrections/deletions from making stock negative.
+- [x] Preserve the permanent product measurement-type lock even if all transaction rows are deleted.
 
 ## Phase 06 — Spending Dashboard and Insights
 

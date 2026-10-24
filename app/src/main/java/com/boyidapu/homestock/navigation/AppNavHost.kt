@@ -21,6 +21,8 @@ import com.boyidapu.homestock.ui.archived.ArchivedProductsScreen
 import com.boyidapu.homestock.ui.archived.ArchivedProductsViewModel
 import com.boyidapu.homestock.ui.category.CategoryScreen
 import com.boyidapu.homestock.ui.category.CategoryViewModel
+import com.boyidapu.homestock.ui.history.ProductHistoryScreen
+import com.boyidapu.homestock.ui.history.ProductHistoryViewModel
 import com.boyidapu.homestock.ui.home.HomeScreen
 import com.boyidapu.homestock.ui.home.HomeViewModel
 import com.boyidapu.homestock.ui.insights.InsightsScreen
@@ -124,11 +126,40 @@ fun HomeStockAppNavHost(
                 onEditProduct = { productId ->
                     backStack += Screen.EditProduct(productId)
                 },
+                onNavigateToHistory = { productId ->
+                    backStack += Screen.ProductHistory(productId)
+                },
                 onNavigateToAddTransaction = { productId ->
                     backStack += Screen.AddTransaction(productId)
                 },
                 onNavigateToUseTransaction = { productId ->
                     backStack += Screen.UseTransaction(productId)
+                }
+            )
+        }
+
+        entry<Screen.ProductHistory> { key ->
+            val historyViewModel: ProductHistoryViewModel = viewModel(
+                key = "history_${key.productId}",
+                factory = viewModelFactory {
+                    initializer {
+                        ProductHistoryViewModel(
+                            key.productId,
+                            appContainer.productRepository,
+                            appContainer.transactionRepository
+                        )
+                    }
+                }
+            )
+            LaunchedEffect(key.productId) {
+                historyViewModel.loadHistoryData()
+            }
+            ProductHistoryScreen(
+                viewModel = historyViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
                 }
             )
         }

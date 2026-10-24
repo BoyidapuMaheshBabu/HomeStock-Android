@@ -15,6 +15,7 @@ data class ProductEntity(
     val preferredUnit: String,
     val isPreset: Boolean,
     val isArchived: Boolean,
+    val hasEverHadTransactions: Boolean = false,
     val createdAtEpochMs: Long
 ) {
     fun toDomain(): Product = Product(
@@ -24,6 +25,7 @@ data class ProductEntity(
         dimension = MeasurementDimension.valueOf(dimension),
         isPreset = isPreset,
         isArchived = isArchived,
+        hasEverHadTransactions = hasEverHadTransactions,
         createdAtEpochMs = createdAtEpochMs
     )
 
@@ -36,6 +38,7 @@ data class ProductEntity(
             preferredUnit = product.preferredUnit.symbol,
             isPreset = product.isPreset,
             isArchived = product.isArchived,
+            hasEverHadTransactions = product.hasEverHadTransactions,
             createdAtEpochMs = product.createdAtEpochMs
         )
     }

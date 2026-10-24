@@ -58,6 +58,9 @@ interface ProductDao {
     @Query("UPDATE products SET isArchived = 0 WHERE id = :productId")
     suspend fun restoreProduct(productId: Long)
 
+    @Query("UPDATE products SET hasEverHadTransactions = 1 WHERE id = :productId")
+    suspend fun markHasEverHadTransactions(productId: Long)
+
     @Query("DELETE FROM transactions WHERE productId = :productId")
     suspend fun deleteTransactionsForProduct(productId: Long)
 

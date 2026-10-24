@@ -7,6 +7,7 @@ data class Product(
     val dimension: MeasurementDimension,
     val isPreset: Boolean = false,
     val isArchived: Boolean = false,
+    val hasEverHadTransactions: Boolean = false,
     val createdAtEpochMs: Long = System.currentTimeMillis()
 ) {
     val preferredUnit: UnitType

@@ -1,6 +1,7 @@
 package com.boyidapu.homestock.test.fake
 
 import com.boyidapu.homestock.domain.model.InventoryTransaction
+import com.boyidapu.homestock.domain.model.TransactionEditAudit
 import com.boyidapu.homestock.domain.model.TransactionType
 import com.boyidapu.homestock.domain.model.UnitType
 import com.boyidapu.homestock.domain.repository.TransactionRepository
@@ -13,6 +14,7 @@ import java.time.ZoneId
 class FakeTransactionRepository : TransactionRepository {
 
     val transactions = MutableStateFlow<List<InventoryTransaction>>(emptyList())
+    val audits = MutableStateFlow<List<TransactionEditAudit>>(emptyList())
 
     fun setSpendingPaise(paise: Long) {
         val todayEpochDay = LocalDate.now(ZoneId.systemDefault()).toEpochDay()
@@ -31,12 +33,24 @@ class FakeTransactionRepository : TransactionRepository {
         return transactions.map { list -> list.filter { it.productId == productId } }
     }
 
+    override fun getTransactionById(transactionId: Long): Flow<InventoryTransaction?> {
+        return transactions.map { list -> list.firstOrNull { it.id == transactionId } }
+    }
+
     override fun getProductStockBaseQuantity(productId: Long): Flow<Long> {
         return transactions.map { list ->
             val productTxs = list.filter { it.productId == productId }
             val addSum = productTxs.filter { it.type == TransactionType.ADD }.sumOf { it.baseQuantity }
             val useSum = productTxs.filter { it.type == TransactionType.USE }.sumOf { it.baseQuantity }
             addSum - useSum
+        }
+    }
+
+    override fun getProductTotalSpending(productId: Long): Flow<Long> {
+        return transactions.map { list ->
+            list.filter {
+                it.productId == productId && it.type == TransactionType.ADD && it.amountPaidPaise != null
+            }.sumOf { it.amountPaidPaise!! }
         }
     }
 
@@ -59,6 +73,10 @@ class FakeTransactionRepository : TransactionRepository {
         }
     }
 
+    override fun getAuditsForTransaction(transactionId: Long): Flow<List<TransactionEditAudit>> {
+        return audits.map { list -> list.filter { it.transactionId == transactionId } }
+    }
+
     override suspend fun addTransaction(transaction: InventoryTransaction): Long {
         val newId = (transactions.value.maxOfOrNull { it.id } ?: 0L) + 1L
         val newTx = transaction.copy(id = newId)
@@ -79,6 +97,75 @@ class FakeTransactionRepository : TransactionRepository {
         val newId = (transactions.value.maxOfOrNull { it.id } ?: 0L) + 1L
         val newTx = transaction.copy(id = newId)
         transactions.value = transactions.value + newTx
+        return true
+    }
+
+    override suspend fun editTransactionAtomic(
+        transactionId: Long,
+        newBaseQuantity: Long,
+        newEntryUnitSymbol: String,
+        newAmountPaidPaise: Long?,
+        newTransactionEpochDay: Long,
+        editedAtEpochMs: Long
+    ): Boolean {
+        val existing = transactions.value.firstOrNull { it.id == transactionId } ?: return false
+        val productTxs = transactions.value.filter { it.productId == existing.productId }
+        val addSum = productTxs.filter { it.type == TransactionType.ADD && it.id != transactionId }
+            .sumOf { it.baseQuantity } + (if (existing.type == TransactionType.ADD) newBaseQuantity else 0L)
+        val useSum = productTxs.filter { it.type == TransactionType.USE && it.id != transactionId }
+            .sumOf { it.baseQuantity } + (if (existing.type == TransactionType.USE) newBaseQuantity else 0L)
+        val proposedStock = addSum - useSum
+
+        if (proposedStock < 0L) {
+            return false
+        }
+
+        val audit = TransactionEditAudit(
+            id = (audits.value.maxOfOrNull { it.id } ?: 0L) + 1L,
+            transactionId = transactionId,
+            editedAtEpochMs = editedAtEpochMs,
+            oldBaseQuantity = existing.baseQuantity,
+            oldEntryUnit = existing.entryUnit,
+            oldAmountPaidPaise = existing.amountPaidPaise,
+            oldTransactionEpochDay = existing.transactionEpochDay,
+            newBaseQuantity = newBaseQuantity,
+            newEntryUnit = UnitType.fromSymbol(newEntryUnitSymbol),
+            newAmountPaidPaise = newAmountPaidPaise,
+            newTransactionEpochDay = newTransactionEpochDay
+        )
+        audits.value = audits.value + audit
+
+        val updated = existing.copy(
+            baseQuantity = newBaseQuantity,
+            entryUnit = UnitType.fromSymbol(newEntryUnitSymbol),
+            amountPaidPaise = newAmountPaidPaise,
+            transactionEpochDay = newTransactionEpochDay
+        )
+        transactions.value = transactions.value.map { if (it.id == transactionId) updated else it }
+        return true
+    }
+
+    override suspend fun deleteTransactionAtomic(
+        transactionId: Long,
+        currentTimeMs: Long
+    ): Boolean {
+        val existing = transactions.value.firstOrNull { it.id == transactionId } ?: return false
+        val deadline = existing.createdAtEpochMs + (30 * 60 * 1000L)
+        if (currentTimeMs >= deadline) {
+            return false
+        }
+
+        val remainingTxs = transactions.value.filterNot { it.id == transactionId }
+        val productTxs = remainingTxs.filter { it.productId == existing.productId }
+        val addSum = productTxs.filter { it.type == TransactionType.ADD }.sumOf { it.baseQuantity }
+        val useSum = productTxs.filter { it.type == TransactionType.USE }.sumOf { it.baseQuantity }
+        val proposedStock = addSum - useSum
+
+        if (proposedStock < 0L) {
+            return false
+        }
+
+        transactions.value = remainingTxs
         return true
     }
 }
