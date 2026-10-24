@@ -7,7 +7,10 @@ import com.boyidapu.homestock.data.local.dao.TransactionAuditDao
 import com.boyidapu.homestock.data.local.dao.TransactionDao
 import com.boyidapu.homestock.data.local.entity.TransactionEditAuditEntity
 import com.boyidapu.homestock.data.local.entity.TransactionEntity
+import com.boyidapu.homestock.domain.model.CategorySpending
+import com.boyidapu.homestock.domain.model.FixedCategory
 import com.boyidapu.homestock.domain.model.InventoryTransaction
+import com.boyidapu.homestock.domain.model.ProductSpending
 import com.boyidapu.homestock.domain.model.TransactionEditAudit
 import com.boyidapu.homestock.domain.model.TransactionType
 import com.boyidapu.homestock.domain.repository.TransactionRepository
@@ -45,6 +48,84 @@ class TransactionRepositoryImpl(
 
     override fun getAllTimeSpending(): Flow<Long> {
         return transactionDao.getAllTimeSpending()
+    }
+
+    override fun getAddTransactionCountBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<Int> {
+        return transactionDao.getAddTransactionCountBetweenEpochDays(startEpochDay, endEpochDay)
+    }
+
+    override fun getAllTimeAddTransactionCount(): Flow<Int> {
+        return transactionDao.getAllTimeAddTransactionCount()
+    }
+
+    override fun getAddTransactionsBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<InventoryTransaction>> {
+        return transactionDao.getAddTransactionsBetweenEpochDays(startEpochDay, endEpochDay).map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
+    override fun getAllTimeAddTransactions(): Flow<List<InventoryTransaction>> {
+        return transactionDao.getAllTimeAddTransactions().map { list ->
+            list.map { it.toDomain() }
+        }
+    }
+
+    override fun getCategorySpendingBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<CategorySpending>> {
+        return transactionDao.getCategorySpendingBetweenEpochDays(startEpochDay, endEpochDay).map { list ->
+            val totalSpending = list.sumOf { it.totalSpendingPaise }
+            list.map { entity ->
+                val category = FixedCategory.fromId(entity.categoryId) ?: FixedCategory.FOOD_KITCHEN
+                val pct = if (totalSpending > 0L) (entity.totalSpendingPaise.toFloat() / totalSpending.toFloat()) * 100f else 0f
+                CategorySpending(
+                    category = category,
+                    totalSpendingPaise = entity.totalSpendingPaise,
+                    percentageShare = pct
+                )
+            }
+        }
+    }
+
+    override fun getAllTimeCategorySpending(): Flow<List<CategorySpending>> {
+        return transactionDao.getAllTimeCategorySpending().map { list ->
+            val totalSpending = list.sumOf { it.totalSpendingPaise }
+            list.map { entity ->
+                val category = FixedCategory.fromId(entity.categoryId) ?: FixedCategory.FOOD_KITCHEN
+                val pct = if (totalSpending > 0L) (entity.totalSpendingPaise.toFloat() / totalSpending.toFloat()) * 100f else 0f
+                CategorySpending(
+                    category = category,
+                    totalSpendingPaise = entity.totalSpendingPaise,
+                    percentageShare = pct
+                )
+            }
+        }
+    }
+
+    override fun getTopProductSpendingBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<ProductSpending>> {
+        return transactionDao.getTopProductSpendingBetweenEpochDays(startEpochDay, endEpochDay).map { list ->
+            list.map { entity ->
+                ProductSpending(
+                    productId = entity.productId,
+                    productName = entity.productName,
+                    category = FixedCategory.fromId(entity.categoryId) ?: FixedCategory.FOOD_KITCHEN,
+                    isArchived = entity.isArchived,
+                    totalSpendingPaise = entity.totalSpendingPaise
+                )
+            }
+        }
+    }
+
+    override fun getAllTimeTopProductSpending(): Flow<List<ProductSpending>> {
+        return transactionDao.getAllTimeTopProductSpending().map { list ->
+            list.map { entity ->
+                ProductSpending(
+                    productId = entity.productId,
+                    productName = entity.productName,
+                    category = FixedCategory.fromId(entity.categoryId) ?: FixedCategory.FOOD_KITCHEN,
+                    isArchived = entity.isArchived,
+                    totalSpendingPaise = entity.totalSpendingPaise
+                )
+            }
+        }
     }
 
     override fun getAuditsForTransaction(transactionId: Long): Flow<List<TransactionEditAudit>> {
@@ -87,7 +168,6 @@ class TransactionRepositoryImpl(
             val existingEntity = transactionDao.getTransactionByIdSync(transactionId) ?: return@withTransaction false
             val currentStock = transactionDao.getProductStockBaseQuantitySync(existingEntity.productId)
 
-            // Net stock change calculation
             val isAdd = existingEntity.type == TransactionType.ADD.name
             val oldQty = existingEntity.baseQuantity
             val netStockChange = if (isAdd) (newBaseQuantity - oldQty) else (oldQty - newBaseQuantity)
@@ -97,7 +177,6 @@ class TransactionRepositoryImpl(
                 return@withTransaction false
             }
 
-            // Record Audit Trail
             val auditEntity = TransactionEditAuditEntity(
                 transactionId = transactionId,
                 editedAtEpochMs = editedAtEpochMs,
@@ -112,7 +191,6 @@ class TransactionRepositoryImpl(
             )
             transactionAuditDao.insertAudit(auditEntity)
 
-            // Update Transaction
             val updatedEntity = existingEntity.copy(
                 baseQuantity = newBaseQuantity,
                 entryUnit = newEntryUnitSymbol,
@@ -131,7 +209,6 @@ class TransactionRepositoryImpl(
         return database.withTransaction {
             val existingEntity = transactionDao.getTransactionByIdSync(transactionId) ?: return@withTransaction false
 
-            // Check 30-minute deadline rule
             val deadlineMs = existingEntity.createdAtEpochMs + (30 * 60 * 1000L)
             if (currentTimeMs >= deadlineMs) {
                 return@withTransaction false

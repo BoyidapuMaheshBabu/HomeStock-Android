@@ -172,6 +172,36 @@ Example for October 23, 2026: Last 7 days is October 17–23; This month is Octo
 
 For each range, sum actual paid amounts from Add transactions in that range. Include archived products. Use never changes spending. Display the actual selected range. Empty range returns ₹0 and a clear empty state. Home's This month value must match Insights' This month value.
 
+### Phase 06 Insights screen content
+
+Insights is one vertically scrollable screen with these sections in this exact order:
+1. Existing app bar with Back and **Spending Insights**.
+2. Five single-select period filters: Last 7 days, This month, Last 3 months, Custom, All time. Default to This month. All sections use the same selected period.
+3. **Total purchase spending** summary card: prominent INR total, selected date range, purchase-record count, and average amount per purchase. Count ADD transaction records (including free purchases). Average is the total divided by count, rounded to the nearest paise; show an em dash when count is zero.
+4. **Spending trend** bar chart grouped by the selected period's date buckets.
+5. **Spending by category** with each of the three fixed categories, purchase amount, percent share, and proportional horizontal bar.
+6. **Top spending products** list containing up to five products ranked by total purchase spending in the selected period. Show product name, category, and amount.
+
+Full interaction and design details are defined in [Phase 06 Insights screen design](PHASE-06-INSIGHTS-DESIGN.md).
+
+### Spending trend aggregation
+
+- Last 7 days: one bucket per local calendar day.
+- This month: one bucket per day from the first of the month through today.
+- Last 3 months: one bucket per calendar month.
+- Custom ranges of 31 calendar days or fewer: daily; 32–180 days: weekly (Monday–Sunday, clipped to the selected boundaries); longer ranges: monthly.
+- All time: monthly buckets from the month of the first ADD transaction through the current local month.
+- Use inclusive local-calendar boundaries and avoid fixed-millisecond day arithmetic. Label buckets and provide a readable way to inspect the exact bucket amount.
+
+### Breakdown and empty-state rules
+
+- Category totals group ADD amounts by the product's fixed category. All three fixed categories must be represented; percentages are relative to overall spending for the selected range.
+- Top spending products rank by ADD amount, descending; include archived products and show an unobtrusive Archived label. Exclude products with zero total spend from the ranking. Equal totals must have deterministic ordering.
+- Purchases of archived products remain included in summary, trend, category, product ranking, count, and average.
+- Use and stock changes never affect spending analytics. Editing an ADD amount/date updates every affected section. Permanent product deletion removes its transactions from all analytics.
+- When there are no purchase records, show ₹0, zero purchases, an em dash average, and helpful empty states. When records exist but all purchases were free, count them but do not display misleading positive-spending bars or percentages.
+- Do not add budgets, savings targets, forecasts, overspending claims, AI insights, or network-dependent features in Phase 06.
+
 ## 12. Offline storage, privacy and deferred features
 
 Products, name, transactions, stock and spending are local. Room is the source of truth for product/transaction data; totals are derived from transactions. No account, cloud sync, internet permission, analytics or ad SDK is needed. JSON backup/restore comes after core-app acceptance.
