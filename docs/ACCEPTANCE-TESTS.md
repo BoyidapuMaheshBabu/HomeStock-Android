@@ -102,16 +102,42 @@ All periods use device-local calendar dates and inclusive boundaries. Test date:
 - [ ] Changing filters updates total and displayed range correctly.
 - [ ] Home's This month card always agrees with Insights' This month total.
 
-## H. Product history
+## H. Product transaction history
 
-- [ ] Tapping product row opens a vertically scrollable history for that product.
+- [ ] Tapping a product row opens a vertically scrollable history for that product.
 - [ ] Entries are grouped by local transaction date, with Today/Yesterday/date labels.
-- [ ] Newer dates first; same-date transactions ordered newest inserted first.
-- [ ] Time-of-day is not shown.
-- [ ] Add/Purchase entries show quantity, unit and actual amount paid.
-- [ ] Use entries show quantity, unit and stock impact.
-- [ ] Product-specific spending matches the sum of its Add transactions.
-- [ ] History rows are read-only in the first MVP; no transaction-row edit/delete controls.
+- [ ] Newer dates appear first; same-date transactions are ordered newest recorded first.
+- [ ] Time-of-day is not shown in the history list.
+- [ ] Add/Purchase entries show quantity, compatible unit and actual amount paid.
+- [ ] Use entries show quantity, compatible unit and stock impact, with no money amount.
+- [ ] Product-specific spending matches the sum of its saved Add transactions.
+- [ ] Tapping a history row opens transaction details with an Edit action regardless of transaction age.
+- [ ] No permanent Edit/Delete buttons clutter every row; actions live in transaction details.
+- [ ] Edit preserves the transaction ID, product association, transaction type and original recorded-at timestamp.
+- [ ] ADD can edit quantity, compatible unit, amount paid and transaction date.
+- [ ] USE can edit quantity, compatible unit and transaction date; it has no money field.
+- [ ] Transaction date may be changed to a permitted past/current date but not a future date.
+- [ ] Edits use the same quantity, dimension, precision and money validation as transaction creation.
+- [ ] An edit that would cause negative derived stock is rejected atomically; the previous record remains unchanged.
+- [ ] Successful edits update stock and spending via Room-derived state without manual refresh.
+- [ ] ADD amount/date edits recalculate affected spending ranges; USE edits never change spending.
+- [ ] Existing transactions of archived products can be corrected without automatically unarchiving the product.
+- [ ] Editing does not reset or extend the 30-minute Delete deadline.
+
+## H2. Transaction edit and time-limited deletion policy
+
+- [ ] Every saved transaction has an immutable recorded-at timestamp separate from its editable transaction date.
+- [ ] Delete is available only while less than 30 minutes have elapsed since the transaction was actually recorded.
+- [ ] The 30-minute rule uses recorded-at time, not a backdated purchase/usage date.
+- [ ] At exactly 30 minutes and afterward, the delete action is unavailable and the repository rejects deletion even if the UI is stale.
+- [ ] Canceling the transaction-delete confirmation leaves the transaction unchanged.
+- [ ] Deleting a transaction inside the eligible window is atomic and refreshes derived stock/spending immediately.
+- [ ] Deletion is blocked if removing that transaction would make derived stock negative; the record remains intact and an explanatory error is shown.
+- [ ] Transactions predating the recorded-at timestamp migration are considered outside the Delete window because their original save time is unknown.
+- [ ] A transaction's Delete deadline remains unchanged after any edit.
+- [ ] After an Add or Use transaction is deleted, a product's `hasEverHadTransactions` flag remains true; its measurement type stays locked permanently.
+- [ ] Measurement type remains locked if all transaction rows for that product have been deleted.
+- [ ] Schema migration preserves existing product/transaction data and does not use destructive database fallback.
 
 ## I. Delete, Archive and Restore
 
