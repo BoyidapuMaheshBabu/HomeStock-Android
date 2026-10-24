@@ -1,8 +1,8 @@
 # Roadmap
 
-**Current status: Phases 01–03 accepted; Phase 04 — Add/Use transactions and stock rules is next.**
-**Next implementation branch:** phase/04-add-use-transactions-and-stock-rules.
-**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3.
+**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is next.**
+**Next implementation branch:** phase/05-product-transaction-history.
+**Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
 
@@ -50,17 +50,19 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 04 — Add/Use transactions and stock rules
 
-**Status:** Next phase. Create `phase/04-add-use-transactions-and-stock-rules` from the latest `main` after the Phase 03 merge.
+**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported implementation/test evidence and its limits.
 
-- [ ] Plus action opens separate Add and Use choices.
-- [ ] Add form: quantity, compatible unit, required amount paid and date.
-- [ ] Use form: current stock, quantity, compatible unit and date.
-- [ ] Base-unit conversions and positive quantity validation.
-- [ ] Atomic stock check and Use insert; reject over-use.
-- [ ] Disable Save while write is pending and prevent duplicate submissions.
-- [ ] Update Room-derived stock, history and spending immediately after successful saves.
+- [x] Plus action opens separate Add and Use choices.
+- [x] Add form: quantity, compatible unit, required amount paid and date.
+- [x] Use form: current stock, quantity, compatible unit and date.
+- [x] Base-unit conversions and positive quantity validation.
+- [x] Atomic stock check and Use insert; reject over-use.
+- [x] Disable Save while write is pending and prevent duplicate submissions.
+- [x] Update Room-derived stock, history and spending immediately after successful saves.
 
 ## Phase 05 — Product transaction history
+
+**Status:** Next phase. Create `phase/05-product-transaction-history` from the latest `main` after the Phase 04 merge.
 
 - [ ] Tapping product row opens scrollable date-grouped read-only history.
 - [ ] Add entries display quantity, unit, amount paid and date.
@@ -97,8 +99,8 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 2. The reviewed planning and branding baseline was merged into `main` via PR #1.
 3. Phase 01 was accepted and merged into `main` via PR #2.
 4. Phase 02 was accepted and merged into `main` via PR #3.
-5. Phase 03 used `phase/03-product-catalogue-and-management`; it is accepted and is being merged into `main`.
-6. Phase 04 uses `phase/04-add-use-transactions-and-stock-rules`, created from the latest `main` after that merge.
-7. Implement one focused phase at a time and verify builds, tests and device behavior.
-8. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
-
+5. Phase 03 used `phase/03-product-catalogue-and-management`; it was accepted and merged into `main` via PR #5.
+6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules`; it has been accepted to advance to Phase 05 and is being merged into `main`.
+7. Phase 05 uses `phase/05-product-transaction-history`, created from the latest `main` after the Phase 04 merge.
+8. Implement one focused phase at a time and verify builds, tests and device behavior.
+9. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.

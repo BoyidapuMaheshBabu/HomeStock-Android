@@ -33,6 +33,10 @@ import com.boyidapu.homestock.ui.product.EditProductScreen
 import com.boyidapu.homestock.ui.product.EditProductViewModel
 import com.boyidapu.homestock.ui.settings.SettingsScreen
 import com.boyidapu.homestock.ui.settings.SettingsViewModel
+import com.boyidapu.homestock.ui.transaction.AddTransactionScreen
+import com.boyidapu.homestock.ui.transaction.AddTransactionViewModel
+import com.boyidapu.homestock.ui.transaction.UseTransactionScreen
+import com.boyidapu.homestock.ui.transaction.UseTransactionViewModel
 
 @Composable
 fun HomeStockAppNavHost(
@@ -119,6 +123,12 @@ fun HomeStockAppNavHost(
                 },
                 onEditProduct = { productId ->
                     backStack += Screen.EditProduct(productId)
+                },
+                onNavigateToAddTransaction = { productId ->
+                    backStack += Screen.AddTransaction(productId)
+                },
+                onNavigateToUseTransaction = { productId ->
+                    backStack += Screen.UseTransaction(productId)
                 }
             )
         }
@@ -162,6 +172,52 @@ fun HomeStockAppNavHost(
             }
             EditProductScreen(
                 viewModel = editProductViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.AddTransaction> { key ->
+            val addViewModel: AddTransactionViewModel = viewModel(
+                key = "add_tx_${key.productId}",
+                factory = viewModelFactory {
+                    initializer {
+                        AddTransactionViewModel(
+                            key.productId,
+                            appContainer.productRepository,
+                            appContainer.transactionRepository
+                        )
+                    }
+                }
+            )
+            AddTransactionScreen(
+                viewModel = addViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.UseTransaction> { key ->
+            val useViewModel: UseTransactionViewModel = viewModel(
+                key = "use_tx_${key.productId}",
+                factory = viewModelFactory {
+                    initializer {
+                        UseTransactionViewModel(
+                            key.productId,
+                            appContainer.productRepository,
+                            appContainer.transactionRepository
+                        )
+                    }
+                }
+            )
+            UseTransactionScreen(
+                viewModel = useViewModel,
                 onBack = {
                     if (backStack.isNotEmpty()) {
                         backStack.removeAt(backStack.lastIndex)

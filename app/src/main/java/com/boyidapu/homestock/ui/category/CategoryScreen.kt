@@ -1,6 +1,7 @@
 package com.boyidapu.homestock.ui.category
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,7 +20,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -50,7 +53,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.boyidapu.homestock.domain.model.FixedCategory
 import com.boyidapu.homestock.domain.model.ProductWithStock
 import com.boyidapu.homestock.ui.theme.CleanWhite
 import com.boyidapu.homestock.ui.theme.DeepTeal
@@ -64,11 +66,14 @@ fun CategoryScreen(
     viewModel: CategoryViewModel,
     onBack: () -> Unit,
     onAddProduct: (String) -> Unit,
-    onEditProduct: (Long) -> Unit
+    onEditProduct: (Long) -> Unit,
+    onNavigateToAddTransaction: (Long) -> Unit,
+    onNavigateToUseTransaction: (Long) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     var productToDelete by remember { mutableStateOf<ProductWithStock?>(null) }
+    var productForChooser by remember { mutableStateOf<ProductWithStock?>(null) }
 
     val categoryName = uiState.category?.displayName ?: "Category Products"
 
@@ -152,7 +157,7 @@ fun CategoryScreen(
                     ) { item ->
                         ProductItemCard(
                             item = item,
-                            onPlusClicked = { viewModel.onPlusClicked(item.product.name) },
+                            onPlusClicked = { productForChooser = item },
                             onEditClicked = { onEditProduct(item.product.id) },
                             onDeleteClicked = { productToDelete = item },
                             onArchiveClicked = { viewModel.archiveProduct(item.product.id) }
@@ -160,11 +165,132 @@ fun CategoryScreen(
                     }
 
                     item {
-                        Spacer(modifier = Modifier.height(72.dp)) // Padding for FAB
+                        Spacer(modifier = Modifier.height(72.dp))
                     }
                 }
             }
         }
+    }
+
+    // Add / Use Chooser Dialog
+    if (productForChooser != null) {
+        val target = productForChooser!!
+        AlertDialog(
+            onDismissRequest = { productForChooser = null },
+            title = {
+                Column {
+                    Text(target.product.name, fontWeight = FontWeight.Bold, color = DeepTeal)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Current Stock: ${target.formattedStock}",
+                        fontSize = 13.sp,
+                        color = MutedSageGray,
+                        fontWeight = FontWeight.Normal
+                    )
+                }
+            },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    // Add Option
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = SoftSage),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val productId = target.product.id
+                                productForChooser = null
+                                onNavigateToAddTransaction(productId)
+                            }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(DeepTeal, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ShoppingCart,
+                                    contentDescription = "Add Purchase",
+                                    tint = CleanWhite,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(14.dp))
+                            Column {
+                                Text(
+                                    text = "Add (Purchase)",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = DeepTeal
+                                )
+                                Text(
+                                    text = "Record new purchase or stock in",
+                                    fontSize = 12.sp,
+                                    color = ForestCharcoal
+                                )
+                            }
+                        }
+                    }
+
+                    // Use Option
+                    Card(
+                        colors = CardDefaults.cardColors(containerColor = SoftSage),
+                        shape = RoundedCornerShape(12.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                val productId = target.product.id
+                                productForChooser = null
+                                onNavigateToUseTransaction(productId)
+                            }
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .size(40.dp)
+                                    .background(DeepTeal, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Done,
+                                    contentDescription = "Use Stock",
+                                    tint = CleanWhite,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(14.dp))
+                            Column {
+                                Text(
+                                    text = "Use (Consume)",
+                                    fontSize = 16.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    color = DeepTeal
+                                )
+                                Text(
+                                    text = "Record usage or stock out",
+                                    fontSize = 12.sp,
+                                    color = ForestCharcoal
+                                )
+                            }
+                        }
+                    }
+                }
+            },
+            confirmButton = {},
+            dismissButton = {
+                TextButton(onClick = { productForChooser = null }) {
+                    Text("Cancel", color = MutedSageGray)
+                }
+            }
+        )
     }
 
     // Delete Confirmation Dialog
