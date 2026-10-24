@@ -1,6 +1,9 @@
 package com.boyidapu.homestock.test.fake
 
+import com.boyidapu.homestock.domain.model.CategorySpending
+import com.boyidapu.homestock.domain.model.FixedCategory
 import com.boyidapu.homestock.domain.model.InventoryTransaction
+import com.boyidapu.homestock.domain.model.ProductSpending
 import com.boyidapu.homestock.domain.model.TransactionEditAudit
 import com.boyidapu.homestock.domain.model.TransactionType
 import com.boyidapu.homestock.domain.model.UnitType
@@ -15,6 +18,15 @@ class FakeTransactionRepository : TransactionRepository {
 
     val transactions = MutableStateFlow<List<InventoryTransaction>>(emptyList())
     val audits = MutableStateFlow<List<TransactionEditAudit>>(emptyList())
+    val products = MutableStateFlow<Map<Long, Pair<String, FixedCategory>>>(emptyMap())
+    val archivedProducts = MutableStateFlow<Set<Long>>(emptySet())
+
+    fun addProduct(id: Long, name: String, category: FixedCategory, isArchived: Boolean = false) {
+        products.value = products.value + (id to (name to category))
+        if (isArchived) {
+            archivedProducts.value = archivedProducts.value + id
+        }
+    }
 
     fun setSpendingPaise(paise: Long) {
         val todayEpochDay = LocalDate.now(ZoneId.systemDefault()).toEpochDay()
@@ -70,6 +82,144 @@ class FakeTransactionRepository : TransactionRepository {
             list.filter {
                 it.type == TransactionType.ADD && it.amountPaidPaise != null
             }.sumOf { it.amountPaidPaise!! }
+        }
+    }
+
+    override fun getAddTransactionCountBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<Int> {
+        return transactions.map { list ->
+            list.count {
+                it.type == TransactionType.ADD &&
+                it.transactionEpochDay >= startEpochDay &&
+                it.transactionEpochDay <= endEpochDay
+            }
+        }
+    }
+
+    override fun getAllTimeAddTransactionCount(): Flow<Int> {
+        return transactions.map { list ->
+            list.count { it.type == TransactionType.ADD }
+        }
+    }
+
+    override fun getAddTransactionsBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<InventoryTransaction>> {
+        return transactions.map { list ->
+            list.filter {
+                it.type == TransactionType.ADD &&
+                it.transactionEpochDay >= startEpochDay &&
+                it.transactionEpochDay <= endEpochDay
+            }.sortedBy { it.transactionEpochDay }
+        }
+    }
+
+    override fun getAllTimeAddTransactions(): Flow<List<InventoryTransaction>> {
+        return transactions.map { list ->
+            list.filter { it.type == TransactionType.ADD }.sortedBy { it.transactionEpochDay }
+        }
+    }
+
+    override fun getCategorySpendingBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<CategorySpending>> {
+        return transactions.map { list ->
+            val matchingAddTxs = list.filter {
+                it.type == TransactionType.ADD &&
+                it.amountPaidPaise != null &&
+                it.transactionEpochDay >= startEpochDay &&
+                it.transactionEpochDay <= endEpochDay
+            }
+            val totalSpending = matchingAddTxs.sumOf { it.amountPaidPaise!! }
+
+            val groupedByCategory = matchingAddTxs.groupBy { tx ->
+                products.value[tx.productId]?.second ?: FixedCategory.FOOD_KITCHEN
+            }
+
+            groupedByCategory.map { (category, txs) ->
+                val catTotal = txs.sumOf { it.amountPaidPaise!! }
+                val pct = if (totalSpending > 0L) (catTotal.toFloat() / totalSpending.toFloat()) * 100f else 0f
+                CategorySpending(
+                    category = category,
+                    totalSpendingPaise = catTotal,
+                    percentageShare = pct
+                )
+            }
+        }
+    }
+
+    override fun getAllTimeCategorySpending(): Flow<List<CategorySpending>> {
+        return transactions.map { list ->
+            val matchingAddTxs = list.filter {
+                it.type == TransactionType.ADD && it.amountPaidPaise != null
+            }
+            val totalSpending = matchingAddTxs.sumOf { it.amountPaidPaise!! }
+
+            val groupedByCategory = matchingAddTxs.groupBy { tx ->
+                products.value[tx.productId]?.second ?: FixedCategory.FOOD_KITCHEN
+            }
+
+            groupedByCategory.map { (category, txs) ->
+                val catTotal = txs.sumOf { it.amountPaidPaise!! }
+                val pct = if (totalSpending > 0L) (catTotal.toFloat() / totalSpending.toFloat()) * 100f else 0f
+                CategorySpending(
+                    category = category,
+                    totalSpendingPaise = catTotal,
+                    percentageShare = pct
+                )
+            }
+        }
+    }
+
+    override fun getTopProductSpendingBetweenEpochDays(startEpochDay: Long, endEpochDay: Long): Flow<List<ProductSpending>> {
+        return transactions.map { list ->
+            val matchingAddTxs = list.filter {
+                it.type == TransactionType.ADD &&
+                it.amountPaidPaise != null &&
+                it.transactionEpochDay >= startEpochDay &&
+                it.transactionEpochDay <= endEpochDay
+            }
+
+            val groupedByProduct = matchingAddTxs.groupBy { it.productId }
+
+            groupedByProduct.mapNotNull { (productId, txs) ->
+                val total = txs.sumOf { it.amountPaidPaise!! }
+                if (total > 0L) {
+                    val pInfo = products.value[productId] ?: ("Product $productId" to FixedCategory.FOOD_KITCHEN)
+                    val isArchived = archivedProducts.value.contains(productId)
+                    ProductSpending(
+                        productId = productId,
+                        productName = pInfo.first,
+                        category = pInfo.second,
+                        isArchived = isArchived,
+                        totalSpendingPaise = total
+                    )
+                } else null
+            }
+                .sortedWith(compareByDescending<ProductSpending> { it.totalSpendingPaise }.thenBy { it.productName })
+                .take(5)
+        }
+    }
+
+    override fun getAllTimeTopProductSpending(): Flow<List<ProductSpending>> {
+        return transactions.map { list ->
+            val matchingAddTxs = list.filter {
+                it.type == TransactionType.ADD && it.amountPaidPaise != null
+            }
+
+            val groupedByProduct = matchingAddTxs.groupBy { it.productId }
+
+            groupedByProduct.mapNotNull { (productId, txs) ->
+                val total = txs.sumOf { it.amountPaidPaise!! }
+                if (total > 0L) {
+                    val pInfo = products.value[productId] ?: ("Product $productId" to FixedCategory.FOOD_KITCHEN)
+                    val isArchived = archivedProducts.value.contains(productId)
+                    ProductSpending(
+                        productId = productId,
+                        productName = pInfo.first,
+                        category = pInfo.second,
+                        isArchived = isArchived,
+                        totalSpendingPaise = total
+                    )
+                } else null
+            }
+                .sortedWith(compareByDescending<ProductSpending> { it.totalSpendingPaise }.thenBy { it.productName })
+                .take(5)
         }
     }
 

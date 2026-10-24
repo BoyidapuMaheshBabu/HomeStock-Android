@@ -1,10 +1,13 @@
 package com.boyidapu.homestock.core.dates
 
+import com.boyidapu.homestock.domain.model.InventoryTransaction
 import com.boyidapu.homestock.domain.model.SpendingPeriod
-import java.time.Instant
+import com.boyidapu.homestock.domain.model.TrendBucket
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 object DateUtils {
@@ -35,7 +38,7 @@ object DateUtils {
             SpendingPeriod.THIS_MONTH -> referenceDate.withDayOfMonth(1)
             SpendingPeriod.LAST_3_MONTHS -> referenceDate.minusMonths(2).withDayOfMonth(1)
             SpendingPeriod.CUSTOM -> customStart ?: referenceDate
-            SpendingPeriod.ALL_TIME -> LocalDate.of(2000, 1, 1)
+            SpendingPeriod.ALL_TIME -> LocalDate.of(1970, 1, 1)
         }
 
         val actualEnd = if (period == SpendingPeriod.CUSTOM && customEnd != null) customEnd else end
@@ -57,5 +60,151 @@ object DateUtils {
             SpendingPeriod.ALL_TIME -> "All time"
             else -> "${startDate.format(formatter)} – ${endDate.format(formatter)}"
         }
+    }
+
+    fun calculateTrendBuckets(
+        period: SpendingPeriod,
+        startDate: LocalDate,
+        endDate: LocalDate,
+        addTransactions: List<InventoryTransaction>
+    ): List<TrendBucket> {
+        if (startDate.isAfter(endDate)) return emptyList()
+
+        val buckets = mutableListOf<TrendBucket>()
+
+        when (period) {
+            SpendingPeriod.LAST_7_DAYS -> {
+                var curr = startDate
+                val dayFormatter = DateTimeFormatter.ofPattern("EEE", Locale.getDefault())
+                while (!curr.isAfter(endDate)) {
+                    val epoch = curr.toEpochDay()
+                    val spend = addTransactions.filter { it.transactionEpochDay == epoch }.sumOf { it.amountPaidPaise ?: 0L }
+                    buckets.add(
+                        TrendBucket(
+                            label = curr.format(dayFormatter),
+                            totalSpendingPaise = spend,
+                            startDate = curr,
+                            endDate = curr
+                        )
+                    )
+                    curr = curr.plusDays(1)
+                }
+            }
+            SpendingPeriod.THIS_MONTH -> {
+                var curr = startDate
+                val dayFormatter = DateTimeFormatter.ofPattern("d", Locale.getDefault())
+                while (!curr.isAfter(endDate)) {
+                    val epoch = curr.toEpochDay()
+                    val spend = addTransactions.filter { it.transactionEpochDay == epoch }.sumOf { it.amountPaidPaise ?: 0L }
+                    buckets.add(
+                        TrendBucket(
+                            label = curr.format(dayFormatter),
+                            totalSpendingPaise = spend,
+                            startDate = curr,
+                            endDate = curr
+                        )
+                    )
+                    curr = curr.plusDays(1)
+                }
+            }
+            SpendingPeriod.LAST_3_MONTHS -> {
+                var currMonth = startDate.withDayOfMonth(1)
+                val monthFormatter = DateTimeFormatter.ofPattern("MMM", Locale.getDefault())
+                while (!currMonth.isAfter(endDate)) {
+                    val monthEnd = currMonth.plusMonths(1).minusDays(1).let { if (it.isAfter(endDate)) endDate else it }
+                    val startEpoch = currMonth.toEpochDay()
+                    val endEpoch = monthEnd.toEpochDay()
+                    val spend = addTransactions.filter { it.transactionEpochDay in startEpoch..endEpoch }.sumOf { it.amountPaidPaise ?: 0L }
+                    buckets.add(
+                        TrendBucket(
+                            label = currMonth.format(monthFormatter),
+                            totalSpendingPaise = spend,
+                            startDate = currMonth,
+                            endDate = monthEnd
+                        )
+                    )
+                    currMonth = currMonth.plusMonths(1)
+                }
+            }
+            SpendingPeriod.CUSTOM -> {
+                val totalDays = ChronoUnit.DAYS.between(startDate, endDate) + 1
+                if (totalDays <= 31) {
+                    var curr = startDate
+                    val dayFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.getDefault())
+                    while (!curr.isAfter(endDate)) {
+                        val epoch = curr.toEpochDay()
+                        val spend = addTransactions.filter { it.transactionEpochDay == epoch }.sumOf { it.amountPaidPaise ?: 0L }
+                        buckets.add(
+                            TrendBucket(
+                                label = curr.format(dayFormatter),
+                                totalSpendingPaise = spend,
+                                startDate = curr,
+                                endDate = curr
+                            )
+                        )
+                        curr = curr.plusDays(1)
+                    }
+                } else if (totalDays <= 180) {
+                    var curr = startDate
+                    val labelFormatter = DateTimeFormatter.ofPattern("MMM d", Locale.getDefault())
+                    while (!curr.isAfter(endDate)) {
+                        val weekEnd = curr.with(DayOfWeek.SUNDAY).let { if (it.isAfter(endDate)) endDate else it }
+                        val startEpoch = curr.toEpochDay()
+                        val endEpoch = weekEnd.toEpochDay()
+                        val spend = addTransactions.filter { it.transactionEpochDay in startEpoch..endEpoch }.sumOf { it.amountPaidPaise ?: 0L }
+                        buckets.add(
+                            TrendBucket(
+                                label = curr.format(labelFormatter),
+                                totalSpendingPaise = spend,
+                                startDate = curr,
+                                endDate = weekEnd
+                            )
+                        )
+                        curr = weekEnd.plusDays(1)
+                    }
+                } else {
+                    var currMonth = startDate.withDayOfMonth(1)
+                    val monthFormatter = DateTimeFormatter.ofPattern("MMM yyyy", Locale.getDefault())
+                    while (!currMonth.isAfter(endDate)) {
+                        val monthEnd = currMonth.plusMonths(1).minusDays(1).let { if (it.isAfter(endDate)) endDate else it }
+                        val startEpoch = currMonth.toEpochDay()
+                        val endEpoch = monthEnd.toEpochDay()
+                        val spend = addTransactions.filter { it.transactionEpochDay in startEpoch..endEpoch }.sumOf { it.amountPaidPaise ?: 0L }
+                        buckets.add(
+                            TrendBucket(
+                                label = currMonth.format(monthFormatter),
+                                totalSpendingPaise = spend,
+                                startDate = currMonth,
+                                endDate = monthEnd
+                            )
+                        )
+                        currMonth = currMonth.plusMonths(1)
+                    }
+                }
+            }
+            SpendingPeriod.ALL_TIME -> {
+                val firstTxDay = addTransactions.minOfOrNull { it.transactionEpochDay } ?: startDate.toEpochDay()
+                val firstMonth = LocalDate.ofEpochDay(firstTxDay).withDayOfMonth(1)
+                var currMonth = if (firstMonth.isBefore(startDate)) firstMonth else startDate.withDayOfMonth(1)
+                val monthFormatter = DateTimeFormatter.ofPattern("MMM yyyy", Locale.getDefault())
+                while (!currMonth.isAfter(endDate)) {
+                    val monthEnd = currMonth.plusMonths(1).minusDays(1).let { if (it.isAfter(endDate)) endDate else it }
+                    val startEpoch = currMonth.toEpochDay()
+                    val endEpoch = monthEnd.toEpochDay()
+                    val spend = addTransactions.filter { it.transactionEpochDay in startEpoch..endEpoch }.sumOf { it.amountPaidPaise ?: 0L }
+                    buckets.add(
+                        TrendBucket(
+                            label = currMonth.format(monthFormatter),
+                            totalSpendingPaise = spend,
+                            startDate = currMonth,
+                            endDate = monthEnd
+                        )
+                    )
+                    currMonth = currMonth.plusMonths(1)
+                }
+            }
+        }
+
+        return buckets
     }
 }
