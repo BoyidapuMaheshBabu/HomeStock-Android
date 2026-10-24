@@ -1,7 +1,7 @@
 # Roadmap
 
-**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is next.**
-**Next implementation branch:** phase/05-product-transaction-history.
+**Current status: Phases 01–04 accepted; Phase 05 — Product transaction history is active.**
+**Current branch:** phase/05-product-transaction-history.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5.
 
 The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
@@ -62,7 +62,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Next phase. Create `phase/05-product-transaction-history` from the latest `main` after the Phase 04 merge.
+**Status:** Active on `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit `8d64ed09769e4b09ae59a99296f489693d138870`. Implementation is pending.
 
 - [ ] Tapping product row opens scrollable date-grouped read-only history.
 - [ ] Add entries display quantity, unit, amount paid and date.
@@ -100,7 +100,7 @@ Do not implement JSON backup/restore in the core MVP. Revisit after the intended
 3. Phase 01 was accepted and merged into `main` via PR #2.
 4. Phase 02 was accepted and merged into `main` via PR #3.
 5. Phase 03 used `phase/03-product-catalogue-and-management`; it was accepted and merged into `main` via PR #5.
-6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules`; it has been accepted to advance to Phase 05 and is being merged into `main`.
-7. Phase 05 uses `phase/05-product-transaction-history`, created from the latest `main` after the Phase 04 merge.
+6. Phase 04 used `phase/04-add-use-transactions-and-stock-rules` and was merged into `main` via PR #6.
+7. Phase 05 uses `phase/05-product-transaction-history`, created from the post-Phase-04 `main` commit.
 8. Implement one focused phase at a time and verify builds, tests and device behavior.
 9. After the user accepts a completed phase, merge it into `main`, update status/evidence, then create the next phase branch from the latest `main`.
