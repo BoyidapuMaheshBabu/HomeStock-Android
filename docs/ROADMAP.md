@@ -1,6 +1,6 @@
 # Roadmap
 
-**Current status: Phases 01–06 accepted; Phase 07 — Verification and intended-user review is active.**
+**Current status: Phases 01–07 recorded complete. Phase 07 was closed by project-owner direction on 2026-11-02 for project/reporting status; its individual verification evidence remains qualified as documented below.**
 **Current branch:** phase/07-verification-and-intended-user-review.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
@@ -91,18 +91,9 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 07 — Verification and intended-user review
 
-**Status:** Active on `phase/07-verification-and-intended-user-review`. Verify the complete app and resolve any defects against the agreed product requirements before calling the core MVP ready.
+**Status:** Completed for project/reporting status by explicit project-owner direction on 2026-11-02. This is an owner-declared phase closure, not a claim that every acceptance scenario was independently verified. See [Phase 07 verification](PHASE-07-VERIFICATION.md).
 
-- [ ] Run the relevant Gradle unit tests and debug build; record actual output and results.
-- [ ] Run the scenarios in ACCEPTANCE-TESTS.md and mark individual cases passed only when there is evidence.
-- [ ] Test the core app in airplane mode and confirm no network dependency.
-- [ ] Verify name, products, archive state, transactions, stock, edit audit records, and spending persist across restart/force close.
-- [ ] Test quantity/unit conversions, over-use rejection, rapid duplicate submissions, transaction edits, the exact 30-minute delete boundary, and archive/delete behavior.
-- [ ] Verify all Insights filters and inclusive dates, purchase count/average, daily/weekly/monthly trend buckets, category amounts/shares, top-five products, archived-product inclusion, free purchases, and empty states.
-- [ ] Confirm Home's This month card equals Insights' This month total and data changes refresh the UI without manual reload.
-- [ ] Install the APK on the intended physical phone and have the intended user review the app.
-- [ ] Fix issues or usability problems that violate requirements; rerun relevant tests after fixes.
-- [ ] Update README and verification records only with observed, supportable evidence.
+**Evidence register:** The itemized scenarios in `docs/ACCEPTANCE-TESTS.md` remain an evidence checklist. At the time of this status update, 143 items were unchecked in that file. They have deliberately not been converted to passed checks. The repository does not contain a recorded Phase 07 Gradle test/build run or a complete item-by-item offline and intended-user acceptance record. See `PHASE-07-VERIFICATION.md`.
 
 ## Deferred follow-up — JSON backup/restore
 
