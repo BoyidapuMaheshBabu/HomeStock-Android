@@ -2,7 +2,7 @@
 
 IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
 
-**Status:** Phases 01–06 accepted. Phase 06 — Spending Dashboard and Insights was merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). See [Phase 06 verification](docs/PHASE-06-VERIFICATION.md) for scope and evidence limits. Phase 07 — Verification and intended-user review is active on `phase/07-verification-and-intended-user-review`.
+**Status:** Phases 01–06 accepted and merged into `main`. Phase 07 — Verification and intended-user review is recorded as complete by project-owner direction on 2026-11-02 for project/reporting status. Its individual verification evidence remains qualified; see [Phase 07 verification](docs/PHASE-07-VERIFICATION.md).
 **Working branch:** phase/07-verification-and-intended-user-review.
 **Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
@@ -32,6 +32,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Phase 04 verification record](docs/PHASE-04-VERIFICATION.md) — accepted Add/Use transaction scope and reported automated test evidence.
 - [Phase 05 verification record](docs/PHASE-05-VERIFICATION.md) — accepted product history, transaction corrections, time-limited deletion, and reported automated test evidence.
 - [Phase 06 verification record](docs/PHASE-06-VERIFICATION.md) — accepted spending filters, summary metrics, trend, category breakdown, product ranking, and evidence limits.
+- [Phase 07 verification record](docs/PHASE-07-VERIFICATION.md) — owner-declared phase closure and remaining evidence limitations.
 - [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
 - [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
 
@@ -53,4 +54,4 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01–06 are accepted. Phase 05 added product-specific transaction history, auditable corrections, a 30-minute post-recording Delete window, safe Room migration, and stock/spending safeguards; it was merged via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). Phase 06 added five spending-period filters, summary metrics, a trend chart, category breakdown, and top spending products; it was merged via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). See [Phase 06 verification](docs/PHASE-06-VERIFICATION.md) for the reported scope and evidence limits. Phase 07 — Verification and intended-user review is active on `phase/07-verification-and-intended-user-review`.
+Phases 01–06 are accepted. Phase 05 added product-specific transaction history, auditable corrections, a 30-minute post-recording Delete window, safe Room migration, and stock/spending safeguards; it was merged via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). Phase 06 added five spending-period filters, summary metrics, a trend chart, category breakdown, and top spending products; it was merged via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). Phase 07 is now recorded as owner-declared complete for project/reporting status. The repository's unchecked acceptance items remain unverified unless separate evidence is recorded; see [Phase 07 verification](docs/PHASE-07-VERIFICATION.md).
