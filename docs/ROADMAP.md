@@ -1,6 +1,6 @@
 # Roadmap
 
-**Current status: Phases 01–07 recorded complete. Phase 07 was closed by project-owner direction on 2026-11-02 for project/reporting status; its individual verification evidence remains qualified as documented below.**
+**Current status: Phases 01–07 recorded complete. On 2026-11-02, Mahesh confirmed physical-device testing of the app's functionality and reported that everything worked as expected. Automated build/test evidence remains separately qualified.**
 **Current branch:** phase/07-verification-and-intended-user-review.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
@@ -91,9 +91,9 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 07 — Verification and intended-user review
 
-**Status:** Completed for project/reporting status by explicit project-owner direction on 2026-11-02. This is an owner-declared phase closure, not a claim that every acceptance scenario was independently verified. See [Phase 07 verification](PHASE-07-VERIFICATION.md).
+**Status:** Completed and physically accepted by the project owner on 2026-11-02. Mahesh reports that he tested the app's functionality on a physical device and that everything worked as expected. See [Phase 07 verification](PHASE-07-VERIFICATION.md).
 
-**Evidence register:** The itemized scenarios in `docs/ACCEPTANCE-TESTS.md` remain an evidence checklist. At the time of this status update, 143 items were unchecked in that file. They have deliberately not been converted to passed checks. The repository does not contain a recorded Phase 07 Gradle test/build run or a complete item-by-item offline and intended-user acceptance record. See `PHASE-07-VERIFICATION.md`.
+**Evidence note:** This is user-reported physical-device functional acceptance. The detailed acceptance catalogue remains available for traceability; its individual checkboxes were not all transcribed one-by-one during the physical test. No new Gradle test/debug-build execution output is recorded by this status update.
 
 ## Deferred follow-up — JSON backup/restore
 
