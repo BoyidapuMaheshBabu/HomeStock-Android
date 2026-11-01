@@ -1,6 +1,6 @@
 # HomeStock Acceptance Tests
 
-**Status:** Active test catalogue; Phases 01–06 are accepted. Phase 07 — Verification and intended-user review is active. Individual scenarios are not marked passed unless that specific case has recorded evidence.
+**Status:** Reference test catalogue for the completed Phases 01–07. On 2026-11-02, Mahesh reported physically testing the app's functionality on a device and confirmed that everything worked as expected. The individual checklist boxes remain a traceability aid and are not a separately recorded, case-by-case test execution log.
 
 **Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](PHASE-05-VERIFICATION.md). **Phase 06:** Accepted and merged via PR #8; see [Phase 06 verification](PHASE-06-VERIFICATION.md). Phase 05 and Phase 06 test results remain implementation-reported where noted in those records. Do not infer that every unchecked item in this catalogue passed.
 
