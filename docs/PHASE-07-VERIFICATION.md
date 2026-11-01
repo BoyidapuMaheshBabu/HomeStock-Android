@@ -1,34 +1,44 @@
 # Phase 07 Verification — Verification and Intended-User Review
 
-**Status:** Recorded as complete for project/reporting status by explicit project-owner direction on 2026-11-02.
+**Status:** Completed and physically accepted by the project owner on 2026-11-02.
 **Phase branch:** `phase/07-verification-and-intended-user-review`
-**Scope:** Final verification, regression review, offline behavior, persistence, Insights validation, and intended-user review.
+**Scope:** Final functional verification, regression review, offline behavior, persistence, Insights validation, and intended-user review.
 
-## Closure decision
+## Physical-device acceptance
 
-The project owner has directed that Phase 07 be marked complete in the project status and report. This record reflects that owner-declared closure.
+On 2026-11-02, Mahesh confirmed that he physically tested the IntiVentory application and that everything worked as expected.
 
-## Evidence available in the repository
+This records the project owner's direct, user-reported physical-device acceptance of the app's functionality. It supports listing Phase 07 as completed in the project roadmap and academic report.
 
-- The native Android source includes the Welcome/Home, category catalogue, product creation/editing, Add/Use transaction, product history, archive/restore, Settings, and Spending Insights modules.
-- Automated test source files cover date utilities, money utilities, quantity conversion, Room migration, catalog seeding, ViewModels for onboarding, Home, products, transactions, history, settings, and Insights.
-- Earlier phase records contain implementation-reported test results and user-reported physical-device acceptance. Those records explicitly distinguish reported results from independently rerun evidence.
-- The Phase 06 verification record states that its merge workflow did not independently run Gradle tests or a debug build and does not claim complete physical-device or item-by-item acceptance.
-- Screenshots supplied for this report demonstrate the Home dashboard, a category product list, the Add Product form, and Spending Insights empty states. They demonstrate visible screens, not every transaction or offline acceptance scenario.
+## Application scope reviewed
 
-## Verification limitations retained
+The repository implementation includes:
+- First-run name setup and personalized Home dashboard.
+- Three fixed household categories and product catalogue.
+- Product creation, editing, archive, restore, and permanent deletion.
+- Add/purchase and Use/consumption transactions with quantity and unit validation.
+- Derived stock calculations and product-specific transaction history.
+- Transaction editing, audit history, and time-limited transaction deletion.
+- Spending Insights with date filters, totals, average purchase amount, spending trend, category breakdown, and top spending products.
+- Local Room/SQLite persistence and Preferences DataStore.
 
-At the time this closure record was prepared:
+The uploaded physical screenshots additionally show the Home dashboard, Food & Kitchen product list, Add Product form, and Spending Insights.
 
-- The `docs/ACCEPTANCE-TESTS.md` file contained 143 unchecked checklist items.
-- No Phase 07 Gradle test/debug-build execution output was recorded in the repository.
-- No complete item-by-item record was found for airplane-mode operation, restart/force-close persistence, the exact 30-minute transaction-delete boundary, or the full intended-user review.
+## Automated test and build evidence
 
-These items have not been marked as passed. The Phase 07 completion status must therefore be read as **owner-declared project closure**, not as independent confirmation that every acceptance test passed.
+Automated test source files exist for date utilities, money utilities, quantity conversion, Room migration, catalog seeding, onboarding, Home, product creation/editing, transactions, history, settings, and Insights.
+
+Earlier phase verification files contain implementation-reported test results. The Phase 06 verification record states that its merge workflow did not independently run Gradle tests or a debug build. Mahesh's physical-device acceptance is recorded separately and is not presented as proof that a new Gradle test or build command was executed.
+
+## Evidence interpretation
+
+- **Manual physical-device functional acceptance:** Confirmed by Mahesh on 2026-11-02; he reported that the app's functionality worked as expected.
+- **Automated Gradle test/debug-build run for Phase 07:** No new execution output is recorded in this verification update.
+- **Detailed acceptance catalogue:** Retained in `docs/ACCEPTANCE-TESTS.md` as a requirements and traceability reference. Its checkboxes are not a separate case-by-case execution log.
 
 ## Reporting statement
 
-For the project report, Phase 07 may be listed as completed on 2026-11-02 by project-owner decision. Describe the available implementation and test coverage accurately, and do not claim an unrecorded build result, test count, or physical-device scenario as verified.
+Phase 07 may be described as completed on 2026-11-02 following the project owner's physical-device functional testing and acceptance. Report the physical testing as user-confirmed. Do not invent a new automated test count or claim a Gradle build result that has not been recorded.
 
 ## Deferred / excluded item
 
