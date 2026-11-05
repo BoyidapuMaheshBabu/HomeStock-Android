@@ -17,6 +17,7 @@ Read the relevant documents before proposing or implementing a change:
 5. `docs/ROADMAP.md` and `docs/PROGRESS.md` — accepted status and deferred work.
 6. `docs/DEVELOPMENT-WORKFLOW.md` — branching, review, and evidence rules.
 7. The relevant file in `docs/phases/` — historical scope and verification limits.
+8. Relevant records in `docs/adr/` — accepted architectural decisions and their rationale.
 
 Do not treat an old phase note or remembered branch name as the current repository state. Inspect the actual code, branch, and Git status first.
 
@@ -36,7 +37,7 @@ Do not treat an old phase note or remembered branch name as the current reposito
 - Inspect `git status`, the current branch, project structure, and relevant implementation before editing. Preserve unrelated or uncommitted work.
 - Start product work from the latest accepted `main` baseline on a focused `phase/NN-short-description` branch. Use `chore/short-description` for repository maintenance.
 - Do not commit product work directly to `main`.
-- Work only within the approved objective. Update the PRD, architecture, roadmap, acceptance tests, progress snapshot, or phase records when the change makes them inaccurate.
+- Work only within the approved objective. Update the PRD, architecture, roadmap, acceptance tests, progress snapshot, or phase records when the change makes them inaccurate. When making a material architectural decision, add an ADR under `docs/adr/` and update `docs/ARCHITECTURE.md` so the current design remains easy to find.
 - Do not merge a product phase until the project owner has tested the result on the intended device and explicitly accepted it.
 
 ## Validation and evidence

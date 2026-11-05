@@ -29,6 +29,7 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - [Branding](docs/BRANDING.md) — approved name, Telugu caption, SVG references, and color palette.
 - [Development workflow](docs/DEVELOPMENT-WORKFLOW.md) — planning, evidence, branching, and review process.
 - [Phase records](docs/phases/README.md) — phase verification documents and the Phase 06 design reference.
+- [Architecture decision records](docs/adr/README.md) — concise history of significant technical decisions.
 - [Agent instructions](AGENTS.md) — repository-specific guidance for AI coding agents.
 
 ## Key rules
