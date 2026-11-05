@@ -37,4 +37,4 @@ Mahesh confirmed that the measurement-type reversal problem was resolved after r
 
 ## Evidence limits
 
-This record distinguishes the implementation agent's reported automated results from Mahesh's physical-device confirmation. The unchecked cases in `ACCEPTANCE-TESTS.md` remain a detailed catalogue of individual scenarios; they should not be treated as individually passed unless a pass is recorded. Phase 04 transaction-entry workflows are not part of Phase 03 and remain upcoming.
+This record distinguishes the implementation agent's reported automated results from Mahesh's physical-device confirmation. The unchecked cases in `docs/ACCEPTANCE-TESTS.md` remain a detailed catalogue of individual scenarios; they should not be treated as individually passed unless a pass is recorded. Phase 04 transaction-entry workflows are not part of Phase 03 and remain upcoming.

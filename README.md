@@ -1,8 +1,8 @@
 # IntiVentory — Home Inventory & Spending Tracker
 
-IntiVentory is an **offline-first native Android household inventory and spending tracker** being built for the user's sister and household.
+IntiVentory is an **offline-first native Android household inventory and spending tracker**.
 
-**Status:** Phases 01–07 are recorded complete. On 2026-11-02, Mahesh confirmed that he physically tested the app's functionality on a device and that everything worked as expected. See [Phase 07 verification](docs/PHASE-07-VERIFICATION.md) for the user-reported acceptance and remaining automated-evidence notes.
+**Status:** Phases 01–07 are recorded complete. On 2026-11-02, Mahesh confirmed that he physically tested the app's functionality on a device and that everything worked as expected. See [Phase 07 verification](docs/phases/phase-07-verification.md) for the user-reported acceptance and remaining automated-evidence notes.
 **Current baseline:** `main` (Phases 01–07 recorded complete).
 **Baseline:** Planning and branding were merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
@@ -19,22 +19,18 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 - Every transaction can be edited; individual transaction deletion is available only for 30 minutes after recording.
 - Insights: five date filters, total purchase spending, purchase count and average, a spending trend chart, category spending shares, and top five spending products.
 
-## Source-of-truth planning documents
+## Documentation
 
-- [Product requirements](docs/PRODUCT.md) — user flow, all product behaviors and business rules.
-- [Architecture](docs/ARCHITECTURE.md) — selected technical stack, package structure, schema, state flow, calculations, privacy and test layers.
-- [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — concrete expected outcomes and validation cases.
-- [Roadmap](docs/ROADMAP.md) — implementation phases and acceptance gates.
-- [Phase 06 Insights screen design](docs/PHASE-06-INSIGHTS-DESIGN.md) — exact layout, metrics, chart buckets, category breakdown, product ranking, and empty-state behavior.
-- [Phase 01 verification record](docs/PHASE-01-VERIFICATION.md) — reported build/test results and Mahesh's physical-device acceptance.
-- [Phase 02 verification record](docs/PHASE-02-VERIFICATION.md) — accepted Welcome/Home behavior and evidence limits.
-- [Phase 03 verification record](docs/PHASE-03-VERIFICATION.md) — accepted catalogue scope, editor regression root cause and reported verification evidence.
-- [Phase 04 verification record](docs/PHASE-04-VERIFICATION.md) — accepted Add/Use transaction scope and reported automated test evidence.
-- [Phase 05 verification record](docs/PHASE-05-VERIFICATION.md) — accepted product history, transaction corrections, time-limited deletion, and reported automated test evidence.
-- [Phase 06 verification record](docs/PHASE-06-VERIFICATION.md) — accepted spending filters, summary metrics, trend, category breakdown, product ranking, and evidence limits.
-- [Phase 07 verification record](docs/PHASE-07-VERIFICATION.md) — owner-declared phase closure and remaining evidence limitations.
-- [Branding direction](docs/BRANDING.md) — selected name IntiVentory, Telugu caption, SVG logo references, and locked color palette.
-- [Working philosophy](docs/WORKING-PHILOSOPHY.md) — planning-first engineering workflow.
+- [Product requirements document](docs/PRD.md) — product behavior, user flows, and business rules.
+- [Architecture](docs/ARCHITECTURE.md) — technical decisions, data model, state flow, calculations, and test layers.
+- [Acceptance tests](docs/ACCEPTANCE-TESTS.md) — expected outcomes and traceability scenarios.
+- [Roadmap](docs/ROADMAP.md) — phase scope, delivery history, and acceptance gates.
+- [Progress summary](docs/PROGRESS.md) — current baseline, completion status, and verification limits.
+- [Branding](docs/BRANDING.md) — approved name, Telugu caption, SVG references, and color palette.
+- [Development workflow](docs/DEVELOPMENT-WORKFLOW.md) — planning, evidence, branching, and review process.
+- [Phase records](docs/phases/README.md) — phase verification documents and the Phase 06 design reference.
+- [Architecture decision records](docs/adr/README.md) — concise history of significant technical decisions.
+- [Agent instructions](AGENTS.md) — repository-specific guidance for AI coding agents.
 
 ## Key rules
 
@@ -54,4 +50,8 @@ IntiVentory is an **offline-first native Android household inventory and spendin
 
 ## Implementation status
 
-Phases 01–06 are accepted. Phase 05 added product-specific transaction history, auditable corrections, a 30-minute post-recording Delete window, safe Room migration, and stock/spending safeguards; it was merged via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). Phase 06 added five spending-period filters, summary metrics, a trend chart, category breakdown, and top spending products; it was merged via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). Phase 07 is now recorded as owner-declared complete for project/reporting status. The repository's unchecked acceptance items remain unverified unless separate evidence is recorded; see [Phase 07 verification](docs/PHASE-07-VERIFICATION.md).
+Phases 01–07 are recorded complete on the `main` baseline. Phase 05 added product-specific transaction history and correction safeguards (PR #7); Phase 06 added spending filters and Insights analytics (PR #8). Phase 07 records the project owner's physical-device functional acceptance on 2026-11-02.
+
+That manual acceptance is owner-reported evidence. It does not mean every checkbox in `docs/ACCEPTANCE-TESTS.md` was recorded as an individual pass, and it does not imply a new Gradle test or build run. See [Progress](docs/PROGRESS.md) and the [phase records](docs/phases/README.md) for evidence limits.
+
+JSON backup/restore remains deferred and must not be described as an implemented feature.

@@ -1,10 +1,10 @@
 # Roadmap
 
 **Current status: Phases 01–07 recorded complete. On 2026-11-02, Mahesh confirmed physical-device testing of the app's functionality and reported that everything worked as expected. Automated build/test evidence remains separately qualified.**
-**Current branch:** phase/07-verification-and-intended-user-review.
+**Accepted baseline:** `main` contains the implementation through Phase 07. Phase-specific branches are retained as development history.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
-The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [PHASE-01-VERIFICATION.md](PHASE-01-VERIFICATION.md).
+The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [Phase 01 verification](phases/phase-01-verification.md).
 
 ## Planning sign-off
 
@@ -24,7 +24,7 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] Build and launch a minimal app on the intended phone.
 - [x] Record actual dependency versions and verified build evidence.
 
-**Acceptance:** Accepted by Mahesh after a successful physical-phone launch, icon verification and Telugu-text rendering check. Friday reported successful debug build and 13/13 passing unit tests; see PHASE-01-VERIFICATION.md.
+**Acceptance:** Accepted by Mahesh after a successful physical-phone launch, icon verification and Telugu-text rendering check. Friday reported successful debug build and 13/13 passing unit tests; see [Phase 01 verification](phases/phase-01-verification.md).
 
 ## Phase 02 — Welcome and Home
 
@@ -34,11 +34,11 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] This month card opens Insights with This month selected.
 - [x] Three fixed rectangular category hero cards.
 
-**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [PHASE-02-VERIFICATION.md](PHASE-02-VERIFICATION.md) for scope and evidence limits.
+**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [Phase 02 verification](phases/phase-02-verification.md) for scope and evidence limits.
 
 ## Phase 03 — Product catalogue and management
 
-**Status:** Accepted by Mahesh on October 24, 2026, following physical-device re-testing. See [Phase 03 verification](PHASE-03-VERIFICATION.md).
+**Status:** Accepted by Mahesh on October 24, 2026, following physical-device re-testing. See [Phase 03 verification](phases/phase-03-verification.md).
 
 - [x] Seed the 15 starter products once with zero stock and preserve deliberate deletions.
 - [x] Fixed category product lists and separate custom product creation using name + Mass/Liquid/Units only.
@@ -50,7 +50,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 04 — Add/Use transactions and stock rules
 
-**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](PHASE-04-VERIFICATION.md).
+**Status:** Accepted by Mahesh on October 24, 2026, to advance to Phase 05. See [Phase 04 verification](phases/phase-04-verification.md).
 
 - [x] Plus action opens separate Add and Use choices.
 - [x] Add form: quantity, compatible unit, required amount paid and date.
@@ -62,7 +62,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 05 — Product transaction history
 
-**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7). See [Phase 05 verification](PHASE-05-VERIFICATION.md) for scope and evidence limits; the branch README reported 54 passing unit tests.
+**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/7). See [Phase 05 verification](phases/phase-05-verification.md) for scope and evidence limits; the branch README reported 54 passing unit tests.
 
 - [x] Tapping product row opens scrollable date-grouped transaction history.
 - [x] Add entries display quantity, unit, amount paid and date; Use entries display quantity, unit and stock impact.
@@ -74,7 +74,7 @@ The architecture and product specification are the working contract. Checkboxes 
 
 ## Phase 06 — Spending Dashboard and Insights
 
-**Status:** Accepted by Mahesh and merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). See [Phase 06 verification](PHASE-06-VERIFICATION.md) and [the screen design](PHASE-06-INSIGHTS-DESIGN.md). The verification record documents the test/build evidence limits.
+**Status:** Accepted by Mahesh and merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/8). See [Phase 06 verification](phases/phase-06-verification.md) and [the screen design](phases/phase-06-insights-design.md). The verification record documents the test/build evidence limits.
 
 - [x] Home This month card shows current calendar-month purchase spending and the local date range; opens Insights with This month selected.
 - [x] Five global filters: Last 7 days, This month, Last 3 months, Custom date range, and All time; every screen section follows the same selected period.
@@ -87,17 +87,17 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] Transaction edits/deletes refresh affected sections through observable data; permanently deleted product history is excluded.
 - [x] Screen follows IntiVentory branding and Material 3, is vertically scrollable, and remains offline.
 - [x] Regression tests for Insights ViewModel behavior and related repository test fakes are included.
-- [ ] Gradle tests and debug build need recorded execution evidence; see Phase 06 verification and complete full acceptance testing in Phase 07.
+- [ ] No independent Gradle test/debug-build execution output was recorded during the Phase 06 merge workflow; see the Phase 06 verification record. Phase 07 owner-reported physical-device acceptance is recorded separately.
 
 ## Phase 07 — Verification and intended-user review
 
-**Status:** Completed and physically accepted by the project owner on 2026-11-02. Mahesh reports that he tested the app's functionality on a physical device and that everything worked as expected. See [Phase 07 verification](PHASE-07-VERIFICATION.md).
+**Status:** Completed and physically accepted by the project owner on 2026-11-02. Mahesh reports that he tested the app's functionality on a physical device and that everything worked as expected. See [Phase 07 verification](phases/phase-07-verification.md).
 
 **Evidence note:** This is user-reported physical-device functional acceptance. The detailed acceptance catalogue remains available for traceability; its individual checkboxes were not all transcribed one-by-one during the physical test. No new Gradle test/debug-build execution output is recorded by this status update.
 
 ## Deferred follow-up — JSON backup/restore
 
-Do not implement JSON backup/restore in the core MVP. Revisit after the intended user reviews and accepts the working app.
+JSON backup/restore remains outside the accepted core MVP. Start it only as a separately scoped and explicitly approved follow-up; do not treat it as implemented.
 
 ## Branch workflow
 

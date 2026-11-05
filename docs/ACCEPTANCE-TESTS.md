@@ -1,10 +1,10 @@
-# HomeStock Acceptance Tests
+# IntiVentory Acceptance Tests
 
 **Status:** Reference test catalogue for the completed Phases 01–07. On 2026-11-02, Mahesh reported physically testing the app's functionality on a device and confirmed that everything worked as expected. The individual checklist boxes remain a traceability aid and are not a separately recorded, case-by-case test execution log.
 
-**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](PHASE-02-VERIFICATION.md). **Phase 03:** See [Phase 03 verification](PHASE-03-VERIFICATION.md). **Phase 04:** See [Phase 04 verification](PHASE-04-VERIFICATION.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](PHASE-05-VERIFICATION.md). **Phase 06:** Accepted and merged via PR #8; see [Phase 06 verification](PHASE-06-VERIFICATION.md). Phase 05 and Phase 06 test results remain implementation-reported where noted in those records. Do not infer that every unchecked item in this catalogue passed.
+**Phase 02:** Mahesh accepted the Welcome/Home implementation after physical-device usability checks. See [Phase 02 verification](phases/phase-02-verification.md). **Phase 03:** See [Phase 03 verification](phases/phase-03-verification.md). **Phase 04:** See [Phase 04 verification](phases/phase-04-verification.md) for the reported 47-unit-test result and evidence limits. **Phase 05:** Accepted and merged via PR #7; see [Phase 05 verification](phases/phase-05-verification.md). **Phase 06:** Accepted and merged via PR #8; see [Phase 06 verification](phases/phase-06-verification.md). Phase 05 and Phase 06 test results remain implementation-reported where noted in those records. Do not infer that every unchecked item in this catalogue passed.
 
-Phases 05 and 06 have been accepted and merged via PRs #7 and #8. Phase 06 acceptance covered the expanded Insights screen; its test/build evidence limits are recorded in [Phase 06 verification](PHASE-06-VERIFICATION.md). Phase 07 is for full regression, offline, persistence, Insights, and intended-user device review. The unchecked items below are not considered passed without recorded evidence.
+Phases 05 and 06 were accepted and merged via PRs #7 and #8. Phase 06 acceptance covered the expanded Insights screen; its test/build evidence limits are recorded in [Phase 06 verification](phases/phase-06-verification.md). Phase 07 was recorded complete on 2026-11-02 after project-owner physical-device acceptance. The unchecked items below remain a traceability catalogue and are not considered individually passed without separate recorded evidence.
 
 ## A. Onboarding and Home
 

@@ -1,6 +1,6 @@
 # IntiVentory Branding
 
-**Status:** The user-facing name, logo direction, caption, and light theme are selected for the MVP. Implementation remains paused until the user explicitly starts it.
+**Status:** The user-facing name, logo direction, caption, and light theme are selected for the MVP. This document is the source of truth for the approved visual identity and future branding changes.
 
 ## Approved app identity
 
@@ -10,7 +10,7 @@
 - **English meaning:** Our household supplies, our household accounts.
 - **Name idea:** Inti (ఇంటి) + Inventory
 
-The repository remains named `HomeStock-Android` for now. Do not rename the repository or alter the Android application ID merely to match the display name.
+The repository is named `IntiVentory-Android`. The Android application ID is `com.boyidapu.homestock`; it is a technical identifier and should not be changed merely to match the display name.
 
 ## Logo reference assets
 
@@ -47,6 +47,6 @@ The SVG assets are reference artwork. During implementation, prepare and verify 
 ## Implementation guidance
 
 - App display name should be **IntiVentory**.
-- Keep the repository identifier `HomeStock-Android` unchanged unless a separate repository-renaming decision is made.
+- Keep the Android application ID `com.boyidapu.homestock` unchanged unless a separately approved migration requires a change.
 - Do not add accounts, network services, analytics, or any unrelated feature as part of branding work.
-- Implementation has not started. These docs and SVG references are the planning artifacts only.
+- The accepted app implementation uses this branding direction. The SVG files remain the reference artwork; verify any launcher/adaptive icon variants in the Android build and on the physical device.

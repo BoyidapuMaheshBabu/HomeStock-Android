@@ -23,7 +23,7 @@
 The committed project README reports **47 passing unit tests** for Phase 04.
 
 The implementation commit is `2b5306c49060a1d844a563ece07e71e95560f574`:
-[View Phase 04 implementation commit](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/commit/2b5306c49060a1d844a563ece07e71e95560f574).
+[View Phase 04 implementation commit](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/commit/2b5306c49060a1d844a563ece07e71e95560f574).
 
 These automated test results are recorded as implementation-reported evidence; this document does not claim that the tests were independently rerun during repository integration.
 
