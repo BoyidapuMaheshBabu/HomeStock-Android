@@ -1,7 +1,6 @@
 # IntiVentory Architecture
 
-**Status:** Phases 01–04 accepted; Phase 05 product transaction history is active. See [Phase 04 verification](PHASE-04-VERIFICATION.md) for reported verification evidence and its limits.
-**Current implementation branch:** phase/05-product-transaction-history.
+**Status:** Architecture baseline for the accepted Phase 01–07 MVP. Phase delivery and evidence are recorded in the [phase records](phases/README.md).
 
 This is the implementation blueprint for one small native Android app. It is not a web app and does not require a cloud service.
 
@@ -31,7 +30,7 @@ Use the latest stable versions that are mutually compatible when the implementat
 
 ## 2. Why this architecture
 
-HomeStock has one user and no server. Its important complexity is local data integrity: purchases, usage, quantity and spending must agree after every action. A small layered design keeps these rules out of UI components and makes them testable.
+IntiVentory is a single-user household app with no server. Its important complexity is local data integrity: purchases, usage, quantity and spending must agree after every action. A small layered design keeps these rules out of UI components and makes them testable.
 
 Data flow:
 **Compose screen → screen ViewModel → domain rule/use case → repository → Room database**
@@ -322,7 +321,7 @@ Never keep a separate editable/cached total in UI state.
 
 ## 14. Official Android references
 
-These are implementation references, not evidence that HomeStock has been built:
+These are official Android implementation references. Delivery and verification evidence is recorded separately in the phase records:
 - Architecture recommendations: https://developer.android.com/topic/architecture/recommendations
 - Offline-first data layer: https://developer.android.com/topic/architecture/data-layer/offline-first
 - Room database: https://developer.android.com/training/data-storage/room

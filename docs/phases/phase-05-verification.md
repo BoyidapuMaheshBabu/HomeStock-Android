@@ -1,6 +1,6 @@
 # Phase 05 Verification — Product Transaction History and Correction Safeguards
 
-**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/7).
+**Status:** Accepted by Mahesh and merged into `main` via [PR #7](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/7).
 **Implementation branch:** `phase/05-product-transaction-history`
 **Merge commit:** `2f7d4bc4c53318e8bedfd0b206273785aa055b85`
 **Next phase:** Phase 06 — Spending Dashboard and Insights, active on `phase/06-spending-dashboard-and-insights`.

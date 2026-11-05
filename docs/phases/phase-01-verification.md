@@ -2,7 +2,7 @@
 
 **Phase branch:** `phase/01-foundation-and-project-setup`  
 **Acceptance date:** 2026-10-23  
-**Merge pull request:** [#2 — Phase 01 Android foundation](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/2)
+**Merge pull request:** [#2 — Phase 01 Android foundation](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/2)
 
 ## Scope delivered
 

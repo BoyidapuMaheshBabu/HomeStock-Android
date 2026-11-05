@@ -1,6 +1,6 @@
 # Phase 06 Verification — Spending Dashboard and Insights
 
-**Status:** Accepted by Mahesh for progression to Phase 07 and merged via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8).
+**Status:** Accepted by Mahesh for progression to Phase 07 and merged via [PR #8](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/8).
 **Implementation branch:** `phase/06-spending-dashboard-and-insights`
 **Scope:** Spending period filters, summary metrics, spending trend, category breakdown, and top spending products.
 **Next phase:** Phase 07 — Verification and intended-user review.

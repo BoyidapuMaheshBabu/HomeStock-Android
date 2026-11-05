@@ -2,7 +2,7 @@
 
 **Phase branch:** `phase/02-welcome-and-home`  
 **Acceptance date:** 2026-10-23  
-**Merge pull request:** [#3 — Phase 02 Welcome and Home](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/3)
+**Merge pull request:** [#3 — Phase 02 Welcome and Home](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/3)
 
 ## Scope delivered
 

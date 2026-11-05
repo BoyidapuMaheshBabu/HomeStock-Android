@@ -1,8 +1,8 @@
-# Product Requirements
+# Product Requirements Document
 
 ## 1. Purpose and user
 
-IntiVentory is for the user's sister and household. The repository remains named HomeStock-Android. It is a simple offline native Android app to track household products, purchases, usage, quantities remaining and money spent on household products.
+IntiVentory is an offline-first native Android app for tracking household products, purchases, usage, remaining quantities, and household purchase spending. The repository is named `IntiVentory-Android`; the Android application ID remains a separate technical identifier.
 
 ## 2. First launch
 
@@ -182,7 +182,7 @@ Insights is one vertically scrollable screen with these sections in this exact o
 5. **Spending by category** with each of the three fixed categories, purchase amount, percent share, and proportional horizontal bar.
 6. **Top spending products** list containing up to five products ranked by total purchase spending in the selected period. Show product name, category, and amount.
 
-Full interaction and design details are defined in [Phase 06 Insights screen design](PHASE-06-INSIGHTS-DESIGN.md).
+Full interaction and design details are defined in [Phase 06 Insights screen design](phases/phase-06-insights-design.md).
 
 ### Spending trend aggregation
 
@@ -204,7 +204,7 @@ Full interaction and design details are defined in [Phase 06 Insights screen des
 
 ## 12. Offline storage, privacy and deferred features
 
-Products, name, transactions, stock and spending are local. Room is the source of truth for product/transaction data; totals are derived from transactions. No account, cloud sync, internet permission, analytics or ad SDK is needed. JSON backup/restore comes after core-app acceptance.
+Products, name, transactions, stock and spending are local. Room is the source of truth for product/transaction data; totals are derived from transactions. No account, cloud sync, internet permission, analytics or ad SDK is needed. JSON backup/restore remains deferred beyond the accepted core MVP and requires a separately approved follow-up phase.
 
 ## 13. Related specifications
 

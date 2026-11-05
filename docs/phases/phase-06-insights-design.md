@@ -1,7 +1,7 @@
 # Phase 06 — Spending Insights Screen Design
 
 **Branch:** `phase/06-spending-dashboard-and-insights`
-**Status:** Implemented scope reference for Phase 06, accepted and merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/HomeStock-Android/pull/8). This document records the agreed screen design and acceptance contract.
+**Status:** Implemented scope reference for Phase 06, accepted and merged into `main` via [PR #8](https://github.com/BoyidapuMaheshBabu/IntiVentory-Android/pull/8). This document records the agreed screen design and acceptance contract.
 **Platform:** Native Android, Kotlin, Jetpack Compose + Material 3, offline-first.
 
 ## Goal
