@@ -4,7 +4,7 @@
 **Accepted baseline:** `main` contains the implementation through Phase 07. Phase-specific branches are retained as development history.
 **Baseline:** planning and branding merged via PR #1; Phase 01 via PR #2; Phase 02 via PR #3; Phase 03 via PR #5; Phase 04 via PR #6; Phase 05 via PR #7; Phase 06 via PR #8.
 
-The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [phases/phase-01-verification.md](phases/phase-01-verification.md).
+The architecture and product specification are the working contract. Checkboxes below describe verified completion state and remaining planned work. Phase 01 verification is recorded in [Phase 01 verification](phases/phase-01-verification.md).
 
 ## Planning sign-off
 
@@ -24,7 +24,7 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] Build and launch a minimal app on the intended phone.
 - [x] Record actual dependency versions and verified build evidence.
 
-**Acceptance:** Accepted by Mahesh after a successful physical-phone launch, icon verification and Telugu-text rendering check. Friday reported successful debug build and 13/13 passing unit tests; see phases/phase-01-verification.md.
+**Acceptance:** Accepted by Mahesh after a successful physical-phone launch, icon verification and Telugu-text rendering check. Friday reported successful debug build and 13/13 passing unit tests; see [Phase 01 verification](phases/phase-01-verification.md).
 
 ## Phase 02 — Welcome and Home
 
@@ -34,7 +34,7 @@ The architecture and product specification are the working contract. Checkboxes 
 - [x] This month card opens Insights with This month selected.
 - [x] Three fixed rectangular category hero cards.
 
-**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [phases/phase-02-verification.md](phases/phase-02-verification.md) for scope and evidence limits.
+**Acceptance:** Mahesh accepted the current Welcome/Home implementation after Friday's physical-device usability pass. See [Phase 02 verification](phases/phase-02-verification.md) for scope and evidence limits.
 
 ## Phase 03 — Product catalogue and management
 
