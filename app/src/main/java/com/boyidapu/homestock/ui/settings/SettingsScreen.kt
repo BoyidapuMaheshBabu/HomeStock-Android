@@ -1,7 +1,10 @@
 package com.boyidapu.homestock.ui.settings
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,10 +12,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -37,6 +43,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -55,7 +62,8 @@ import com.boyidapu.homestock.ui.theme.MutedSageGray
 fun SettingsScreen(
     viewModel: SettingsViewModel,
     onBack: () -> Unit,
-    onNavigateToArchivedProducts: () -> Unit
+    onNavigateToArchivedProducts: () -> Unit,
+    onNavigateToAbout: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
@@ -88,6 +96,7 @@ fun SettingsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .verticalScroll(rememberScrollState())
                 .padding(20.dp)
         ) {
             // Profile / User Name Card
@@ -252,33 +261,53 @@ fun SettingsScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // App Identity Card
+            // Branded Product Profile Entry: About IntiVentory
             Card(
                 colors = CardDefaults.cardColors(containerColor = CleanWhite),
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigateToAbout() }
             ) {
-                Column(
-                    modifier = Modifier.padding(20.dp)
+                Row(
+                    modifier = Modifier.padding(18.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.app_name),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = DeepTeal
-                    )
-                    Text(
-                        text = stringResource(id = R.string.telugu_app_name),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = DeepTeal
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(id = R.string.telugu_app_caption),
-                        fontSize = 13.sp,
-                        color = MutedSageGray
+                    Box(
+                        modifier = Modifier
+                            .size(42.dp)
+                            .background(DeepTeal, shape = RoundedCornerShape(12.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                            contentDescription = stringResource(id = R.string.app_name),
+                            modifier = Modifier.size(42.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = "About IntiVentory",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = ForestCharcoal
+                        )
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Version 1.0.0 · App information",
+                            fontSize = 13.sp,
+                            color = MutedSageGray
+                        )
+                    }
+
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                        contentDescription = "About IntiVentory",
+                        tint = MutedSageGray
                     )
                 }
             }

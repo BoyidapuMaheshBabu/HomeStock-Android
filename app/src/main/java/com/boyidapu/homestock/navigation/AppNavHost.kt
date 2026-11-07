@@ -17,6 +17,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import com.boyidapu.homestock.app.AppContainer
+import com.boyidapu.homestock.ui.about.AboutScreen
 import com.boyidapu.homestock.ui.archived.ArchivedProductsScreen
 import com.boyidapu.homestock.ui.archived.ArchivedProductsViewModel
 import com.boyidapu.homestock.ui.category.CategoryScreen
@@ -288,6 +289,9 @@ fun HomeStockAppNavHost(
                 },
                 onNavigateToArchivedProducts = {
                     backStack += Screen.ArchivedProducts
+                },
+                onNavigateToAbout = {
+                    backStack += Screen.About
                 }
             )
         }
@@ -300,6 +304,16 @@ fun HomeStockAppNavHost(
             )
             ArchivedProductsScreen(
                 viewModel = archivedViewModel,
+                onBack = {
+                    if (backStack.isNotEmpty()) {
+                        backStack.removeAt(backStack.lastIndex)
+                    }
+                }
+            )
+        }
+
+        entry<Screen.About> {
+            AboutScreen(
                 onBack = {
                     if (backStack.isNotEmpty()) {
                         backStack.removeAt(backStack.lastIndex)
